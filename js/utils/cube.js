@@ -192,15 +192,29 @@ export class CubeRotator {
         if (e.type === 'touchmove') e.preventDefault();
     }
 
-    onUp() {
+    onUp(e) {
         if (!this.isDragging) return;
 
         this.isDragging = false;
         this.element.style.cursor = 'grab';
 
         if (!this.wasDragging) {
-            // It was a clean tap/click — navigate to the front-facing face
-            const href = this.getFrontFaceHref();
+            // It was a clean tap/click
+            let href = null;
+            
+            // Try to find if user actually clicked a specific face
+            if (e && e.target) {
+                const face = e.target.closest('.cube-face');
+                if (face) {
+                    href = face.getAttribute('href');
+                }
+            }
+
+            // Fallback to mathematical center if they clicked the wrapper but missed a face
+            if (!href) {
+                href = this.getFrontFaceHref();
+            }
+
             if (href) {
                 window.location.href = href;
                 return; // Don't resume auto-rotate — we're navigating away
