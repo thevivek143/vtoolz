@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'vtoolz-v50';
+const CACHE_VERSION = 'vtoolz-v51';
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const DYNAMIC_CACHE = `${CACHE_VERSION}-dynamic`;
 const CDN_CACHE = `${CACHE_VERSION}-cdn`;

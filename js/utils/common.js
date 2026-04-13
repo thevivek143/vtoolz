@@ -394,8 +394,37 @@ export const Utils = {
     initErrorBoundary: () => {
         window.addEventListener('error', (event) => {
             if (event.target && (event.target.tagName === 'SCRIPT' || event.target.tagName === 'LINK')) {
-                const src = event.target.src || event.target.href || 'unknown resource';
-                console.error('Resource failed to load:', src);
+                const src = event.target.src || event.target.href || '';
+                const optionalHosts = [
+                    'pagead2.googlesyndication.com',
+                    'googleads.g.doubleclick.net',
+                    'tpc.googlesyndication.com',
+                    'www.googletagmanager.com',
+                    'www.google-analytics.com',
+                    'cdn.jsdelivr.net',
+                    'cdnjs.cloudflare.com',
+                    'fonts.googleapis.com',
+                    'fonts.gstatic.com'
+                ];
+
+                let url;
+                try {
+                    url = new URL(src || '', window.location.href);
+                } catch {
+                    return;
+                }
+
+                const isFirstParty = url.origin === window.location.origin;
+                const isOptionalExternal = optionalHosts.some(host => url.hostname === host || url.hostname.endsWith(`.${host}`));
+
+                // Show the banner only when first-party assets fail.
+                // Third-party network/ad-block failures are noisy and usually non-critical.
+                if (!isFirstParty || isOptionalExternal) {
+                    console.warn('Optional external resource failed to load:', url.href);
+                    return;
+                }
+
+                console.error('Required resource failed to load:', url.href);
 
                 if (!document.getElementById('error-boundary-banner')) {
                     const banner = document.createElement('div');
