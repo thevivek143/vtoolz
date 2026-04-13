@@ -366,6 +366,85 @@ const TOOL_DEFS = {
     "speech-to-text-notes": {
         kind: "speech",
         fields: []
+    },
+    "image-to-text-ocr": {
+        kind: "imageOcr",
+        fields: [
+            { id: "image", label: "Image File", type: "file", accept: "image/*" },
+            { id: "lang", label: "OCR Language", type: "select", options: ["eng", "eng+hin"], value: "eng" }
+        ]
+    },
+    "pdf-ocr-extractor": {
+        kind: "pdfOcr",
+        fields: [
+            { id: "pdf", label: "PDF File", type: "file", accept: "application/pdf,.pdf" },
+            { id: "maxPages", label: "Pages to process", type: "number", value: "3", min: "1", max: "10" },
+            { id: "lang", label: "OCR Language", type: "select", options: ["eng", "eng+hin"], value: "eng" }
+        ]
+    },
+    "audio-to-text-transcriber": {
+        kind: "speech",
+        fields: []
+    },
+    "video-to-mp3-converter": {
+        kind: "videoMp3",
+        fields: [
+            { id: "video", label: "Video File", type: "file", accept: "video/*" },
+            { id: "bitrate", label: "MP3 Bitrate (kbps)", type: "number", value: "128", min: "64", max: "320", step: "32" }
+        ]
+    },
+    "grammar-checker": {
+        kind: "grammar",
+        fields: [
+            { id: "text", label: "Text", type: "textarea", placeholder: "Paste text to check grammar and punctuation" }
+        ]
+    },
+    "ai-text-detector": {
+        kind: "aiDetector",
+        fields: [
+            { id: "text", label: "Text", type: "textarea", placeholder: "Paste writing sample" }
+        ]
+    },
+    "expense-tracker": {
+        kind: "expenseTracker",
+        fields: [
+            { id: "income", label: "Monthly Income", type: "number", value: "80000" },
+            { id: "entries", label: "Expenses (date,category,amount,note per line)", type: "textarea", placeholder: "2026-04-01,Food,420,Lunch\n2026-04-02,Transport,180,Metro" }
+        ]
+    },
+    "time-difference-calculator": {
+        kind: "timeDiff",
+        fields: [
+            { id: "start", label: "Start Date/Time", type: "datetime-local" },
+            { id: "startOffset", label: "Start UTC Offset", type: "number", value: "5.5", step: "0.5" },
+            { id: "end", label: "End Date/Time", type: "datetime-local" },
+            { id: "endOffset", label: "End UTC Offset", type: "number", value: "0", step: "0.5" }
+        ]
+    },
+    "trip-cost-calculator": {
+        kind: "tripCost",
+        fields: [
+            { id: "distance", label: "Distance (km)", type: "number", value: "450" },
+            { id: "mileage", label: "Vehicle Mileage (km/l)", type: "number", value: "16" },
+            { id: "fuelPrice", label: "Fuel Price per Liter", type: "number", value: "105" },
+            { id: "tolls", label: "Tolls", type: "number", value: "900" },
+            { id: "parking", label: "Parking", type: "number", value: "300" },
+            { id: "days", label: "Trip Days", type: "number", value: "4", min: "1" },
+            { id: "travelers", label: "Travelers", type: "number", value: "2", min: "1" },
+            { id: "stayPerNight", label: "Stay per Night", type: "number", value: "2500" },
+            { id: "foodPerPerson", label: "Food per Person per Day", type: "number", value: "700" },
+            { id: "activities", label: "Activities Total", type: "number", value: "2000" },
+            { id: "misc", label: "Miscellaneous", type: "number", value: "800" }
+        ]
+    },
+    "fuel-cost-calculator": {
+        kind: "fuelCost",
+        fields: [
+            { id: "distance", label: "Distance (km)", type: "number", value: "120" },
+            { id: "mileage", label: "Mileage (km/l)", type: "number", value: "18" },
+            { id: "fuelPrice", label: "Fuel Price per Liter", type: "number", value: "104" },
+            { id: "passengers", label: "Passengers", type: "number", value: "1", min: "1" }
+        ]
     }
 };
 
@@ -394,6 +473,10 @@ function toNum(v, fallback = 0) {
     return Number.isFinite(n) ? n : fallback;
 }
 
+function clamp(v, min, max) {
+    return Math.min(max, Math.max(min, v));
+}
+
 function parseLines(text) {
     return String(text || "")
         .split(/\r?\n/)
@@ -408,9 +491,40 @@ function parseCsvList(text) {
         .filter(Boolean);
 }
 
+const scriptLoadCache = new Map();
+
+function loadScriptOnce(src, checkReady) {
+    if (typeof checkReady === "function" && checkReady()) {
+        return Promise.resolve();
+    }
+    if (scriptLoadCache.has(src)) {
+        return scriptLoadCache.get(src);
+    }
+    const pending = new Promise((resolve, reject) => {
+        const existing = document.querySelector(`script[src="${src}"]`);
+        if (existing) {
+            existing.addEventListener("load", () => resolve(), { once: true });
+            existing.addEventListener("error", () => reject(new Error(`Failed to load ${src}`)), { once: true });
+            return;
+        }
+        const s = document.createElement("script");
+        s.src = src;
+        s.async = true;
+        s.onload = () => resolve();
+        s.onerror = () => reject(new Error(`Failed to load ${src}`));
+        document.head.appendChild(s);
+    });
+    scriptLoadCache.set(src, pending);
+    return pending;
+}
+
 function getFieldValue(container, field) {
     const node = container.querySelector(`[name=\"${field.id}\"]`);
-    return node ? node.value : "";
+    if (!node) return "";
+    if (field.type === "file") {
+        return node.files && node.files[0] ? node.files[0] : null;
+    }
+    return node.value;
 }
 
 function renderForm(toolId, def) {
@@ -433,13 +547,20 @@ function renderForm(toolId, def) {
                 input.appendChild(option);
             });
         } else {
-            input = el("input", {
+            const attrs = {
                 id: field.id,
                 name: field.id,
                 type: field.type || "text",
-                placeholder: field.placeholder || "",
-                value: field.value || ""
-            });
+                placeholder: field.placeholder || ""
+            };
+            if (field.accept) attrs.accept = field.accept;
+            if (field.min !== undefined) attrs.min = String(field.min);
+            if (field.max !== undefined) attrs.max = String(field.max);
+            if (field.step !== undefined) attrs.step = String(field.step);
+            if ((field.type || "text") !== "file" && field.value !== undefined) {
+                attrs.value = field.value;
+            }
+            input = el("input", attrs);
         }
         group.appendChild(label);
         group.appendChild(input);
@@ -514,6 +635,15 @@ function translitHiToEn(text) {
     Object.entries(map).forEach(([hi, en]) => {
         out = out.split(hi).join(en);
     });
+    return out;
+}
+
+function floatToInt16(samples) {
+    const out = new Int16Array(samples.length);
+    for (let i = 0; i < samples.length; i++) {
+        const s = clamp(samples[i], -1, 1);
+        out[i] = s < 0 ? Math.round(s * 32768) : Math.round(s * 32767);
+    }
     return out;
 }
 
@@ -995,6 +1125,282 @@ async function executeTool(toolId, kind, v, output) {
         }
         case "translit": {
             return v.dir === "hi-en" ? translitHiToEn(v.text || "") : translitEnToHi(v.text || "");
+        }
+        case "imageOcr": {
+            const file = v.image;
+            if (!(file instanceof File)) {
+                return "Select an image file first.";
+            }
+            const lang = v.lang || "eng";
+            output.innerHTML = "<pre>Loading OCR engine...</pre>";
+            try {
+                await loadScriptOnce("https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js", () => !!window.Tesseract);
+                const result = await window.Tesseract.recognize(file, lang, {
+                    logger: (m) => {
+                        if (!m || !m.status) return;
+                        const pct = typeof m.progress === "number" ? ` ${Math.round(m.progress * 100)}%` : "";
+                        output.innerHTML = `<pre>${m.status}${pct}</pre>`;
+                    }
+                });
+                const text = (result && result.data && result.data.text ? result.data.text : "").trim();
+                return text ? `Detected Text\n\n${text}` : "No text detected. Try a clearer image.";
+            } catch (err) {
+                return `OCR failed: ${err.message || err}`;
+            }
+        }
+        case "pdfOcr": {
+            const file = v.pdf;
+            if (!(file instanceof File)) {
+                return "Select a PDF file first.";
+            }
+            const lang = v.lang || "eng";
+            const maxPages = Math.max(1, Math.min(10, Math.round(toNum(v.maxPages, 3))));
+            output.innerHTML = "<pre>Loading PDF engine...</pre>";
+            try {
+                await loadScriptOnce("https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js", () => !!window.pdfjsLib);
+                if (window.pdfjsLib && window.pdfjsLib.GlobalWorkerOptions) {
+                    window.pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+                }
+                const buffer = await file.arrayBuffer();
+                const doc = await window.pdfjsLib.getDocument({ data: buffer }).promise;
+                const pages = Math.min(doc.numPages, maxPages);
+                const chunks = [];
+                const ocrPages = [];
+
+                for (let i = 1; i <= pages; i++) {
+                    output.innerHTML = `<pre>Scanning page ${i}/${pages}...</pre>`;
+                    const page = await doc.getPage(i);
+                    const content = await page.getTextContent();
+                    const pageText = content.items.map(it => it.str).join(" ").replace(/\s+/g, " ").trim();
+                    if (pageText.length >= 24) {
+                        chunks.push(`--- Page ${i} ---\n${pageText}`);
+                    } else {
+                        ocrPages.push(i);
+                    }
+                }
+
+                if (ocrPages.length) {
+                    output.innerHTML = `<pre>Running OCR on ${ocrPages.length} scanned page(s)...</pre>`;
+                    await loadScriptOnce("https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js", () => !!window.Tesseract);
+                    for (let idx = 0; idx < ocrPages.length; idx++) {
+                        const pageNo = ocrPages[idx];
+                        output.innerHTML = `<pre>OCR page ${pageNo} (${idx + 1}/${ocrPages.length})...</pre>`;
+                        const page = await doc.getPage(pageNo);
+                        const viewport = page.getViewport({ scale: 1.6 });
+                        const canvas = document.createElement("canvas");
+                        canvas.width = Math.ceil(viewport.width);
+                        canvas.height = Math.ceil(viewport.height);
+                        const ctx = canvas.getContext("2d");
+                        await page.render({ canvasContext: ctx, viewport }).promise;
+                        const result = await window.Tesseract.recognize(canvas, lang);
+                        const text = (result && result.data && result.data.text ? result.data.text : "").replace(/\s+\n/g, "\n").trim();
+                        chunks.push(`--- Page ${pageNo} (OCR) ---\n${text || "[No text detected]"}`);
+                    }
+                }
+
+                return chunks.length ? chunks.join("\n\n") : "No readable text found in selected pages.";
+            } catch (err) {
+                return `PDF OCR failed: ${err.message || err}`;
+            }
+        }
+        case "videoMp3": {
+            const file = v.video;
+            if (!(file instanceof File)) {
+                return "Select a video file first.";
+            }
+            const bitrate = Math.round(clamp(toNum(v.bitrate, 128), 64, 320));
+            let audioCtx = null;
+            output.innerHTML = "<pre>Loading MP3 encoder...</pre>";
+            try {
+                await loadScriptOnce("https://cdn.jsdelivr.net/npm/lamejs@1.2.1/lame.min.js", () => !!window.lamejs);
+                const Ctx = window.AudioContext || window.webkitAudioContext;
+                if (!Ctx) return "Audio conversion is not supported in this browser.";
+                audioCtx = new Ctx();
+
+                output.innerHTML = "<pre>Decoding audio track...</pre>";
+                const buffer = await file.arrayBuffer();
+                const decoded = await audioCtx.decodeAudioData(buffer.slice(0));
+                const channels = Math.min(2, decoded.numberOfChannels);
+                const encoder = new window.lamejs.Mp3Encoder(channels, decoded.sampleRate, bitrate);
+                const left = floatToInt16(decoded.getChannelData(0));
+                const right = channels === 2 ? floatToInt16(decoded.getChannelData(1)) : null;
+                const blockSize = 1152;
+                const chunks = [];
+
+                for (let i = 0; i < left.length; i += blockSize) {
+                    const lChunk = left.subarray(i, i + blockSize);
+                    let encoded;
+                    if (channels === 2) {
+                        const rChunk = right.subarray(i, i + blockSize);
+                        encoded = encoder.encodeBuffer(lChunk, rChunk);
+                    } else {
+                        encoded = encoder.encodeBuffer(lChunk);
+                    }
+                    if (encoded.length) chunks.push(new Uint8Array(encoded));
+                    if (i % (blockSize * 120) === 0) {
+                        const pct = Math.round((i / left.length) * 100);
+                        output.innerHTML = `<pre>Encoding MP3... ${pct}%</pre>`;
+                    }
+                }
+                const flush = encoder.flush();
+                if (flush.length) chunks.push(new Uint8Array(flush));
+
+                const blob = new Blob(chunks, { type: "audio/mpeg" });
+                const baseName = file.name.replace(/\.[^.]+$/, "") || "audio";
+                const href = URL.createObjectURL(blob);
+                const wrap = el("div", { class: "speech-wrap" });
+                const info = el("p", {}, `Conversion complete. Output size: ${(blob.size / (1024 * 1024)).toFixed(2)} MB`);
+                const dl = el("a", { href, download: `${baseName}.mp3`, class: "btn btn-primary" }, "Download MP3");
+                wrap.appendChild(info);
+                wrap.appendChild(dl);
+                output.innerHTML = "";
+                output.appendChild(wrap);
+                setTimeout(() => URL.revokeObjectURL(href), 120000);
+                return null;
+            } catch (err) {
+                return `Video conversion failed: ${err.message || err}`;
+            } finally {
+                if (audioCtx && typeof audioCtx.close === "function") {
+                    try {
+                        await audioCtx.close();
+                    } catch {
+                        // ignore close errors
+                    }
+                }
+            }
+        }
+        case "grammar": {
+            const text = String(v.text || "").trim();
+            if (!text) return "Paste text to run grammar checks.";
+            const sentences = (text.match(/[^.!?]+[.!?]*/g) || []).map(s => s.trim()).filter(Boolean);
+            const issueLines = [];
+            const repeats = [...text.matchAll(/\b([a-zA-Z]{2,})\s+\1\b/gi)].slice(0, 12);
+            repeats.forEach(m => issueLines.push(`Repeated word: \"${m[0]}\"`));
+            sentences.forEach((s, idx) => {
+                if (/^[a-z]/.test(s)) issueLines.push(`Sentence ${idx + 1} starts with lowercase.`);
+                if (!/[.!?]["')\]]?$/.test(s)) issueLines.push(`Sentence ${idx + 1} may need ending punctuation.`);
+                const wc = words(s).length;
+                if (wc > 32) issueLines.push(`Sentence ${idx + 1} is long (${wc} words). Consider splitting it.`);
+            });
+            const cleaned = text
+                .replace(/\s+([,.!?;:])/g, "$1")
+                .replace(/\bi\b/g, "I")
+                .replace(/\s{2,}/g, " ")
+                .trim();
+            const wc = words(text).length;
+            const avg = sentences.length ? wc / sentences.length : wc;
+            return `Grammar Check Summary\nWords: ${wc}\nSentences: ${sentences.length}\nAverage Words/Sentence: ${avg.toFixed(1)}\n\nIssues Found:\n- ${issueLines.join("\n- ") || "No major issues detected."}\n\nCleaned Draft:\n${cleaned}`;
+        }
+        case "aiDetector": {
+            const text = String(v.text || "").trim();
+            if (!text) return "Paste text to estimate AI-likeness.";
+            const tokenList = words(text);
+            const sentenceList = (text.match(/[^.!?]+[.!?]*/g) || []).map(s => s.trim()).filter(Boolean);
+            const lengths = sentenceList.map(s => words(s).length).filter(Boolean);
+            const avgLen = lengths.length ? lengths.reduce((a, b) => a + b, 0) / lengths.length : tokenList.length;
+            const variance = lengths.length ? lengths.reduce((acc, n) => acc + Math.pow(n - avgLen, 2), 0) / lengths.length : 0;
+            const burst = avgLen ? (Math.sqrt(variance) / avgLen) * 100 : 0;
+            const uniqueRatio = tokenList.length ? (new Set(tokenList).size / tokenList.length) : 0;
+            const contractions = (text.match(/\b[a-z]+('[a-z]+)\b/gi) || []).length;
+            const transitions = (text.match(/\b(however|moreover|therefore|furthermore|additionally|overall|in conclusion)\b/gi) || []).length;
+
+            let score = 50;
+            if (uniqueRatio < 0.45) score += 16;
+            if (burst < 32) score += 14;
+            if (avgLen > 24) score += 10;
+            if (contractions === 0) score += 8;
+            if (transitions >= 3) score += 8;
+            if (uniqueRatio > 0.58) score -= 12;
+            if (burst > 55) score -= 10;
+            if (contractions > Math.max(2, Math.floor(sentenceList.length / 3))) score -= 8;
+            score = Math.round(clamp(score, 1, 99));
+
+            let label = "Mixed pattern";
+            if (score >= 70) label = "Likely AI-like pattern";
+            if (score < 45) label = "Likely human-like pattern";
+
+            return `AI Writing Heuristic\nScore: ${score}/100\nAssessment: ${label}\n\nSignals:\n- Vocabulary diversity: ${(uniqueRatio * 100).toFixed(1)}%\n- Sentence burstiness: ${burst.toFixed(1)}\n- Avg sentence length: ${avgLen.toFixed(1)} words\n- Contractions: ${contractions}\n\nNote: This is a heuristic estimate, not a definitive detector.`;
+        }
+        case "expenseTracker": {
+            const income = toNum(v.income, 0);
+            const rows = parseLines(v.entries).map(line => {
+                const parts = line.split(",");
+                const date = (parts[0] || "").trim() || "N/A";
+                const category = (parts[1] || "Other").trim() || "Other";
+                const amount = toNum((parts[2] || "").replace(/[^0-9.-]/g, ""), 0);
+                const note = parts.slice(3).join(",").trim();
+                return { date, category, amount, note };
+            }).filter(r => r.amount > 0);
+            if (!rows.length) {
+                return "Add expense rows in the format: date,category,amount,note";
+            }
+            const totalSpend = rows.reduce((sum, r) => sum + r.amount, 0);
+            const byCategory = new Map();
+            rows.forEach(r => {
+                byCategory.set(r.category, (byCategory.get(r.category) || 0) + r.amount);
+            });
+            const sortedCats = [...byCategory.entries()].sort((a, b) => b[1] - a[1]);
+            const balance = income - totalSpend;
+            const categoryLines = sortedCats.map(([cat, amount]) => `- ${cat}: ${amount.toFixed(2)}`);
+            const topRows = rows.slice(-5).map(r => `- ${r.date} | ${r.category} | ${r.amount.toFixed(2)}${r.note ? ` | ${r.note}` : ""}`);
+            return `Expense Summary\nEntries: ${rows.length}\nTotal Spend: ${totalSpend.toFixed(2)}\nMonthly Income: ${income.toFixed(2)}\nBalance: ${balance.toFixed(2)}\n\nCategory Breakdown:\n${categoryLines.join("\n")}\n\nRecent Entries:\n${topRows.join("\n")}`;
+        }
+        case "timeDiff": {
+            if (!v.start || !v.end) {
+                return "Select both start and end date/time values.";
+            }
+            const startOffset = toNum(v.startOffset, 0);
+            const endOffset = toNum(v.endOffset, 0);
+            const startMs = new Date(v.start).getTime();
+            const endMs = new Date(v.end).getTime();
+            if (!Number.isFinite(startMs) || !Number.isFinite(endMs)) {
+                return "Invalid date/time input.";
+            }
+            const startUtc = startMs - startOffset * 3600000;
+            const endUtc = endMs - endOffset * 3600000;
+            const diffMs = endUtc - startUtc;
+            const absMs = Math.abs(diffMs);
+            const totalSec = Math.floor(absMs / 1000);
+            const days = Math.floor(totalSec / 86400);
+            const hours = Math.floor((totalSec % 86400) / 3600);
+            const mins = Math.floor((totalSec % 3600) / 60);
+            const secs = totalSec % 60;
+            const relation = diffMs >= 0 ? "End is after start" : "Start is after end";
+            return `Time Difference\n${relation}\n\nDuration: ${days}d ${hours}h ${mins}m ${secs}s\nHours Total: ${(absMs / 3600000).toFixed(2)}\nMinutes Total: ${(absMs / 60000).toFixed(2)}\n\nStart (UTC): ${new Date(startUtc).toISOString()}\nEnd (UTC): ${new Date(endUtc).toISOString()}`;
+        }
+        case "tripCost": {
+            const distance = Math.max(0, toNum(v.distance, 0));
+            const mileage = Math.max(0.1, toNum(v.mileage, 16));
+            const fuelPrice = Math.max(0, toNum(v.fuelPrice, 0));
+            const tolls = Math.max(0, toNum(v.tolls, 0));
+            const parking = Math.max(0, toNum(v.parking, 0));
+            const days = Math.max(1, Math.round(toNum(v.days, 1)));
+            const travelers = Math.max(1, Math.round(toNum(v.travelers, 1)));
+            const stayPerNight = Math.max(0, toNum(v.stayPerNight, 0));
+            const foodPerPerson = Math.max(0, toNum(v.foodPerPerson, 0));
+            const activities = Math.max(0, toNum(v.activities, 0));
+            const misc = Math.max(0, toNum(v.misc, 0));
+
+            const liters = distance / mileage;
+            const fuelCost = liters * fuelPrice;
+            const stayCost = Math.max(0, days - 1) * stayPerNight;
+            const foodCost = days * travelers * foodPerPerson;
+            const roadCost = tolls + parking;
+            const total = fuelCost + stayCost + foodCost + roadCost + activities + misc;
+            const perPerson = total / travelers;
+
+            return `Trip Cost Estimate\nDistance: ${distance.toFixed(1)} km\nFuel Needed: ${liters.toFixed(2)} L\n\nFuel: ${fuelCost.toFixed(2)}\nTolls + Parking: ${roadCost.toFixed(2)}\nStay: ${stayCost.toFixed(2)}\nFood: ${foodCost.toFixed(2)}\nActivities: ${activities.toFixed(2)}\nMisc: ${misc.toFixed(2)}\n\nTotal Trip Cost: ${total.toFixed(2)}\nPer Traveler: ${perPerson.toFixed(2)}`;
+        }
+        case "fuelCost": {
+            const distance = Math.max(0, toNum(v.distance, 0));
+            const mileage = Math.max(0.1, toNum(v.mileage, 1));
+            const fuelPrice = Math.max(0, toNum(v.fuelPrice, 0));
+            const passengers = Math.max(1, Math.round(toNum(v.passengers, 1)));
+            const liters = distance / mileage;
+            const total = liters * fuelPrice;
+            const perKm = distance ? total / distance : 0;
+            const perPerson = total / passengers;
+            return `Fuel Cost Summary\nDistance: ${distance.toFixed(2)} km\nMileage: ${mileage.toFixed(2)} km/l\nFuel Needed: ${liters.toFixed(2)} L\nTotal Fuel Cost: ${total.toFixed(2)}\nCost per KM: ${perKm.toFixed(2)}\nCost per Passenger: ${perPerson.toFixed(2)}`;
         }
         case "speech": {
             output.innerHTML = "";

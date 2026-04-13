@@ -5,6 +5,8 @@ const CLUSTERS = {
         ids: [
             'next-ats-resume-checker',
             'next-cover-letter-formatter',
+            'next-grammar-checker',
+            'next-ai-text-detector',
             'next-salary-breakup-calculator',
             'next-interview-prep-cards',
             'next-form-format-validator',
@@ -18,7 +20,9 @@ const CLUSTERS = {
             'next-fd-calculator',
             'next-tax-estimator',
             'next-budgeting-sheet',
+            'next-expense-tracker',
             'next-debt-payoff-planner',
+            'next-fuel-cost-calculator',
             'next-margin-calculator',
             'next-gst-vat-calculator',
             'next-invoice-generator',
@@ -31,6 +35,9 @@ const CLUSTERS = {
             'next-itinerary-builder',
             'next-packing-list-builder',
             'next-timezone-planner',
+            'next-time-difference-calculator',
+            'next-trip-cost-calculator',
+            'next-fuel-cost-calculator',
             'next-visa-doc-checker'
         ]
     },
@@ -40,6 +47,10 @@ const CLUSTERS = {
             'next-subtitle-formatter',
             'next-script-timer',
             'next-hashtag-title-generator',
+            'next-image-to-text-ocr',
+            'next-pdf-ocr-extractor',
+            'next-audio-to-text-transcriber',
+            'next-video-to-mp3-converter',
             'next-audio-cleanup-notes',
             'next-speech-to-text-notes'
         ]
