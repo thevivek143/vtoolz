@@ -448,6 +448,32 @@ const TOOL_DEFS = {
     }
 };
 
+const HIGH_DEMAND_TOOL_NAMES = {
+    "image-to-text-ocr": "Image to Text OCR",
+    "pdf-ocr-extractor": "PDF OCR Extractor",
+    "audio-to-text-transcriber": "Audio to Text Transcriber",
+    "video-to-mp3-converter": "Video to MP3 Converter",
+    "grammar-checker": "Grammar Checker",
+    "ai-text-detector": "AI Text Detector",
+    "expense-tracker": "Expense Tracker",
+    "time-difference-calculator": "Time Difference Calculator",
+    "trip-cost-calculator": "Trip Cost Calculator",
+    "fuel-cost-calculator": "Fuel Cost Calculator"
+};
+
+const HIGH_DEMAND_CROSSLINKS = {
+    "image-to-text-ocr": ["pdf-ocr-extractor", "audio-to-text-transcriber", "grammar-checker", "ai-text-detector"],
+    "pdf-ocr-extractor": ["image-to-text-ocr", "grammar-checker", "ai-text-detector", "audio-to-text-transcriber"],
+    "audio-to-text-transcriber": ["video-to-mp3-converter", "grammar-checker", "ai-text-detector", "image-to-text-ocr"],
+    "video-to-mp3-converter": ["audio-to-text-transcriber", "grammar-checker", "ai-text-detector", "image-to-text-ocr"],
+    "grammar-checker": ["ai-text-detector", "audio-to-text-transcriber", "image-to-text-ocr", "pdf-ocr-extractor"],
+    "ai-text-detector": ["grammar-checker", "audio-to-text-transcriber", "image-to-text-ocr", "pdf-ocr-extractor"],
+    "expense-tracker": ["image-to-text-ocr", "pdf-ocr-extractor", "trip-cost-calculator", "fuel-cost-calculator"],
+    "time-difference-calculator": ["trip-cost-calculator", "fuel-cost-calculator", "expense-tracker", "video-to-mp3-converter"],
+    "trip-cost-calculator": ["fuel-cost-calculator", "time-difference-calculator", "expense-tracker", "image-to-text-ocr"],
+    "fuel-cost-calculator": ["trip-cost-calculator", "time-difference-calculator", "expense-tracker", "image-to-text-ocr"]
+};
+
 function el(tag, attrs = {}, html = "") {
     const node = document.createElement(tag);
     Object.entries(attrs).forEach(([k, v]) => node.setAttribute(k, v));
@@ -604,6 +630,25 @@ function renderForm(toolId, def) {
     app.innerHTML = "";
     app.appendChild(fieldsWrap);
     app.appendChild(actions);
+}
+
+function renderRelatedTools(toolId) {
+    const related = HIGH_DEMAND_CROSSLINKS[toolId];
+    if (!Array.isArray(related) || !related.length) return;
+
+    const faq = document.querySelector(".next-faq");
+    if (!faq) return;
+
+    const links = related
+        .filter(id => HIGH_DEMAND_TOOL_NAMES[id])
+        .map(id => `<a href="./${id}.html">${esc(HIGH_DEMAND_TOOL_NAMES[id])}</a>`);
+
+    if (!links.length) return;
+
+    const section = el("div", { class: "next-related-links" });
+    section.appendChild(el("h3", {}, "Related Tools"));
+    section.appendChild(el("p", {}, links.join(" | ")));
+    faq.appendChild(section);
 }
 
 function compareKeywordSets(a, b) {
@@ -1471,6 +1516,7 @@ function init() {
         return;
     }
     renderForm(toolId, def);
+    renderRelatedTools(toolId);
 }
 
 document.addEventListener("DOMContentLoaded", init);
