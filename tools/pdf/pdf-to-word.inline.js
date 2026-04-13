@@ -88,16 +88,23 @@ async function handleFile(file) {
     }
 }
 
-downloadBtn.addEventListener('click', () => {
-    if (!extractedText) return;
+function downloadBlob(blob, filename) {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
 
-    // Create a simple HTML structure for the Word doc
-    // Word opens HTML if it has correct structure and mime
+function downloadLegacyDoc(text) {
     const htmlContent = `
         <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
         <head><meta charset='utf-8'><title>Export HTML To Doc</title></head>
         <body>
-            ${extractedText.replace(/\n/g, '<br>')}
+            ${text.replace(/\n/g, '<br>')}
         </body>
         </html>
     `;
@@ -106,12 +113,48 @@ downloadBtn.addEventListener('click', () => {
         type: 'application/msword'
     });
 
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'converted.doc'; // .doc opens in Word
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-});
+    downloadBlob(blob, 'converted.doc');
+}
+
+async function buildDocxBlob(text) {
+    const lines = String(text || '')
+        .split(/\r?\n/)
+        .map(line => line.trim())
+        .filter(Boolean);
+
+    const docxApi = window.docx;
+    const children = lines.length
+        ? lines.map(line => new docxApi.Paragraph({
+            children: [new docxApi.TextRun(line)]
+        }))
+        : [new docxApi.Paragraph({ children: [new docxApi.TextRun('')] })];
+
+    const document = new docxApi.Document({
+        sections: [{
+            properties: {},
+            children
+        }]
+    });
+
+    return docxApi.Packer.toBlob(document);
+}
+
+downloadBtn.addEventListener('click', async () => {
+    if (!extractedText) return;
+
+    try {
+        if (window.docx && window.docx.Document && window.docx.Packer && window.docx.Paragraph && window.docx.TextRun) {
+            statusText.textContent = 'Building DOCX file...';
+            const blob = await buildDocxBlob(extractedText);
+            downloadBlob(blob, 'converted.docx');
+            statusText.textContent = 'DOCX file ready.';
+            return;
+        }
+    } catch (err) {
+        console.error('DOCX build failed:', err);
+    }
+
+    statusText.textContent = 'Using compatibility export...';
+    downloadLegacyDoc(extractedText);
+    statusText.textContent = 'Word file ready.';
+});

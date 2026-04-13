@@ -12,6 +12,7 @@ export const tools = [
     { id: 'pdf-extract', name: 'Extract Pages', category: 'pdf', url: 'tools/pdf/extract.html', description: 'Save specific pages.', icon: 'fas fa-file-export', color: '#e74c3c', keywords: 'save separate' },
     { id: 'word-to-pdf', name: 'Word to PDF', category: 'pdf', url: 'tools/pdf/word-to-pdf.html', description: 'Convert Word documents to PDF.', icon: 'fas fa-file-pdf', color: '#e74c3c', keywords: 'doc docx convert' },
     { id: 'pdf-to-word', name: 'PDF to Word', category: 'pdf', url: 'tools/pdf/pdf-to-word.html', description: 'Convert PDF to editable Word.', icon: 'fas fa-file-word', color: '#e74c3c', keywords: 'convert doc docx' },
+    { id: 'pdf-to-docx', name: 'PDF to DOCX', category: 'pdf', url: 'tools/pdf/pdf-to-docx.html', description: 'Convert PDF to editable DOCX.', icon: 'fas fa-file-word', color: '#e74c3c', keywords: 'pdf to docx convert word' },
     { id: 'html-to-pdf', name: 'HTML to PDF', category: 'pdf', url: 'tools/pdf/html-to-pdf.html', description: 'Convert HTML files to PDF.', icon: 'fas fa-code', color: '#e74c3c', keywords: 'webpage convert' },
     { id: 'excel-to-pdf', name: 'Excel to PDF', category: 'pdf', url: 'tools/pdf/excel-to-pdf.html', description: 'Convert Excel spreadsheets to PDF.', icon: 'fas fa-file-excel', color: '#e74c3c', keywords: 'xls xlsx convert' },
     { id: 'pdf-reorder', name: 'Reorder PDF', category: 'pdf', url: 'tools/pdf/reorder.html', description: 'Rearrange page order.', icon: 'fas fa-sort', color: '#e74c3c', keywords: 'organize sort' },
