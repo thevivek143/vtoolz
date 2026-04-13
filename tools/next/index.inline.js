@@ -1,7 +1,11 @@
 import { tools } from '../../js/utils/tools.js';
 
 const grid = document.getElementById('next-grid');
-const list = tools.filter(t => t.id.startsWith('next-'));
+const list = tools.filter(t =>
+    t.id.startsWith('next-') &&
+    t.id !== 'next-growth-toolkit' &&
+    !t.id.endsWith('-cluster')
+);
 
 if (!list.length) {
     grid.innerHTML = '<p class="text-muted">No new tools available.</p>';
