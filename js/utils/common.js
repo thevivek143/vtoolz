@@ -416,11 +416,19 @@ export const Utils = {
 
                 const isFirstParty = url.origin === window.location.origin;
                 const isOptionalExternal = optionalHosts.some(host => url.hostname === host || url.hostname.endsWith(`.${host}`));
+                const path = (url.pathname || '').toLowerCase();
+                const isCodeAsset = path.endsWith('.js') || path.endsWith('.css');
 
                 // Show the banner only when first-party assets fail.
                 // Third-party network/ad-block failures are noisy and usually non-critical.
                 if (!isFirstParty || isOptionalExternal) {
                     console.warn('Optional external resource failed to load:', url.href);
+                    return;
+                }
+
+                // Ignore non-critical local assets like favicons, manifests, and images.
+                if (!isCodeAsset) {
+                    console.warn('Non-critical local resource failed to load:', url.href);
                     return;
                 }
 
