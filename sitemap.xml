@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>https://vibox.app/index.html</loc>
@@ -157,5 +157,57 @@
 
     <!-- Games Hub -->
     <url><loc>https://vibox.app/games/index.html</loc><lastmod>2026-02-21</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-
+    <!-- Next Tools (Generated) -->
+    <!-- BEGIN NEXT TOOLS URLS -->
+    <url><loc>https://vibox.app/tools/next/index.html</loc><lastmod>2026-04-13</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://vibox.app/tools/next/citation-generator.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/formula-sheet-maker.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/plagiarism-checker.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/graph-plotter.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/ats-resume-checker.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/cover-letter-formatter.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/salary-breakup-calculator.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/interview-prep-cards.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/thumbnail-caption-maker.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/subtitle-formatter.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/script-timer.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/hashtag-title-generator.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/audio-cleanup-notes.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/invoice-generator.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/gst-vat-calculator.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/quotation-maker.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/margin-calculator.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/receipt-parser.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/form-format-validator.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/eligibility-calculator.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/macros-calculator.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/calorie-planner.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/interval-timer-planner.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/habit-tracker.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/meal-planner.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/sip-calculator.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/emi-calculator.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/fd-calculator.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/tax-estimator.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/budgeting-sheet.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/debt-payoff-planner.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/itinerary-builder.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/packing-list-builder.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/timezone-planner.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/visa-doc-checker.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/api-tester-lite.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/jwt-decoder.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/code-formatter-lite.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/mock-data-generator.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/quiz-creator.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/worksheet-generator.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/flashcard-maker.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/puzzle-generator.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/aim-trainer.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/sensitivity-converter.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/tournament-bracket-builder.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/hindi-writing-assistant.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/transliteration-tool.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://vibox.app/tools/next/speech-to-text-notes.html</loc><lastmod>2026-04-13</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <!-- END NEXT TOOLS URLS -->
 </urlset>
