@@ -483,5 +483,27 @@
         "mode": "single",
         "mobileOptimized": true,
         "image": "assets/covers/g45.png"
+    },
+    {
+        "id": 46,
+        "name": "Stack Bounce",
+        "description": "Smash your way through colorful rotating platforms! Dodge obstacles, activate Fire Mode, and crush high scores.",
+        "engine": "iframe",
+        "url": "stack-bounce/index.html",
+        "category": "arcade",
+        "mode": "single",
+        "mobileOptimized": true,
+        "image": "assets/covers/g46.png"
+    },
+    {
+        "id": 47,
+        "name": "Stack Tower",
+        "description": "Stack isometric blocks as high as you can! Trim overhang slices with physics and build a gorgeous rainbow tower.",
+        "engine": "iframe",
+        "url": "stack-tower/index.html",
+        "category": "casual",
+        "mode": "single",
+        "mobileOptimized": true,
+        "image": "assets/covers/g47.png"
     }
 ]

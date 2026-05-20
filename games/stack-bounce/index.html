@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-select=none">
+    <title>Stack Bounce | Vibox Arcade</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #05050d;
+            --card-bg: rgba(13, 13, 33, 0.7);
+            --neon-blue: #00f0ff;
+            --neon-pink: #ff007f;
+            --text-color: #f0f0f5;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Outfit', sans-serif;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            width: 100vw;
+            touch-action: none;
+        }
+
+        #gameContainer {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            height: 100%;
+            max-height: 640px;
+            aspect-ratio: 400 / 640;
+            background: radial-gradient(circle at center, #0f1026 0%, #05050c 100%);
+            box-shadow: 0 0 40px rgba(0, 240, 255, 0.15);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+        }
+
+        /* Screen Overlays */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 5, 12, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 10;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--neon-blue) 0%, var(--neon-pink) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.3));
+        }
+
+        .subtitle {
+            font-size: 0.95rem;
+            color: #8fa0dd;
+            margin-bottom: 30px;
+            max-width: 80%;
+            line-height: 1.4;
+        }
+
+        .btn-play {
+            background: linear-gradient(135deg, #00f0ff 0%, #0072ff 100%);
+            border: none;
+            color: #fff;
+            padding: 14px 40px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-play:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.6);
+        }
+
+        .btn-play:active {
+            transform: scale(0.98);
+        }
+
+        .score-display {
+            font-size: 1.2rem;
+            color: #8fa0dd;
+            margin-bottom: 20px;
+        }
+
+        .score-val {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #fff;
+            display: block;
+            margin-top: 5px;
+            text-shadow: 0 0 10px rgba(255, 0, 127, 0.5);
+        }
+
+        /* HUD overlays */
+        #hud {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px 20px;
+            pointer-events: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 5;
+        }
+
+        .hud-score-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .hud-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #6a7bb0;
+        }
+
+        .hud-value {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 0 5px rgba(0, 240, 255, 0.5);
+        }
+
+        /* Level progress bar */
+        #levelProgressBar {
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .level-labels {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .level-current {
+            color: var(--neon-blue);
+        }
+
+        .level-next {
+            color: #6a7bb0;
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
+        }
+
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
+            border-radius: 3px;
+            box-shadow: 0 0 8px var(--neon-blue);
+            transition: width 0.15s ease-out;
+        }
+
+        /* Fire Mode Alert */
+        #fireAlert {
+            position: absolute;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #ff3c00;
+            text-shadow: 0 0 10px #ff3c00, 0 0 20px #ffea00;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            pointer-events: none;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 5;
+            animation: pulse 0.6s infinite alternate;
+        }
+
+        #fireAlert.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1) rotate(-1deg); filter: brightness(1); }
+            100% { transform: scale(1.08) rotate(1deg); filter: brightness(1.3); }
+        }
+
+        /* Instruction text overlays */
+        .tap-instruction {
+            position: absolute;
+            bottom: 30px;
+            width: 100%;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #6a7bb0;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            pointer-events: none;
+            animation: pulseFade 1.5s infinite;
+            z-index: 4;
+        }
+
+        @keyframes pulseFade {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="gameContainer">
+        <!-- HUD -->
+        <div id="hud">
+            <div class="hud-score-container">
+                <span class="hud-label">Score</span>
+                <span id="scoreVal" class="hud-value">0</span>
+            </div>
+            <div class="hud-score-container" style="text-align: right;">
+                <span class="hud-label">Best</span>
+                <span id="bestVal" class="hud-value">0</span>
+            </div>
+        </div>
+
+        <!-- Level Bar -->
+        <div id="levelProgressBar">
+            <div class="level-labels">
+                <span id="levelCurrent" class="level-current">1</span>
+                <span id="levelNext" class="level-next">2</span>
+            </div>
+            <div class="progress-track">
+                <div id="progressFill" class="progress-fill"></div>
+            </div>
+        </div>
+
+        <!-- Fire Mode Badge -->
+        <div id="fireAlert">FIRE MODE!</div>
+
+        <!-- Canvas -->
+        <canvas id="gameCanvas" width="400" height="640"></canvas>
+
+        <div class="tap-instruction" id="tapInstruction">Hold Screen to Smash!</div>
+
+        <!-- Start Screen -->
+        <div id="startScreen" class="overlay active">
+            <h1>Stack Bounce</h1>
+            <p class="subtitle">Smash through safe rings, avoid black hazards. Hold to activate Fire Mode!</p>
+            <div class="score-display">
+                High Score
+                <span id="startBest" class="score-val">0</span>
+            </div>
+            <button class="btn-play" id="btnStart">
+                <i class="fas fa-play"></i> Play Game
+            </button>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div id="gameOverScreen" class="overlay">
+            <h1 style="background: linear-gradient(135deg, #ff0844 0%, #ffb199 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Crash!</h1>
+            <p class="subtitle" style="margin-bottom: 20px;">You hit a hazard segment.</p>
+            <div class="score-display">
+                Score
+                <span id="overScore" class="score-val">0</span>
+            </div>
+            <button class="btn-play" id="btnRestart" style="background: linear-gradient(135deg, #ff0844 0%, #ff4b2b 100%); box-shadow: 0 0 20px rgba(255, 75, 43, 0.4);">
+                <i class="fas fa-rotate-right"></i> Try Again
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // ========================================================
+        // WEB AUDIO RETRO SYNTHESIZER
+        // ========================================================
+        class SoundFX {
+            constructor() {
+                this.ctx = null;
+            }
+            init() {
+                if (!this.ctx) {
+                    this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (this.ctx.state === 'suspended') {
+                    this.ctx.resume();
+                }
+            }
+            playBounce() {
+                this.init();
+                if (!this.ctx) return;
+                let osc = this.ctx.createOscillator();
+                let gain = this.ctx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(140, this.ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(260, this.ctx.currentTime + 0.08);
+                gain.gain.setValueAtTime(0.2, this.ctx.currentTime);
+                gain.gain.linearRampToValueAtTime(0.01, this.ctx.currentTime + 0.08);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start();
+                osc.stop(this.ctx.currentTime + 0.08);
+            }
+            playShatter() {
+                this.init();
+                if (!this.ctx) return;
+                
+                // White noise explosion
+                let bufferSize = this.ctx.sampleRate * 0.12;
+                let buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+                let data = buffer.getChannelData(0);
+                for (let i = 0; i < bufferSize; i++) {
+                    data[i] = Math.random() * 2 - 1;
+                }
+                let noise = this.ctx.createBufferSource();
+                noise.buffer = buffer;
+
+                let filter = this.ctx.createBiquadFilter();
+                filter.type = 'highpass';
+                filter.frequency.setValueAtTime(900, this.ctx.currentTime);
+
+                let gain = this.ctx.createGain();
+                gain.gain.setValueAtTime(0.35, this.ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.12);
+
+                noise.connect(filter);
+                filter.connect(gain);
+                gain.connect(this.ctx.destination);
+                noise.start();
+            }
+            playCrash() {
+                this.init();
+                if (!this.ctx) return;
+                
+                // Sub-bass rumble
+                let osc = this.ctx.createOscillator();
+                let gain = this.ctx.createGain();
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(90, this.ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(15, this.ctx.currentTime + 0.45);
+                gain.gain.setValueAtTime(0.5, this.ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.45);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start();
+                osc.stop(this.ctx.currentTime + 0.45);
+
+                // High frequencies noise crash
+                let bufferSize = this.ctx.sampleRate * 0.4;
+                let buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+                let data = buffer.getChannelData(0);
+                for (let i = 0; i < bufferSize; i++) {
+                    data[i] = Math.random() * 2 - 1;
+                }
+                let noise = this.ctx.createBufferSource();
+                noise.buffer = buffer;
+
+                let filter = this.ctx.createBiquadFilter();
+                filter.type = 'lowpass';
+                filter.frequency.setValueAtTime(400, this.ctx.currentTime);
+
+                let noiseGain = this.ctx.createGain();
+                noiseGain.gain.setValueAtTime(0.4, this.ctx.currentTime);
+                noiseGain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.4);
+
+                noise.connect(filter);
+                filter.connect(noiseGain);
+                noiseGain.connect(this.ctx.destination);
+                noise.start();
+            }
+            playFireMode() {
+                this.init();
+                if (!this.ctx) return;
+                let osc = this.ctx.createOscillator();
+                let gain = this.ctx.createGain();
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(180, this.ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(750, this.ctx.currentTime + 0.28);
+                gain.gain.setValueAtTime(0.25, this.ctx.currentTime);
+                gain.gain.linearRampToValueAtTime(0.01, this.ctx.currentTime + 0.28);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start();
+                osc.stop(this.ctx.currentTime + 0.28);
+            }
+            playLevelUp() {
+                this.init();
+                if (!this.ctx) return;
+                let now = this.ctx.currentTime;
+                let notes = [261.63, 329.63, 392.00, 523.25]; // C4, E4, G4, C5
+                notes.forEach((freq, idx) => {
+                    let osc = this.ctx.createOscillator();
+                    let gain = this.ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+                    gain.gain.setValueAtTime(0.2, now + idx * 0.08);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + idx * 0.08 + 0.25);
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+                    osc.start(now + idx * 0.08);
+                    osc.stop(now + idx * 0.08 + 0.25);
+                });
+            }
+        }
+
+        const sfx = new SoundFX();
+
+        // ========================================================
+        // GAME LOGIC
+        // ========================================================
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+
+        // High scores
+        let bestScore = parseInt(localStorage.getItem("sb_bestScore")) || 0;
+        document.getElementById("bestVal").textContent = bestScore;
+        document.getElementById("startBest").textContent = bestScore;
+
+        // UI screens
+        const startScreen = document.getElementById("startScreen");
+        const gameOverScreen = document.getElementById("gameOverScreen");
+        const scoreVal = document.getElementById("scoreVal");
+        const overScore = document.getElementById("overScore");
+        const levelCurrentText = document.getElementById("levelCurrent");
+        const levelNextText = document.getElementById("levelNext");
+        const progressFill = document.getElementById("progressFill");
+        const fireAlert = document.getElementById("fireAlert");
+        const tapInstruction = document.getElementById("tapInstruction");
+
+        // Game states
+        const STATES = { START: 0, PLAYING: 1, GAMEOVER: 2, COMPLETE: 3 };
+        let gameState = STATES.START;
+
+        // Variables
+        let score = 0;
+        let level = 1;
+        let platforms = [];
+        let particles = [];
+        let ball = null;
+        let holdDown = false;
+        
+        // Colors palette generator for levels
+        const LEVEL_PALETTES = [
+            { main: "#00f0ff", dark: "#0055ff", hazard: "#222" }, // Neon Cyan
+            { main: "#ff007f", dark: "#990033", hazard: "#222" }, // Neon Pink
+            { main: "#39ff14", dark: "#006600", hazard: "#222" }, // Neon Green
+            { main: "#ffff00", dark: "#b39b00", hazard: "#222" }, // Yellow
+            { main: "#ff5e00", dark: "#993300", hazard: "#222" }, // Neon Orange
+            { main: "#bd00ff", dark: "#5500aa", hazard: "#222" }, // Neon Purple
+        ];
+        let currentPalette = LEVEL_PALETTES[0];
+
+        // Screenshake
+        let shakeTime = 0;
+        let shakeIntensity = 0;
+
+        function setScreenShake(duration, intensity) {
+            shakeTime = duration;
+            shakeIntensity = intensity;
+        }
+
+        // --- PLATFORM SEGMENT ---
+        class Segment {
+            constructor(startAngle, endAngle, isHazard) {
+                this.startAngle = startAngle;
+                this.endAngle = endAngle;
+                this.isHazard = isHazard;
+                this.shattered = false;
+            }
+        }
+
+        // --- PLATFORM RING ---
+        class Platform {
+            constructor(y, index) {
+                this.y = y; // relative spacing position
+                this.index = index;
+                this.rotation = Math.random() * Math.PI * 2;
+                // Ring rotations alternate direction
+                this.rotSpeed = (index % 2 === 0 ? 1 : -1) * (0.015 + Math.min(level * 0.0015, 0.015));
+                this.segments = [];
+                this.radiusX = 115;
+                this.radiusY = 28;
+                this.thickness = 13;
+                this.createSegments();
+            }
+
+            createSegments() {
+                const totalSegments = 10;
+                const angleStep = (Math.PI * 2) / totalSegments;
+                
+                // Hazard distribution increases with level
+                const maxHazards = Math.min(2 + Math.floor(level / 2), 4);
+                let hazardIndices = [];
+                
+                if (level > 1) {
+                    while (hazardIndices.length < maxHazards) {
+                        let idx = Math.floor(Math.random() * totalSegments);
+                        if (!hazardIndices.includes(idx)) {
+                            hazardIndices.push(idx);
+                        }
+                    }
+                }
+
+                for (let i = 0; i < totalSegments; i++) {
+                    const startAngle = i * angleStep;
+                    const endAngle = startAngle + angleStep - 0.05; // thin gaps between segments
+                    const isHazard = hazardIndices.includes(i);
+                    this.segments.push(new Segment(startAngle, endAngle, isHazard));
+                }
+            }
+
+            update() {
+                this.rotation += this.rotSpeed;
+            }
+
+            draw(cameraY) {
+                const screenY = this.y - cameraY;
+                // Don't draw off-screen platforms
+                if (screenY < -50 || screenY > canvas.height + 50) return;
+
+                // Draw central shaft cylinder through this area
+                ctx.save();
+                ctx.beginPath();
+                ctx.rect(canvas.width / 2 - 25, screenY - 60, 50, 120);
+                const shaftGrad = ctx.createLinearGradient(canvas.width/2 - 25, 0, canvas.width/2 + 25, 0);
+                shaftGrad.addColorStop(0, 'rgba(15, 17, 36, 0.9)');
+                shaftGrad.addColorStop(0.3, 'rgba(30, 32, 60, 0.9)');
+                shaftGrad.addColorStop(0.7, 'rgba(15, 17, 36, 0.9)');
+                shaftGrad.addColorStop(1, 'rgba(8, 9, 20, 0.9)');
+                ctx.fillStyle = shaftGrad;
+                ctx.fill();
+                ctx.restore();
+
+                // Sort segments: draw back segments first, then front segments for 3D look
+                // Back segments: y values are negative after rotation transform, meaning startAngle is between Math.PI and 2*Math.PI
+                // Front segments: startAngle is between 0 and Math.PI.
+                // However, simple ellipse strokes with gaps are visually enough. To look premium, we draw a 3D side edge first:
+                
+                ctx.save();
+                this.segments.forEach(seg => {
+                    const start = seg.startAngle + this.rotation;
+                    const end = seg.endAngle + this.rotation;
+
+                    // 1. Draw 3D side drop edge (extrusion)
+                    ctx.beginPath();
+                    ctx.ellipse(canvas.width / 2, screenY + 6, this.radiusX, this.radiusY, 0, start, end);
+                    ctx.strokeStyle = seg.isHazard ? '#0a0a0d' : currentPalette.dark;
+                    ctx.lineWidth = this.thickness;
+                    ctx.stroke();
+
+                    // 2. Draw Top facing segment
+                    ctx.beginPath();
+                    ctx.ellipse(canvas.width / 2, screenY, this.radiusX, this.radiusY, 0, start, end);
+                    ctx.strokeStyle = seg.isHazard ? '#151515' : currentPalette.main;
+                    ctx.lineWidth = this.thickness;
+                    ctx.stroke();
+
+                    // Hazard red neon inner glow
+                    if (seg.isHazard) {
+                        ctx.beginPath();
+                        ctx.ellipse(canvas.width / 2, screenY, this.radiusX - 1, this.radiusY - 1, 0, start, end);
+                        ctx.strokeStyle = '#ff0033';
+                        ctx.lineWidth = 2;
+                        ctx.stroke();
+                    }
+                });
+                ctx.restore();
+            }
+
+            shatter(cameraY) {
+                const screenY = this.y - cameraY;
+                sfx.playShatter();
+                
+                // Add particle explosion
+                const particleCount = 14;
+                for (let i = 0; i < particleCount; i++) {
+                    const angle = (i / particleCount) * Math.PI * 2;
+                    const speed = 2 + Math.random() * 5;
+                    const isHazard = Math.random() < 0.2;
+                    particles.push({
+                        x: canvas.width / 2 + Math.cos(angle) * this.radiusX * 0.8,
+                        y: screenY + Math.sin(angle) * this.radiusY * 0.8,
+                        vx: Math.cos(angle) * speed + (Math.random() - 0.5) * 2,
+                        vy: -2 - Math.random() * 4,
+                        size: 4 + Math.random() * 8,
+                        color: isHazard ? '#ff0033' : (Math.random() < 0.3 ? '#ffffff' : currentPalette.main),
+                        alpha: 1,
+                        rot: Math.random() * Math.PI * 2,
+                        rotSpeed: (Math.random() - 0.5) * 0.3
+                    });
+                }
+                setScreenShake(8, 4);
+            }
+        }
+
+        // --- BALL ---
+        class Ball {
+            constructor() {
+                this.x = canvas.width / 2;
+                this.y = 180; // Bounces around fixed horizontal position
+                this.radius = 11;
+                this.vy = 0;
+                this.gravity = 0.55;
+                this.bounceSpeed = -8.2;
+                this.smashSpeed = 12.5;
+                this.trail = [];
+                this.maxTrail = 10;
+                
+                // Combo/Fire mode indicators
+                this.smashStreak = 0;
+                this.fireMode = false;
+                this.fireModeTimer = 0;
+            }
+
+            update(cameraY) {
+                if (gameState !== STATES.PLAYING) return;
+
+                // Add to trail
+                this.trail.push({ x: this.x, y: this.y + cameraY });
+                if (this.trail.length > this.maxTrail) this.trail.shift();
+
+                // Fire Mode depletion
+                if (this.fireMode) {
+                    this.fireModeTimer -= 1;
+                    if (this.fireModeTimer <= 0) {
+                        this.fireMode = false;
+                        fireAlert.classList.remove("active");
+                        this.smashStreak = 0;
+                    }
+                }
+
+                if (holdDown) {
+                    // Accelerate downward
+                    this.vy = this.smashSpeed;
+                    this.y += this.vy;
+                } else {
+                    // Normal physics bounce
+                    this.vy += this.gravity;
+                    this.y += this.vy;
+                    // Cap downward speed normal fall
+                    if (this.vy > 9) this.vy = 9;
+                }
+
+                // Check collision with the top-most active platform
+                const topPlatform = platforms[0];
+                if (!topPlatform) return;
+
+                const ballGridY = this.y + cameraY;
+
+                // If ball falls past the top platform level, trigger collision
+                if (ballGridY >= topPlatform.y) {
+                    // Calculate angle under the ball (facing screen = 90 degrees = Math.PI / 2)
+                    let normalRad = Math.PI / 2;
+                    let ballLocalAngle = normalRad - topPlatform.rotation;
+                    
+                    // Normalize local angle to [0, 2*Math.PI)
+                    ballLocalAngle = ballLocalAngle % (Math.PI * 2);
+                    if (ballLocalAngle < 0) ballLocalAngle += Math.PI * 2;
+
+                    // Find matching segment
+                    let collisionSeg = null;
+                    for (let seg of topPlatform.segments) {
+                        if (ballLocalAngle >= seg.startAngle && ballLocalAngle <= seg.endAngle) {
+                            collisionSeg = seg;
+                            break;
+                        }
+                    }
+                    
+                    // If between gaps, choose closest
+                    if (!collisionSeg && topPlatform.segments.length > 0) {
+                        collisionSeg = topPlatform.segments[0];
+                    }
+
+                    if (collisionSeg) {
+                        if (holdDown) {
+                            // Smash physics
+                            if (collisionSeg.isHazard && !this.fireMode) {
+                                // CRASH! Game over
+                                triggerGameOver();
+                            } else {
+                                // Break platform!
+                                topPlatform.shatter(cameraY);
+                                platforms.shift(); // Remove top platform
+                                score += this.fireMode ? 2 : 1;
+                                scoreVal.textContent = score;
+
+                                // Update level progress bar
+                                updateProgressBar();
+
+                                // Combo check
+                                if (!this.fireMode) {
+                                    this.smashStreak++;
+                                    if (this.smashStreak >= 3) {
+                                        this.fireMode = true;
+                                        this.fireModeTimer = 160; // frames of invuln
+                                        fireAlert.classList.add("active");
+                                        sfx.playFireMode();
+                                        setScreenShake(20, 8);
+                                    }
+                                }
+
+                                // Level complete check
+                                if (platforms.length === 0) {
+                                    triggerLevelComplete();
+                                }
+                            }
+                        } else {
+                            // Normal bounce on platform
+                            if (collisionSeg.isHazard) {
+                                // Bouncing on hazard is also fatal!
+                                triggerGameOver();
+                            } else {
+                                this.y = topPlatform.y - cameraY - this.radius; // align
+                                this.vy = this.bounceSpeed;
+                                this.smashStreak = 0; // break drop combo on normal bounce
+                                sfx.playBounce();
+
+                                // Add neon impact ring ring ripple
+                                createBounceRipple(this.x, this.y);
+                            }
+                        }
+                    }
+                }
+            }
+
+            draw(cameraY) {
+                // Draw trail
+                for (let i = 0; i < this.trail.length; i++) {
+                    const t = this.trail[i];
+                    const screenY = t.y - cameraY;
+                    const ratio = i / this.trail.length;
+                    const size = this.radius * ratio;
+                    
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.arc(t.x, screenY, size, 0, Math.PI * 2);
+                    
+                    if (this.fireMode) {
+                        ctx.fillStyle = `rgba(255, ${Math.floor(100 + ratio * 155)}, 0, ${ratio * 0.6})`;
+                        ctx.shadowBlur = 10;
+                        ctx.shadowColor = '#ff4b00';
+                    } else {
+                        ctx.fillStyle = `rgba(0, 240, 255, ${ratio * 0.45})`;
+                    }
+                    ctx.fill();
+                    ctx.restore();
+                }
+
+                // Draw actual ball
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                
+                if (this.fireMode) {
+                    const gradient = ctx.createRadialGradient(this.x - 3, this.y - 3, 2, this.x, this.y, this.radius);
+                    gradient.addColorStop(0, '#ffff55');
+                    gradient.addColorStop(0.5, '#ff5500');
+                    gradient.addColorStop(1, '#990000');
+                    ctx.fillStyle = gradient;
+                    ctx.shadowBlur = 20;
+                    ctx.shadowColor = '#ff3c00';
+                    ctx.fill();
+
+                    // Flame flares
+                    for (let k = 0; k < 3; k++) {
+                        ctx.beginPath();
+                        const flareSize = this.radius * (0.8 + Math.random() * 0.5);
+                        ctx.arc(this.x + (Math.random() - 0.5) * 8, this.y + this.radius * 0.6 + Math.random() * 8, flareSize * 0.6, 0, Math.PI*2);
+                        ctx.fillStyle = 'rgba(255, 90, 0, 0.4)';
+                        ctx.fill();
+                    }
+                } else {
+                    const gradient = ctx.createRadialGradient(this.x - 4, this.y - 4, 2, this.x, this.y, this.radius);
+                    gradient.addColorStop(0, '#ffffff');
+                    gradient.addColorStop(0.6, '#00f0ff');
+                    gradient.addColorStop(1, '#0044cc');
+                    ctx.fillStyle = gradient;
+                    ctx.shadowBlur = 12;
+                    ctx.shadowColor = '#00f0ff';
+                    ctx.fill();
+                }
+                ctx.restore();
+            }
+        }
+
+        // --- DYNAMIC RIPPLES ---
+        let ripples = [];
+        function createBounceRipple(x, y) {
+            ripples.push({
+                x: x,
+                y: y,
+                r: 5,
+                maxR: 35,
+                alpha: 0.8,
+                color: currentPalette.main
+            });
+        }
+
+        function drawRipples() {
+            ripples.forEach((rp, idx) => {
+                rp.r += 1.8;
+                rp.alpha -= 0.04;
+                if (rp.alpha <= 0) {
+                    ripples.splice(idx, 1);
+                    return;
+                }
+                ctx.save();
+                ctx.beginPath();
+                ctx.ellipse(rp.x, rp.y, rp.r * 1.5, rp.r * 0.4, 0, 0, Math.PI * 2);
+                ctx.strokeStyle = rp.color;
+                ctx.globalAlpha = rp.alpha;
+                ctx.lineWidth = 2.5;
+                ctx.stroke();
+                ctx.restore();
+            });
+        }
+
+        // --- LEVEL GENERATOR ---
+        let cameraY = 0;
+        let targetCameraY = 0;
+        let totalLevelPlatforms = 0;
+
+        function startNewLevel() {
+            holdDown = false;
+            platforms = [];
+            particles = [];
+            ripples = [];
+            cameraY = 0;
+            targetCameraY = 0;
+            
+            // Choose palette
+            currentPalette = LEVEL_PALETTES[(level - 1) % LEVEL_PALETTES.length];
+
+            // Increase platforms size with level
+            totalLevelPlatforms = 10 + Math.min(level * 3, 20);
+            
+            // Generate platforms along descending cylinder
+            let currentY = 320;
+            const verticalSpacing = 110;
+            for (let i = 0; i < totalLevelPlatforms; i++) {
+                platforms.push(new Platform(currentY, i));
+                currentY += verticalSpacing;
+            }
+
+            // Target base platform is just empty or full safe ring at bottom
+            platforms.push(new Platform(currentY, totalLevelPlatforms));
+            // Remove hazards from first platform to guarantee entry safety
+            platforms[0].segments.forEach(seg => seg.isHazard = false);
+
+            ball = new Ball();
+
+            // Set UI text
+            levelCurrentText.textContent = level;
+            levelNextText.textContent = level + 1;
+            updateProgressBar();
+
+            if (gameState === STATES.COMPLETE) {
+                gameState = STATES.PLAYING;
+            }
+        }
+
+        function updateProgressBar() {
+            const completed = totalLevelPlatforms - (platforms.length - 1);
+            const percentage = Math.max(0, Math.min(100, (completed / totalLevelPlatforms) * 100));
+            progressFill.style.width = percentage + "%";
+        }
+
+        // --- GAME SYSTEM STATE TRANSITIONS ---
+        function triggerGameOver() {
+            gameState = STATES.GAMEOVER;
+            holdDown = false;
+            sfx.playCrash();
+            setScreenShake(25, 12);
+            
+            // Save high score
+            if (score > bestScore) {
+                bestScore = score;
+                localStorage.setItem("sb_bestScore", bestScore);
+                document.getElementById("bestVal").textContent = bestScore;
+                document.getElementById("startBest").textContent = bestScore;
+            }
+
+            overScore.textContent = score;
+            gameOverScreen.classList.add("active");
+            fireAlert.classList.remove("active");
+            tapInstruction.style.display = "none";
+        }
+
+        function triggerLevelComplete() {
+            gameState = STATES.COMPLETE;
+            holdDown = false;
+            sfx.playLevelUp();
+            level++;
+            setTimeout(() => {
+                startNewLevel();
+                gameState = STATES.PLAYING;
+            }, 1000);
+        }
+
+        // ========================================================
+        // USER INPUT EVENT LISTENERS
+        // ========================================================
+        function handlePressStart(e) {
+            e.preventDefault();
+            if (gameState === STATES.PLAYING) {
+                holdDown = true;
+                tapInstruction.style.opacity = 0;
+            }
+        }
+
+        function handleRelease(e) {
+            e.preventDefault();
+            holdDown = false;
+        }
+
+        // Touch binds
+        canvas.addEventListener("touchstart", handlePressStart, { passive: false });
+        canvas.addEventListener("touchend", handleRelease, { passive: false });
+        canvas.addEventListener("touchcancel", handleRelease, { passive: false });
+
+        // Mouse binds
+        canvas.addEventListener("mousedown", handlePressStart);
+        canvas.addEventListener("mouseup", handleRelease);
+        canvas.addEventListener("mouseleave", handleRelease);
+
+        // Keyboard binds
+        window.addEventListener("keydown", (e) => {
+            if (e.code === "Space" || e.code === "ArrowDown") {
+                e.preventDefault();
+                if (gameState === STATES.PLAYING) holdDown = true;
+            }
+        });
+        window.addEventListener("keyup", (e) => {
+            if (e.code === "Space" || e.code === "ArrowDown") {
+                e.preventDefault();
+                holdDown = false;
+            }
+        });
+
+        // UI BUTTON CLICK EVENTS
+        document.getElementById("btnStart").addEventListener("click", () => {
+            sfx.init();
+            startScreen.classList.remove("active");
+            gameState = STATES.PLAYING;
+            score = 0;
+            level = 1;
+            scoreVal.textContent = 0;
+            tapInstruction.style.display = "block";
+            startNewLevel();
+        });
+
+        document.getElementById("btnRestart").addEventListener("click", () => {
+            gameOverScreen.classList.remove("active");
+            gameState = STATES.PLAYING;
+            score = 0;
+            level = 1;
+            scoreVal.textContent = 0;
+            tapInstruction.style.display = "block";
+            startNewLevel();
+        });
+
+        // ========================================================
+        // ENGINE MAIN LOOP
+        // ========================================================
+        function tick() {
+            // Screenshake translate
+            ctx.save();
+            if (shakeTime > 0) {
+                const dx = (Math.random() - 0.5) * shakeIntensity;
+                const dy = (Math.random() - 0.5) * shakeIntensity;
+                ctx.translate(dx, dy);
+                shakeTime--;
+            }
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (gameState === STATES.PLAYING || gameState === STATES.COMPLETE || gameState === STATES.GAMEOVER) {
+                // Update platform rotation
+                platforms.forEach(p => p.update());
+
+                // Smooth camera scrolling to follow the ball
+                // Center the active platform y position near Y = 320
+                if (platforms.length > 0) {
+                    targetCameraY = platforms[0].y - 320;
+                }
+                cameraY += (targetCameraY - cameraY) * 0.1;
+
+                // Update ball
+                ball.update(cameraY);
+
+                // Draw platforms
+                platforms.forEach(p => p.draw(cameraY));
+
+                // Draw ripples
+                drawRipples();
+
+                // Update and draw shatter particles
+                particles.forEach((pt, idx) => {
+                    pt.x += pt.vx;
+                    pt.y += pt.vy;
+                    pt.vy += 0.25; // gravity
+                    pt.rot += pt.rotSpeed;
+                    pt.alpha -= 0.025;
+
+                    if (pt.alpha <= 0) {
+                        particles.splice(idx, 1);
+                        return;
+                    }
+
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.translate(pt.x, pt.y);
+                    ctx.rotate(pt.rot);
+                    ctx.rect(-pt.size/2, -pt.size/2, pt.size, pt.size);
+                    ctx.fillStyle = pt.color;
+                    ctx.globalAlpha = pt.alpha;
+                    ctx.fill();
+                    ctx.restore();
+                });
+
+                // Draw ball
+                ball.draw(cameraY);
+            }
+
+            ctx.restore(); // end screenshake
+            requestAnimationFrame(tick);
+        }
+
+        // Run
+        requestAnimationFrame(tick);
+
+    </script>
+</body>
+</html>
