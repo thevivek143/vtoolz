@@ -3,131 +3,276 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="referrer" content="no-referrer">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://tpc.googlesyndication.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: blob:; connect-src 'self' https:; worker-src 'self' blob:; media-src 'self' blob: mediastream:; frame-src https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://www.google.com;">
-    <title>Play Game</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha384-3B6NwesSXE7YJlcLI9RpRqGf2p/EgVH8BgoKTaUrmKNDkHPStTQ3EyoYjCGXaOTS" crossorigin="anonymous">
+    <title>Play Game — Vibox Arcade</title>
+    <link rel="icon" href="/favicon.ico" sizes="48x48">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
-            margin: 0;
-            padding: 0;
-            background: #111;
-            color: white;
+            font-family: 'Outfit', sans-serif;
+            background: #0a0e1a;
+            color: #f1f5f9;
             overflow: hidden;
-            font-family: sans-serif;
+            height: 100vh;
         }
 
-        /* Responsive Game Container */
-        .game-container {
-            width: 100%;
-            height: 90vh;
-            /* Fill most of screen */
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-            background: #000;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-        }
-
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            display: block;
-        }
-
-        /* Mobile Adjustments */
-        @media (max-width: 768px) {
-            .game-container {
-                height: 85vh;
-                border-radius: 0;
-                /* Full width on mobile */
-            }
-
-            body {
-                padding: 0;
-                /* Remove padding on mobile */
-                background: #111;
-                /* Dark mode for focus */
-            }
-
-            .back-btn {
-                position: fixed;
-                top: 10px;
-                left: 10px;
-                z-index: 100;
-                background: rgba(255, 255, 255, 0.9);
-                padding: 10px 15px;
-                border-radius: 30px;
-                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            }
-        }
-
-        .game-bar {
-            height: 50px;
-            background: #222;
+        /* Top bar */
+        .play-bar {
+            height: 52px;
+            background: rgba(17, 24, 39, 0.95);
+            backdrop-filter: blur(12px);
             display: flex;
             align-items: center;
-            padding: 0 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            justify-content: space-between;
+            padding: 0 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
             z-index: 100;
             position: relative;
         }
 
-        .back-btn {
-            color: white;
+        .play-bar-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .play-back {
+            color: #94a3b8;
             text-decoration: none;
-            font-weight: bold;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.2s;
+        }
+        .play-back:hover { color: #f1f5f9; }
+
+        .play-divider {
+            width: 1px;
+            height: 24px;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .play-game-name {
+            font-weight: 700;
+            font-size: 1rem;
+            color: #f1f5f9;
+        }
+
+        .play-game-cat {
+            font-size: 0.8rem;
+            color: #818cf8;
+            font-weight: 500;
+        }
+
+        .play-bar-right {
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .back-btn:hover {
-            color: #3498db;
+        .play-action-btn {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #94a3b8;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+        .play-action-btn:hover {
+            background: rgba(129,140,248,0.15);
+            color: #a5b4fc;
+            border-color: rgba(129,140,248,0.3);
         }
 
-        .game-frame {
+        /* Game iframe */
+        .play-frame {
             width: 100%;
-            height: calc(100vh - 50px);
+            height: calc(100vh - 52px);
             border: none;
+            display: block;
             background: #000;
         }
 
-        #loading {
+        /* Loading overlay */
+        .play-loading {
             position: absolute;
-            top: 50px;
+            top: 52px;
             left: 0;
             width: 100%;
-            height: calc(100vh - 50px);
-            background: #111;
+            height: calc(100vh - 52px);
+            background: #0a0e1a;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
+            gap: 16px;
             z-index: 50;
+            transition: opacity 0.3s;
+        }
+
+        .play-loading.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .play-loading i {
+            font-size: 2rem;
+            color: #818cf8;
+        }
+
+        .play-loading-text {
+            font-size: 1.1rem;
+            color: #94a3b8;
+        }
+
+        /* Fullscreen adjustments */
+        :fullscreen .play-bar { display: none; }
+        :fullscreen .play-frame { height: 100vh; }
+
+        @media (max-width: 768px) {
+            .play-game-cat { display: none; }
+            .play-bar { padding: 0 12px; }
+        }
+
+        @media (max-width: 480px) {
+            .play-divider { display: none; }
+            .play-game-name { font-size: 0.85rem; }
         }
     </style>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1683164345425180"
-        crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <div class="game-bar">
-        <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Library</a>
-    </div>
-
-    <div id="game-container">
-        <div id="loading"><i class="fas fa-spinner fa-spin fa-2x"></i>
-            <p class="u-mt-15">Loading...</p>
+    <div class="play-bar">
+        <div class="play-bar-left">
+            <a href="index.html" class="play-back"><i class="fas fa-arrow-left"></i> Library</a>
+            <div class="play-divider"></div>
+            <div>
+                <div class="play-game-name" id="playGameName">Loading…</div>
+                <div class="play-game-cat" id="playGameCat"></div>
+            </div>
+        </div>
+        <div class="play-bar-right">
+            <button class="play-action-btn" id="btnFullscreen" title="Fullscreen (F)"><i class="fas fa-expand"></i></button>
+            <button class="play-action-btn" id="btnReload" title="Reload game"><i class="fas fa-rotate-right"></i></button>
         </div>
     </div>
 
-    <script src="play.inline.js"></script>
+    <div class="play-loading" id="playLoading">
+        <i class="fas fa-circle-notch fa-spin"></i>
+        <div class="play-loading-text" id="playLoadingText">Loading game…</div>
+    </div>
+
+    <script>
+    (function () {
+        "use strict";
+
+        const params = new URLSearchParams(window.location.search);
+        const gameId = parseInt(params.get("id"), 10);
+        const elName = document.getElementById("playGameName");
+        const elCat = document.getElementById("playGameCat");
+        const elLoading = document.getElementById("playLoading");
+        const elLoadingText = document.getElementById("playLoadingText");
+        const btnFullscreen = document.getElementById("btnFullscreen");
+        const btnReload = document.getElementById("btnReload");
+
+        let gameFrame = null;
+
+        async function init() {
+            try {
+                const res = await fetch("data/games-config.json", { cache: "no-cache" });
+                const games = await res.json();
+                const game = games.find(g => g.id === gameId);
+
+                if (!game) {
+                    elName.textContent = "Game not found";
+                    elLoadingText.textContent = "Game ID " + gameId + " not found.";
+                    return;
+                }
+
+                // Update UI
+                elName.textContent = game.name;
+                elCat.textContent = game.category;
+                elLoadingText.textContent = "Loading " + game.name + "…";
+                document.title = game.name + " — Vibox Arcade";
+
+                // Create iframe
+                gameFrame = document.createElement("iframe");
+                gameFrame.className = "play-frame";
+                gameFrame.src = game.url;
+                gameFrame.setAttribute("allowfullscreen", "true");
+                gameFrame.setAttribute("allow", "autoplay; fullscreen");
+
+                gameFrame.addEventListener("load", function () {
+                    elLoading.classList.add("hidden");
+                });
+
+                document.body.appendChild(gameFrame);
+
+                // Fallback: hide loading after 5s
+                setTimeout(function () {
+                    elLoading.classList.add("hidden");
+                }, 5000);
+
+            } catch (e) {
+                elName.textContent = "Error";
+                elLoadingText.textContent = "Failed to load game configuration.";
+            }
+        }
+
+        // Fullscreen toggle
+        btnFullscreen.addEventListener("click", function () {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(function () {});
+            } else {
+                document.exitFullscreen();
+            }
+        });
+
+        // Reload game
+        btnReload.addEventListener("click", function () {
+            if (gameFrame) {
+                elLoading.classList.remove("hidden");
+                gameFrame.src = gameFrame.src;
+            }
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener("keydown", function (e) {
+            if (e.key === "f" || e.key === "F") {
+                if (document.activeElement === document.body) {
+                    btnFullscreen.click();
+                }
+            }
+            if (e.key === "Escape" && !document.fullscreenElement) {
+                window.location.href = "index.html";
+            }
+        });
+
+        // Update fullscreen icon
+        document.addEventListener("fullscreenchange", function () {
+            const icon = btnFullscreen.querySelector("i");
+            if (document.fullscreenElement) {
+                icon.className = "fas fa-compress";
+            } else {
+                icon.className = "fas fa-expand";
+            }
+        });
+
+        init();
+    })();
+    </script>
 </body>
 
 </html>

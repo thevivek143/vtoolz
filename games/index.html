@@ -5,133 +5,83 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="no-referrer">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://tpc.googlesyndication.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: blob:; connect-src 'self' https:; worker-src 'self' blob:; media-src 'self' blob: mediastream:; frame-src https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://www.google.com;">
-    <title>Vibox Arcade - Free Online Browser Games</title>
-    <meta name="description" content="Play free browser games at Vibox Arcade. 2048, Flappy Bird, Doodle Jump, Fruit Ninja, Temple Run, Subway Surfers and more — all running locally, no downloads needed.">
+    <title>Vibox Arcade — 45+ Free Browser Games | Play Instantly</title>
+    <meta name="description" content="Play 45+ free browser games at Vibox Arcade. 2048, Flappy Bird, Subway Surfers, Chess, Tetris and more — all running locally, no downloads needed.">
     <link rel="canonical" href="https://vibox.app/games/index.html">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Vibox Arcade - Free Online Browser Games">
-    <meta property="og:description" content="Play free browser games instantly. No downloads, no ads. 2048, Flappy Bird, Temple Run and more.">
+    <meta property="og:title" content="Vibox Arcade — Free Online Browser Games">
+    <meta property="og:description" content="Play 45+ free browser games instantly. No downloads, no ads. Subway Surfers, Flappy Bird, Chess and more.">
     <meta property="og:url" content="https://vibox.app/games/index.html">
     <link rel="icon" href="/favicon.ico" sizes="48x48">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="icon" href="/favicon-192.png" type="image/png" sizes="192x192">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-    <link rel="stylesheet" href="../css/style.css?v=5">
-    <link rel="stylesheet" href="style.css?v=5">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha384-iw3OoTErCYJJB9mCa8LNS2hbsQ7M3C0EpIsO/H5+EGAkPGc6rk+V8i04oW/K5xq0" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <style>
-        .arcade-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-        }
 
-        .arcade-logo {
-            font-weight: 800;
-            font-size: 1.5rem;
-            color: var(--text-dark);
-            text-decoration: none;
-        }
-
-        .arcade-logo-dot {
-            color: #FF6B6B;
-        }
-
-        .arcade-nav {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .arcade-back-link {
-            font-weight: 600;
-            color: var(--text-light);
-            text-decoration: none;
-        }
-
-        .arcade-theme-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 1.3rem;
-            padding: 5px;
-        }
-
-        .search-icon {
-            color: #ccc;
-            margin-left: 10px;
-        }
-
-        .game-count {
-            color: #888;
-            font-size: 0.9rem;
-        }
-    </style>
-    <script src="../js/utils/theme-preload.js"></script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1683164345425180"
-        crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <header>
-        <div class="container arcade-header">
-            <a href="../index.html" class="logo arcade-logo">Vibox<span class="arcade-logo-dot">.</span></a>
-            <nav class="arcade-nav">
-                <a href="../index.html" class="arcade-back-link"><i
-                        class="fas fa-arrow-left"></i> Back to Tools</a>
-                <button data-onclick="toggleThemeFromButton(this)" class="arcade-theme-btn">🌓</button>
-            </nav>
-        </div>
-    </header>
 
-    <div class="hero-section">
-        <div class="hero-bg-pattern"></div>
-        <div class="hero-content">
-            <h1 class="hero-title">Vibox Arcade</h1>
-            <p class="hero-subtitle">Discover curated, high-quality web games. Play instantly.</p>
+<!-- ===== HEADER ===== -->
+<header class="ga-header">
+    <div class="ga-header-inner">
+        <a href="../index.html" class="ga-logo">
+            <span class="ga-logo-v">V</span>ibox<span class="ga-logo-dot">.</span>Arcade
+        </a>
+        <nav class="ga-nav">
+            <a href="../index.html" class="ga-nav-link"><i class="fas fa-grid-2"></i> Tools</a>
+            <a href="../ai-hub/index.html" class="ga-nav-link"><i class="fas fa-brain"></i> AI Hub</a>
+        </nav>
+    </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="ga-hero">
+    <div class="ga-hero-grid"></div>
+    <div class="ga-hero-content">
+        <div class="ga-hero-badge"><i class="fas fa-gamepad"></i> 45+ Browser Games</div>
+        <h1 class="ga-hero-title">Vibox Arcade</h1>
+        <p class="ga-hero-sub">High-quality browser games you can play instantly. No downloads, no signups — just fun.</p>
+        <div class="ga-search-wrap">
+            <i class="fas fa-search ga-search-icon"></i>
+            <input type="text" id="gameSearch" class="ga-search-input" placeholder="Search games — Subway Surfers, Chess, Tetris..." autocomplete="off" spellcheck="false">
         </div>
     </div>
+</section>
 
-    <!-- Search Bar -->
-    <div class="search-wrapper">
-        <div class="search-box">
-            <i class="fas fa-search search-icon"></i>
-            <input type="text" class="search-input" id="gameSearch"
-                placeholder="Search for games (e.g. Subway Surfers)...">
-            <button class="search-btn"><i class="fas fa-arrow-right"></i></button>
-        </div>
+<!-- ===== CATEGORY PILLS ===== -->
+<div class="ga-cats" id="categoryTabs">
+    <div class="ga-pill active" data-cat="all"><i class="fas fa-fire"></i> All Games</div>
+    <div class="ga-pill" data-cat="arcade"><i class="fas fa-gamepad"></i> Arcade</div>
+    <div class="ga-pill" data-cat="action"><i class="fas fa-bolt"></i> Action</div>
+    <div class="ga-pill" data-cat="puzzle"><i class="fas fa-puzzle-piece"></i> Puzzle</div>
+    <div class="ga-pill" data-cat="strategy"><i class="fas fa-chess"></i> Strategy</div>
+    <div class="ga-pill" data-cat="word"><i class="fas fa-spell-check"></i> Word</div>
+    <div class="ga-pill" data-cat="idle"><i class="fas fa-cookie-bite"></i> Idle</div>
+    <div class="ga-pill" data-cat="casual"><i class="fas fa-hand-scissors"></i> Casual</div>
+</div>
+
+<!-- ===== GAME GRID ===== -->
+<div class="ga-section">
+    <div class="ga-section-head">
+        <div class="ga-section-title" id="sectionTitle">All Games</div>
+        <div class="ga-game-count" id="gameCount">0 Games</div>
     </div>
-
-    <!-- Categories -->
-    <div class="categories-container" id="categoryTabs">
-        <div class="category-pill active" data-cat="all">All Games</div>
-        <div class="category-pill" data-cat="arcade"><i class="fas fa-gamepad"></i> Arcade</div>
-        <div class="category-pill" data-cat="action"><i class="fas fa-bolt"></i> Action</div>
-        <div class="category-pill" data-cat="puzzle"><i class="fas fa-puzzle-piece"></i> Puzzle</div>
-        <div class="category-pill" data-cat="strategy"><i class="fas fa-chess"></i> Strategy</div>
-        <div class="category-pill" data-cat="sports"><i class="fas fa-futbol"></i> Sports</div>
+    <div class="ga-grid" id="gamesGrid">
+        <div class="ga-loading"><i class="fas fa-circle-notch fa-spin"></i> Loading games…</div>
     </div>
+</div>
 
-    <!-- Featured Section Removed -->
+<!-- ===== FOOTER ===== -->
+<footer class="ga-footer">
+    <p>&copy; 2026 Vibox — Privacy-First Platform. <a href="../index.html">Back to Tools</a> · <a href="../ai-hub/index.html">AI Hub</a></p>
+</footer>
 
-    <!-- Grid -->
-    <div class="container">
-        <div class="section-header">
-            <div class="section-title">All Games</div>
-            <div class="game-count" id="gameCount">0 Games</div>
-        </div>
-
-        <div id="gamesGrid" class="games-grid">
-            <div class="loading-state"><i class="fas fa-circle-notch fa-spin"></i> Loading...</div>
-        </div>
-    </div>
-
-    <script src="index.inline.js"></script>
-    <script src="../js/utils/data-events.js"></script>
-    <script src="../js/loader.js" defer></script>
+<script src="index.inline.js"></script>
 </body>
 
 </html>
