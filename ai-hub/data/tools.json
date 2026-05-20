@@ -33,7 +33,7 @@
     "bestFor": "Writers, students, developers, and general users seeking an all-in-one assistant.",
     "logo": "",
     "isTrending": true,
-    "isLatest": false
+    "isLatest": true
   },
   {
     "id": "ai-claude",
@@ -69,7 +69,7 @@
     "bestFor": "Software developers, technical writers, and researchers uploading massive text volumes.",
     "logo": "",
     "isTrending": true,
-    "isLatest": false
+    "isLatest": true
   },
   {
     "id": "ai-gemini",
@@ -105,7 +105,7 @@
     "bestFor": "Frequent users of Google Docs, Gmail, and users analyzing massive amounts of data.",
     "logo": "",
     "isTrending": true,
-    "isLatest": false
+    "isLatest": true
   },
   {
     "id": "ai-jasper",
@@ -139,8 +139,8 @@
     ],
     "bestFor": "Corporate marketing agencies, copywriters, and enterprise content creators.",
     "logo": "",
-    "isTrending": false,
-    "isLatest": false
+    "isTrending": true,
+    "isLatest": true
   },
   {
     "id": "ai-writesonic",
@@ -175,8 +175,8 @@
     ],
     "bestFor": "Affiliate marketers, SEO specialists, and solo bloggers scaling search traffic.",
     "logo": "",
-    "isTrending": false,
-    "isLatest": false
+    "isTrending": true,
+    "isLatest": true
   },
   {
     "id": "ai-quillbot",
@@ -211,8 +211,8 @@
     ],
     "bestFor": "Academic students, researchers, non-native English speakers, and editors.",
     "logo": "",
-    "isTrending": false,
-    "isLatest": false
+    "isTrending": true,
+    "isLatest": true
   },
   {
     "id": "ai-copyai",
@@ -247,8 +247,8 @@
     ],
     "bestFor": "Sales development teams, growth hackers, and content operation managers.",
     "logo": "",
-    "isTrending": false,
-    "isLatest": false
+    "isTrending": true,
+    "isLatest": true
   },
   {
     "id": "ai-midjourney",
@@ -284,7 +284,7 @@
     "bestFor": "Professional concept artists, UI designers, game developers, and agency creators.",
     "logo": "",
     "isTrending": true,
-    "isLatest": false
+    "isLatest": true
   },
   {
     "id": "ai-stable-diffusion",
@@ -320,7 +320,7 @@
     "bestFor": "Tech-savvy designers, 3D artists, and developers requiring private local execution.",
     "logo": "",
     "isTrending": true,
-    "isLatest": false
+    "isLatest": true
   },
   {
     "id": "ai-leonardo",
@@ -355,7 +355,7 @@
     ],
     "bestFor": "Game asset developers, product designers, and visual illustrators.",
     "logo": "",
-    "isTrending": false,
+    "isTrending": true,
     "isLatest": true
   },
   {
@@ -391,8 +391,8 @@
     ],
     "bestFor": "Corporate visual designers, marketing teams, and Adobe Creative Cloud users.",
     "logo": "",
-    "isTrending": false,
-    "isLatest": false
+    "isTrending": true,
+    "isLatest": true
   },
   {
     "id": "ai-canva",
@@ -428,7 +428,7 @@
     "bestFor": "Social media managers, small business entrepreneurs, and bloggers.",
     "logo": "",
     "isTrending": true,
-    "isLatest": false
+    "isLatest": true
   },
   {
     "id": "ai-clipdrop",
@@ -463,8 +463,8 @@
     ],
     "bestFor": "E-commerce sellers, catalog designers, and product managers.",
     "logo": "",
-    "isTrending": false,
-    "isLatest": false
+    "isTrending": true,
+    "isLatest": true
   },
   {
     "id": "ai-removebg",
@@ -499,8 +499,8 @@
     ],
     "bestFor": "Shopify sellers, graphic designers, and developers automating pipelines.",
     "logo": "",
-    "isTrending": false,
-    "isLatest": false
+    "isTrending": true,
+    "isLatest": true
   },
   {
     "id": "ai-sora",
@@ -572,7 +572,7 @@
     "bestFor": "Creative video editors, content creators, and marketing visual artists.",
     "logo": "",
     "isTrending": true,
-    "isLatest": false
+    "isLatest": true
   },
   {
     "id": "ai-heygen",
@@ -608,7 +608,7 @@
     "bestFor": "B2B sales managers, corporate trainers, and advertising agencies.",
     "logo": "",
     "isTrending": true,
-    "isLatest": false
+    "isLatest": true
   },
   {
     "id": "ai-synthesia",
@@ -643,8 +643,8 @@
     ],
     "bestFor": "Corporate HR training teams, customer support directors, and educators.",
     "logo": "",
-    "isTrending": false,
-    "isLatest": false
+    "isTrending": true,
+    "isLatest": true
   },
   {
     "id": "ai-pika",
@@ -678,8 +678,8 @@
     ],
     "bestFor": "Meme creators, social media influencers, and digital animators.",
     "logo": "",
-    "isTrending": false,
-    "isLatest": false
+    "isTrending": true,
+    "isLatest": true
   },
   {
     "id": "ai-luma",
@@ -750,8 +750,8 @@
     ],
     "bestFor": "Content creators, faceless YouTube channels, and social media marketers.",
     "logo": "",
-    "isTrending": false,
-    "isLatest": false
+    "isTrending": true,
+    "isLatest": true
   },
   {
     "id": "ai-elevenlabs",
@@ -787,7 +787,7 @@
     "bestFor": "Audiobook authors, video creators, game voice-designers, and accessibility teams.",
     "logo": "",
     "isTrending": true,
-    "isLatest": false
+    "isLatest": true
   },
   {
     "id": "ai-suno",
@@ -823,7 +823,7 @@
     "bestFor": "Content creators, songwriters seeking outlines, and casual music experimenters.",
     "logo": "",
     "isTrending": true,
-    "isLatest": false
+    "isLatest": true
   },
   {
     "id": "ai-udio",
@@ -894,8 +894,8 @@
     ],
     "bestFor": "Podcasters, video content creators, and corporate interview editors.",
     "logo": "",
-    "isTrending": false,
-    "isLatest": false
+    "isTrending": true,
+    "isLatest": true
   },
   {
     "id": "ai-speechify",
@@ -930,8 +930,8 @@
     ],
     "bestFor": "Students, ADHD professionals, and users needing accessibility reading solutions.",
     "logo": "",
-    "isTrending": false,
-    "isLatest": false
+    "isTrending": true,
+    "isLatest": true
   },
   {
     "id": "ai-murf",
@@ -965,8 +965,8 @@
     ],
     "bestFor": "E-learning developers, slide designers, and product marketing managers.",
     "logo": "",
-    "isTrending": false,
-    "isLatest": false
+    "isTrending": true,
+    "isLatest": true
   },
   {
     "id": "ai-copilot",
@@ -1002,7 +1002,7 @@
     "bestFor": "Professional software engineers, developers scaling complex codebases.",
     "logo": "",
     "isTrending": true,
-    "isLatest": false
+    "isLatest": true
   },
   {
     "id": "ai-cursor",
@@ -1074,7 +1074,7 @@
     "bestFor": "Frontend developers, product designers, and creators building SaaS MVPs.",
     "logo": "",
     "isTrending": true,
-    "isLatest": false
+    "isLatest": true
   },
   {
     "id": "ai-replit-agent",
@@ -1145,8 +1145,8 @@
     ],
     "bestFor": "Enterprise companies, bank software teams, and developers with strict NDA rules.",
     "logo": "",
-    "isTrending": false,
-    "isLatest": false
+    "isTrending": true,
+    "isLatest": true
   },
   {
     "id": "ai-phind",
@@ -1181,8 +1181,8 @@
     ],
     "bestFor": "Software developers, technical writers, and DevOps engineers debugging logs.",
     "logo": "",
-    "isTrending": false,
-    "isLatest": false
+    "isTrending": true,
+    "isLatest": true
   },
   {
     "id": "ai-codeium",
@@ -1217,8 +1217,8 @@
     ],
     "bestFor": "Student programmers, freelance developers, and engineers wanting a free coding assistant.",
     "logo": "",
-    "isTrending": false,
-    "isLatest": false
+    "isTrending": true,
+    "isLatest": true
   },
   {
     "id": "ai-perplexity",
@@ -1254,7 +1254,7 @@
     "bestFor": "Journalists, academic researchers, students, and curious learners.",
     "logo": "",
     "isTrending": true,
-    "isLatest": false
+    "isLatest": true
   },
   {
     "id": "ai-notion",
@@ -1290,7 +1290,7 @@
     "bestFor": "Startup founders, project managers, student note-takers, and wiki builders.",
     "logo": "",
     "isTrending": true,
-    "isLatest": false
+    "isLatest": true
   },
   {
     "id": "ai-gamma",
@@ -1326,7 +1326,7 @@
     "bestFor": "Sales professionals, startup founders raising capital, and corporate lecturers.",
     "logo": "",
     "isTrending": true,
-    "isLatest": false
+    "isLatest": true
   },
   {
     "id": "ai-consensus",
@@ -1361,8 +1361,8 @@
     ],
     "bestFor": "Medical professionals, academic researchers, biology students, and science writers.",
     "logo": "",
-    "isTrending": false,
-    "isLatest": false
+    "isTrending": true,
+    "isLatest": true
   },
   {
     "id": "ai-julius",
@@ -1433,7 +1433,7 @@
     ],
     "bestFor": "Corporate project leads, journalists, and teams managing back-to-back meetings.",
     "logo": "",
-    "isTrending": false,
-    "isLatest": false
+    "isTrending": true,
+    "isLatest": true
   }
 ]

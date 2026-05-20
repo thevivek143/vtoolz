@@ -910,10 +910,22 @@ body {
 }
 
 /* Drawer sections */
+/* First section in drawer should not have top border/spacing */
 .aih-d-section {
     padding-top: 22px;
     margin-top: 22px;
     border-top: 1px solid var(--aih-border);
+    padding-bottom: 22px;
+}
+
+/* Add bottom margin between sections except last */
+.aih-d-section:not(:last-child) {
+    margin-bottom: 22px;
+}
+.aih-d-section:first-child {
+    padding-top: 0;
+    margin-top: 0;
+    border-top: none;
 }
 .aih-d-section-title {
     font-size: .75rem; font-weight: 800;

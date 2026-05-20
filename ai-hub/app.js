@@ -6,9 +6,9 @@
 (function () {
     "use strict";
 
-    // ---- Tool Database (loaded from ai-hub/data/tools.json) ----
+    // ---- Tool Database (loaded from chunked manifest) ----
     let DB = [];
-    const PAGE_SIZE = 18;
+    const PAGE_SIZE = 36;
 
     // ---- Category/Subcategory name maps ----
     const CAT_NAMES = {
@@ -56,26 +56,49 @@
         return response.json();
     }
 
-    async function loadChunkedTools() {
-        const manifest = await fetchJson("data/tools-manifest.json");
-        if (!manifest || !Array.isArray(manifest.chunks) || manifest.chunks.length === 0) {
-            throw new Error("tools-manifest.json does not list any chunks");
-        }
-
-        const chunkLists = await Promise.all(manifest.chunks.map(chunk => fetchJson("data/" + chunk.file)));
-        return chunkLists.reduce((all, chunk) => all.concat(Array.isArray(chunk) ? chunk : []), []);
-    }
+    
 
     async function loadTools() {
         try {
-            let tools;
-            try {
-                tools = await loadChunkedTools();
-            } catch (chunkError) {
-                tools = await fetchJson("data/tools.json");
+            // 1. Load the curated tools first for instant display
+            const curatedTools = await fetchJson("data/tools.json");
+            if (Array.isArray(curatedTools)) {
+                DB = curatedTools;
             }
-            if (!Array.isArray(tools)) throw new Error("Tool data must be an array");
-            DB = tools;
+
+            // 2. Load the manifest to discover all chunks
+            let manifest;
+            try {
+                manifest = await fetchJson("data/tools-manifest.json");
+            } catch (e) {
+                // No manifest — just use the curated tools.json
+                console.warn("No tools-manifest.json found, using tools.json only.");
+                return;
+            }
+
+            if (!manifest || !Array.isArray(manifest.chunks)) return;
+
+            // 3. Fetch all chunks in parallel (batches of 6 to avoid overwhelming the browser)
+            const BATCH = 6;
+            const allChunkTools = [];
+            const chunkFiles = manifest.chunks.map(c => "data/" + c.file);
+
+            for (let i = 0; i < chunkFiles.length; i += BATCH) {
+                const batch = chunkFiles.slice(i, i + BATCH);
+                const results = await Promise.all(batch.map(url => fetchJson(url).catch(err => {
+                    console.warn("Failed to load chunk:", url, err);
+                    return [];
+                })));
+                results.forEach(arr => {
+                    if (Array.isArray(arr)) allChunkTools.push(...arr);
+                });
+            }
+
+            // 4. Merge: use chunked tools as the primary DB, add any curated tools not already present
+            const chunkIds = new Set(allChunkTools.map(t => t.id));
+            const extras = DB.filter(t => !chunkIds.has(t.id));
+            DB = [...allChunkTools, ...extras];
+
         } catch (error) {
             elGrid.innerHTML = '<div class="aih-empty"><i class="fas fa-triangle-exclamation"></i><h3>Could not load AI tools</h3><p>Please refresh the page or check ai-hub/data/tools.json.</p></div>';
             throw error;
@@ -91,22 +114,63 @@
     }
 
     // ---- Brand logos ----
-    function getToolLogoUrl(tool) {
-        if (tool.logo) return tool.logo;
+    const LOGO_COLORS = {
+        chat: ["#34d399", "#10b981"],
+        image: ["#22d3ee", "#06b6d4"],
+        video: ["#f472b6", "#ec4899"],
+        voice: ["#a78bfa", "#8b5cf6"],
+        code: ["#fb923c", "#f97316"],
+        productivity: ["#facc15", "#eab308"]
+    };
+
+    function getToolHostname(tool) {
         try {
-            const hostname = new URL(tool.url).hostname.replace(/^www\./, "");
-            return "https://www.google.com/s2/favicons?domain=" + encodeURIComponent(hostname) + "&sz=128";
+            return new URL(tool.url).hostname.replace(/^www\./, "");
         } catch (e) {
             return "";
         }
     }
 
+    function getToolLogoUrl(tool) {
+        if (tool.logo) return tool.logo;
+        const hostname = getToolHostname(tool);
+        if (!hostname) return "";
+        return "https://www.google.com/s2/favicons?domain=" + encodeURIComponent(hostname) + "&sz=128";
+    }
+
+    // Generate a letter avatar SVG data URI as final fallback
+    function getLetterAvatarUrl(tool) {
+        const letter = (tool.name || "?").charAt(0).toUpperCase();
+        const colors = LOGO_COLORS[tool.category] || ["#6366f1", "#4f46e5"];
+        const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128">' +
+            '<defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">' +
+            '<stop offset="0%" style="stop-color:' + colors[0] + '"/>' +
+            '<stop offset="100%" style="stop-color:' + colors[1] + '"/>' +
+            '</linearGradient></defs>' +
+            '<rect width="128" height="128" rx="24" fill="url(#g)"/>' +
+            '<text x="64" y="64" text-anchor="middle" dominant-baseline="central" ' +
+            'font-family="Outfit,sans-serif" font-weight="700" font-size="64" fill="#fff">' +
+            letter + '</text></svg>';
+        return "data:image/svg+xml," + encodeURIComponent(svg);
+    }
+
     function renderToolLogo(tool, extraClass) {
         const logoUrl = getToolLogoUrl(tool);
         const className = "aih-card-icon aih-logo-tile" + (extraClass ? " " + extraClass : "");
-        if (!logoUrl) return '<div class="' + className + ' logo-failed"><i class="' + tool.icon + ' aih-logo-fallback"></i></div>';
+        const avatarUrl = getLetterAvatarUrl(tool);
 
-        return '<div class="' + className + '">' +
+        if (!logoUrl) {
+            // No URL at all — use letter avatar directly
+            return '<div class="' + className + '">' +
+                '<img class="aih-tool-logo" src="' + avatarUrl + '" alt="' + tool.name + ' logo">' +
+            '</div>';
+        }
+
+        // Primary logo with fallback chain
+        const hostname = getToolHostname(tool);
+        const ddgFallback = hostname ? "https://icons.duckduckgo.com/ip3/" + encodeURIComponent(hostname) + ".ico" : "";
+
+        return '<div class="' + className + '" data-ddg="' + ddgFallback + '" data-avatar="' + avatarUrl + '">' +
             '<img class="aih-tool-logo" src="' + logoUrl + '" alt="' + tool.name + ' logo" loading="lazy" referrerpolicy="no-referrer">' +
             '<i class="' + tool.icon + ' aih-logo-fallback"></i>' +
         '</div>';
@@ -114,12 +178,45 @@
 
     function wireLogoFallback(root) {
         root.querySelectorAll(".aih-tool-logo").forEach(img => {
-            img.addEventListener("error", function () {
+            // Detect generic/tiny favicons on successful load
+            img.addEventListener("load", function () {
+                if (this.naturalWidth <= 16 || this.naturalHeight <= 16) {
+                    const tile = this.closest(".aih-logo-tile");
+                    if (!tile) return;
+                    const avatarUrl = tile.dataset.avatar;
+                    if (avatarUrl && this.src !== avatarUrl) {
+                        this.src = avatarUrl;
+                        tile.style.padding = "0";
+                    }
+                }
+            });
+
+            img.addEventListener("error", function handleError() {
                 const tile = this.closest(".aih-logo-tile");
-                if (tile) tile.classList.add("logo-failed");
-            }, { once: true });
+                if (!tile) return;
+
+                // Try DuckDuckGo favicon next
+                const ddgUrl = tile.dataset.ddg;
+                if (ddgUrl && this.src !== ddgUrl) {
+                    this.src = ddgUrl;
+                    return;
+                }
+
+                // Final fallback: letter avatar
+                const avatarUrl = tile.dataset.avatar;
+                if (avatarUrl && this.src !== avatarUrl) {
+                    this.src = avatarUrl;
+                    tile.style.padding = "0";
+                    return;
+                }
+
+                // All failed — show icon fallback
+                tile.classList.add("logo-failed");
+            }, { once: false });
         });
     }
+
+
 
     function getPriceSlug(price) {
         return String(price || "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
@@ -391,6 +488,7 @@
         if (window.innerWidth <= 1024) elSidebar.classList.remove("open");
     }
 
+
     // ---- Directory shortcuts ----
     function renderDirectory() {
         if (!elDirectory) return;
@@ -404,22 +502,10 @@
         const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
         elDirectory.innerHTML =
-            '<div class="aih-dir-block">' +
-                '<div class="aih-dir-title">Browse by Category</div>' +
-                '<div class="aih-dir-chips">' +
-                    Object.keys(CAT_NAMES).map(cat => '<button class="aih-dir-chip" data-cat="' + cat + '" data-sub="">' + CAT_NAMES[cat] + ' <span>' + DB.filter(t => t.category === cat).length + '</span></button>').join("") +
-                '</div>' +
-            '</div>' +
-            '<div class="aih-dir-block">' +
-                '<div class="aih-dir-title">Browse by Pricing</div>' +
-                '<div class="aih-dir-chips">' +
-                    priceItems.map(item => '<button class="aih-dir-chip" data-filter="' + item[0] + '">' + item[1] + ' <span>' + DB.filter(t => item[0] === "price-" + getPriceSlug(t.price)).length + '</span></button>').join("") +
-                '</div>' +
-            '</div>' +
+            '' +
             '<div class="aih-dir-block">' +
                 '<div class="aih-dir-title">Browse by Alphabet</div>' +
-                '<div class="aih-alpha-row">' +
-                    letters.map(letter => '<button class="aih-alpha-chip" data-filter="alpha-' + letter.toLowerCase() + '">' + letter + '</button>').join("") +
+                '<div class="aih-alpha-row">' + letters.map(letter => '<button class="aih-alpha-chip" data-filter="alpha-' + letter.toLowerCase() + '">' + letter + '</button>').join("") +
                 '</div>' +
             '</div>';
 
@@ -451,6 +537,7 @@
             });
         });
     }
+
 
     // ---- Event Wiring ----
     async function init() {
