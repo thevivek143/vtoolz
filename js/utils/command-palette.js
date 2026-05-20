@@ -117,7 +117,8 @@ export class CommandPalette {
         const systemCmds = [
             { id: 'cmd-home', name: 'Go Home', icon: 'fas fa-home', action: () => this.navigate('index.html'), desc: 'Navigate to Home' },
             { id: 'cmd-theme', name: 'Toggle Theme', icon: 'fas fa-adjust', action: () => this.toggleTheme(), desc: 'Switch Light/Dark mode' },
-            { id: 'cmd-zen', name: 'Toggle Zen Mode', icon: 'fas fa-compress-alt', action: () => this.toggleZen(), desc: 'Focus Mode (Hide UI)' }
+            { id: 'cmd-zen', name: 'Toggle Zen Mode', icon: 'fas fa-compress-alt', action: () => this.toggleZen(), desc: 'Focus Mode (Hide UI)' },
+            { id: 'cmd-ai-hub', name: 'Go to AI Hub', icon: 'fas fa-brain', action: () => this.navigate('ai-hub/index.html'), desc: 'Explore Curated AI Tools Directory' }
         ];
 
         // 2. Filter Tools
@@ -191,25 +192,20 @@ export class CommandPalette {
     // Actions
     navigate(url) {
         // Resolve URL based on current depth
-        // If we are in 'tools/category/tool.html', we are 2 deep.
-        // If we are in 'index.html', we are 0 deep.
+        // If we are in 'tools/category/tool.html', we are 2 deep (logo href: ../../index.html)
+        // If we are in 'tools/index.html', we are 1 deep (logo href: ../index.html)
+        // If we are in 'index.html', we are 0 deep (logo href: index.html)
 
-        let target = url;
-
-        // Simple logic: check if 'index.html' is in the current folder (Root)
-        // or check the logo href.
+        let prefix = '';
         const logo = document.querySelector('.logo');
         if (logo) {
-            const logoHref = logo.getAttribute('href');
-            if (logoHref.startsWith('../../')) {
-                // We are deep, prefix with ../../ if the tool url is relative to root
-                // Tool URLs in tools.js are like 'tools/pdf/merge.html'
-                // If url is 'index.html', we want '../../index.html'
-                target = '../../' + url;
+            const logoHref = logo.getAttribute('href') || '';
+            if (logoHref.endsWith('index.html')) {
+                prefix = logoHref.substring(0, logoHref.length - 10);
             }
         }
 
-        window.location.href = target;
+        window.location.href = prefix + url;
     }
 
     toggleTheme() {

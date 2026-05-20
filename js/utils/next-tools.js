@@ -1131,6 +1131,7 @@ async function executeTool(toolId, kind, v, output) {
             output.appendChild(box);
             let start = 0;
             btn.onclick = () => {
+                btn.disabled = true;
                 info.textContent = "Wait for it...";
                 target.style.display = "none";
                 const delay = 800 + Math.random() * 2200;
@@ -1144,6 +1145,7 @@ async function executeTool(toolId, kind, v, output) {
                 const ms = performance.now() - start;
                 info.textContent = `Reaction Time: ${ms.toFixed(0)} ms`;
                 target.style.display = "none";
+                btn.disabled = false;
             };
             return null;
         }

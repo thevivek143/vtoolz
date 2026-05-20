@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
+    <title>AI Hub — 40+ Best AI Tools Directory | Vibox</title>
+    <meta name="description" content="Explore 40+ curated AI tools in Vibox AI Hub. Browse by category: writing, image, video, voice, coding, productivity. Find the best AI tools with detailed reviews, pros & cons.">
+    <link rel="canonical" href="https://vibox.app/ai-hub/">
+
+    <link rel="icon" href="/favicon.ico" sizes="48x48">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" href="/favicon-192.png" type="image/png" sizes="192x192">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="style.css">
+
+    <script src="../js/utils/theme-preload.js"></script>
+</head>
+
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="aih-header">
+    <div class="aih-header-inner">
+        <a href="../index.html" class="aih-logo">
+            <span class="aih-logo-v">V</span>ibox<span class="aih-logo-dot">.</span><span class="aih-logo-ai">AI</span>
+        </a>
+        <nav class="aih-nav">
+            <a href="../index.html" class="aih-nav-link"><i class="fas fa-grid-2"></i> Tools</a>
+            <a href="../games/index.html" class="aih-nav-link"><i class="fas fa-gamepad"></i> Games</a>
+        </nav>
+    </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="aih-hero">
+    <div class="aih-hero-grid"></div>
+    <div class="aih-hero-glow aih-hero-glow-l"></div>
+    <div class="aih-hero-glow aih-hero-glow-r"></div>
+    <div class="aih-hero-content">
+        <div class="aih-hero-badge"><i class="fas fa-circle-nodes"></i> Curated Directory</div>
+        <h1 class="aih-hero-title">AI Tools Hub</h1>
+        <p class="aih-hero-sub">40+ hand-picked AI tools across 6 categories. Find your perfect tool with detailed reviews, pros &amp; cons — completely free, no signup.</p>
+        <div class="aih-search-wrap">
+            <i class="fas fa-search aih-search-icon"></i>
+            <input type="text" id="aihSearch" class="aih-search-input" placeholder="Search tools — Claude, Midjourney, ElevenLabs..." autocomplete="off" spellcheck="false">
+            <kbd class="aih-search-kbd">Ctrl K</kbd>
+        </div>
+    </div>
+</section>
+
+<!-- ===== MAIN LAYOUT ===== -->
+<div class="aih-layout-wrap">
+
+    <!-- Mobile toggle -->
+    <button class="aih-mobile-toggle" id="aihMobileToggle">
+        <i class="fas fa-sliders"></i> Browse Categories
+    </button>
+
+    <div class="aih-layout">
+
+        <!-- ===== SIDEBAR ===== -->
+        <aside class="aih-sidebar" id="aihSidebar">
+            <div class="aih-sidebar-head">
+                <span><i class="fas fa-compass"></i> Browse</span>
+                <button class="aih-sidebar-close" id="aihSidebarClose"><i class="fas fa-xmark"></i></button>
+            </div>
+
+            <div class="aih-sidebar-body" id="aihSidebarBody">
+                <!-- All -->
+                <div class="aih-menu-item aih-menu-all active" data-cat="all" data-sub="">
+                    <span class="aih-menu-label"><i class="fas fa-border-all"></i> All AI Tools</span>
+                    <span class="aih-count" id="cnt-all">0</span>
+                </div>
+
+                <!-- Writing & Chat -->
+                <div class="aih-menu-group">
+                    <div class="aih-menu-parent" data-cat="chat" data-sub="">
+                        <span class="aih-menu-label"><i class="fas fa-comment-dots"></i> Writing &amp; Chat</span>
+                        <span class="aih-count" id="cnt-chat">0</span>
+                    </div>
+                    <div class="aih-submenu">
+                        <div class="aih-menu-child" data-cat="chat" data-sub="ai-assistant"><span>AI Assistants</span><span class="aih-count" id="cnt-ai-assistant">0</span></div>
+                        <div class="aih-menu-child" data-cat="chat" data-sub="seo-copy"><span>SEO Copywriting</span><span class="aih-count" id="cnt-seo-copy">0</span></div>
+                        <div class="aih-menu-child" data-cat="chat" data-sub="paraphraser"><span>Paraphrase &amp; Grammar</span><span class="aih-count" id="cnt-paraphraser">0</span></div>
+                    </div>
+                </div>
+
+                <!-- Image -->
+                <div class="aih-menu-group">
+                    <div class="aih-menu-parent" data-cat="image" data-sub="">
+                        <span class="aih-menu-label"><i class="fas fa-image"></i> Image Gen</span>
+                        <span class="aih-count" id="cnt-image">0</span>
+                    </div>
+                    <div class="aih-submenu">
+                        <div class="aih-menu-child" data-cat="image" data-sub="text-to-image"><span>Text to Image</span><span class="aih-count" id="cnt-text-to-image">0</span></div>
+                        <div class="aih-menu-child" data-cat="image" data-sub="photo-editor"><span>Photo Editors</span><span class="aih-count" id="cnt-photo-editor">0</span></div>
+                        <div class="aih-menu-child" data-cat="image" data-sub="graphic-design"><span>Graphic Design</span><span class="aih-count" id="cnt-graphic-design">0</span></div>
+                    </div>
+                </div>
+
+                <!-- Video -->
+                <div class="aih-menu-group">
+                    <div class="aih-menu-parent" data-cat="video" data-sub="">
+                        <span class="aih-menu-label"><i class="fas fa-video"></i> Video &amp; Motion</span>
+                        <span class="aih-count" id="cnt-video">0</span>
+                    </div>
+                    <div class="aih-submenu">
+                        <div class="aih-menu-child" data-cat="video" data-sub="text-to-video"><span>Text to Video</span><span class="aih-count" id="cnt-text-to-video">0</span></div>
+                        <div class="aih-menu-child" data-cat="video" data-sub="avatar-builder"><span>Avatar Builders</span><span class="aih-count" id="cnt-avatar-builder">0</span></div>
+                        <div class="aih-menu-child" data-cat="video" data-sub="ai-animator"><span>AI Animators</span><span class="aih-count" id="cnt-ai-animator">0</span></div>
+                    </div>
+                </div>
+
+                <!-- Voice -->
+                <div class="aih-menu-group">
+                    <div class="aih-menu-parent" data-cat="voice" data-sub="">
+                        <span class="aih-menu-label"><i class="fas fa-microphone"></i> Voice &amp; Audio</span>
+                        <span class="aih-count" id="cnt-voice">0</span>
+                    </div>
+                    <div class="aih-submenu">
+                        <div class="aih-menu-child" data-cat="voice" data-sub="voice-cloning"><span>Voice Cloning</span><span class="aih-count" id="cnt-voice-cloning">0</span></div>
+                        <div class="aih-menu-child" data-cat="voice" data-sub="text-to-speech"><span>Text to Speech</span><span class="aih-count" id="cnt-text-to-speech">0</span></div>
+                        <div class="aih-menu-child" data-cat="voice" data-sub="music-gen"><span>Music Gen</span><span class="aih-count" id="cnt-music-gen">0</span></div>
+                        <div class="aih-menu-child" data-cat="voice" data-sub="audio-editor"><span>Audio Editors</span><span class="aih-count" id="cnt-audio-editor">0</span></div>
+                    </div>
+                </div>
+
+                <!-- Code -->
+                <div class="aih-menu-group">
+                    <div class="aih-menu-parent" data-cat="code" data-sub="">
+                        <span class="aih-menu-label"><i class="fas fa-code"></i> Coding &amp; Tech</span>
+                        <span class="aih-count" id="cnt-code">0</span>
+                    </div>
+                    <div class="aih-submenu">
+                        <div class="aih-menu-child" data-cat="code" data-sub="ide-companion"><span>IDE Companions</span><span class="aih-count" id="cnt-ide-companion">0</span></div>
+                        <div class="aih-menu-child" data-cat="code" data-sub="code-gen"><span>Code Generators</span><span class="aih-count" id="cnt-code-gen">0</span></div>
+                        <div class="aih-menu-child" data-cat="code" data-sub="ui-builder"><span>UI Builders</span><span class="aih-count" id="cnt-ui-builder">0</span></div>
+                        <div class="aih-menu-child" data-cat="code" data-sub="dev-search"><span>Dev Search</span><span class="aih-count" id="cnt-dev-search">0</span></div>
+                    </div>
+                </div>
+
+                <!-- Productivity -->
+                <div class="aih-menu-group">
+                    <div class="aih-menu-parent" data-cat="productivity" data-sub="">
+                        <span class="aih-menu-label"><i class="fas fa-bolt"></i> Productivity</span>
+                        <span class="aih-count" id="cnt-productivity">0</span>
+                    </div>
+                    <div class="aih-submenu">
+                        <div class="aih-menu-child" data-cat="productivity" data-sub="ai-search"><span>AI Search</span><span class="aih-count" id="cnt-ai-search">0</span></div>
+                        <div class="aih-menu-child" data-cat="productivity" data-sub="presentation"><span>Presentations</span><span class="aih-count" id="cnt-presentation">0</span></div>
+                        <div class="aih-menu-child" data-cat="productivity" data-sub="data-analyst"><span>Data Analysts</span><span class="aih-count" id="cnt-data-analyst">0</span></div>
+                        <div class="aih-menu-child" data-cat="productivity" data-sub="doc-assistant"><span>Doc Assistants</span><span class="aih-count" id="cnt-doc-assistant">0</span></div>
+                        <div class="aih-menu-child" data-cat="productivity" data-sub="meeting-comp"><span>Meeting AI</span><span class="aih-count" id="cnt-meeting-comp">0</span></div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- ===== MAIN AREA ===== -->
+        <main class="aih-main">
+
+            <!-- Ultimate filter tabs -->
+            <div class="aih-tabs" id="aihTabs">
+                <button class="aih-tab active" data-filter="all"><i class="fas fa-globe"></i> All Tools</button>
+                <button class="aih-tab" data-filter="latest"><i class="fas fa-sparkles"></i> Latest AI</button>
+                <button class="aih-tab" data-filter="trending"><i class="fas fa-fire"></i> Top Trends</button>
+                <button class="aih-tab" data-filter="price-free"><i class="fas fa-gift"></i> Free AI</button>
+                <button class="aih-tab" data-filter="price-freemium"><i class="fas fa-layer-group"></i> Freemium</button>
+                <button class="aih-tab" data-filter="price-paid"><i class="fas fa-crown"></i> Paid</button>
+                <button class="aih-tab" data-filter="price-free-trial"><i class="fas fa-clock"></i> Free Trial</button>
+                <button class="aih-tab aih-tab-fav" data-filter="bookmarks"><i class="fas fa-heart"></i> Bookmarks</button>
+            </div>
+
+            <!-- Section header -->
+            <div class="aih-section-head">
+                <div class="aih-section-title" id="aihTitle">All AI Tools</div>
+                <div class="aih-section-meta">
+                    <span class="aih-tool-count" id="aihCount">0 Tools</span>
+                    <button class="aih-submit-btn" id="aihOpenSubmit"><i class="fas fa-plus"></i> Submit AI</button>
+                </div>
+            </div>
+
+            <!-- Directory browse shortcuts -->
+            <div class="aih-directory" id="aihDirectory"></div>
+
+            <!-- Tool Grid -->
+            <div class="aih-grid" id="aihGrid">
+                <div class="aih-loading"><i class="fas fa-circle-notch fa-spin"></i><span>Loading tools…</span></div>
+            </div>
+
+            <div class="aih-load-wrap">
+                <button class="aih-load-more hidden" id="aihLoadMore"><i class="fas fa-chevron-down"></i> View More</button>
+            </div>
+
+        </main>
+    </div>
+</div>
+
+<!-- ===== DETAILS DRAWER ===== -->
+<div class="aih-backdrop" id="aihBackdrop"></div>
+<div class="aih-drawer" id="aihDrawer">
+    <button class="aih-drawer-close" id="aihDrawerClose" aria-label="Close"><i class="fas fa-xmark"></i></button>
+    <div class="aih-drawer-scroll" id="aihDrawerScroll">
+        <div class="aih-drawer-loading"><i class="fas fa-circle-notch fa-spin"></i></div>
+    </div>
+</div>
+
+<!-- ===== SUBMIT MODAL ===== -->
+<div class="aih-modal-overlay" id="aihModal">
+    <div class="aih-modal-card">
+        <div class="aih-modal-head">
+            <h2>Submit an AI Tool</h2>
+            <button class="aih-modal-close" id="aihModalClose"><i class="fas fa-xmark"></i></button>
+        </div>
+        <p class="aih-modal-note">Vibox is 100% serverless. Submitting generates a JSON payload for manual indexing. Email or open a GitHub issue with the payload.</p>
+        <form id="aihSubmitForm" class="aih-form">
+            <div class="aih-form-group">
+                <label for="sfName">Tool Name *</label>
+                <input type="text" id="sfName" required placeholder="e.g. ElevenLabs">
+            </div>
+            <div class="aih-form-group">
+                <label for="sfUrl">Website URL *</label>
+                <input type="url" id="sfUrl" required placeholder="https://elevenlabs.io">
+            </div>
+            <div class="aih-form-row">
+                <div class="aih-form-group">
+                    <label for="sfCat">Category *</label>
+                    <select id="sfCat" required>
+                        <option value="" disabled selected>Select…</option>
+                        <option value="chat">Writing &amp; Chat</option>
+                        <option value="image">Image Gen</option>
+                        <option value="video">Video &amp; Motion</option>
+                        <option value="voice">Voice &amp; Audio</option>
+                        <option value="code">Coding &amp; Tech</option>
+                        <option value="productivity">Productivity</option>
+                    </select>
+                </div>
+                <div class="aih-form-group">
+                    <label for="sfPrice">Pricing *</label>
+                    <select id="sfPrice" required>
+                        <option value="Free">Free</option>
+                        <option value="Freemium" selected>Freemium</option>
+                        <option value="Paid">Paid</option>
+                        <option value="Free Trial">Free Trial</option>
+                    </select>
+                </div>
+            </div>
+            <div class="aih-form-group">
+                <label for="sfDesc">Short Description *</label>
+                <textarea id="sfDesc" rows="3" required placeholder="What does this AI tool do?"></textarea>
+            </div>
+            <div class="aih-form-actions">
+                <button type="button" class="aih-btn-ghost" id="aihModalCancel">Cancel</button>
+                <button type="submit" class="aih-btn-primary">Generate Payload</button>
+            </div>
+        </form>
+        <div class="aih-payload-result hidden" id="aihPayloadResult">
+            <h3><i class="fas fa-check-circle"></i> Payload Generated!</h3>
+            <p>Copy this JSON and email us or submit a GitHub issue.</p>
+            <pre id="aihPayloadCode"></pre>
+            <div class="aih-form-actions">
+                <button type="button" class="aih-btn-ghost" id="aihPayloadCopy"><i class="fas fa-copy"></i> Copy</button>
+                <button type="button" class="aih-btn-primary" id="aihPayloadDone">Done</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="aih-footer">
+    <p>&copy; 2026 Vibox — Privacy-First Platform. <a href="../index.html">Back to Tools</a></p>
+</footer>
+
+<script src="app.js"></script>
+<script src="../js/loader.js" defer></script>
+</body>
+</html>

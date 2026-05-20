@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'vtoolz-v53';
+const CACHE_VERSION = 'vtoolz-v57';
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const DYNAMIC_CACHE = `${CACHE_VERSION}-dynamic`;
 const CDN_CACHE = `${CACHE_VERSION}-cdn`;
@@ -34,6 +34,12 @@ const SECONDARY_ASSETS = [
     './js/utils/cube.js',
     './js/utils/tilt.js',
     './tools/index.html',
+    './ai-hub/index.html',
+    './ai-hub/style.css',
+    './ai-hub/app.js',
+    './ai-hub/data/tools.json',
+    './ai-hub/data/tools-manifest.json',
+    './ai-hub/data/tools/chunk-000.json',
 
     // Tool landing pages
     './tools/pdf/index.html',

@@ -1,0 +1,1796 @@
+// AI Tools Directory Controller - Vibox AI Hub
+
+// Curated AI Tools Database (No placeholders!)
+const AI_TOOLS_DB = [
+    // --- Writing & Chat ---
+    {
+        id: "ai-chatgpt",
+        name: "ChatGPT",
+        url: "https://chatgpt.com",
+        desc: "The world's leading conversational AI chatbot by OpenAI, powering brainstorming, drafting, and problem solving.",
+        category: "chat",
+        subcat: "ai-assistant",
+        price: "Freemium",
+        icon: "fas fa-robot",
+        tags: ["OpenAI", "Chat", "LLM"],
+        tagline: "Unleash infinite creativity and reasoning with GPT-4o.",
+        longDesc: "ChatGPT is OpenAI's flagship conversational interface. It provides general assistance, text writing, brainstorming, mathematical analysis, and visual understanding. It excels at coding support and features a custom GPT store where users can find tailored bots for specific tasks.",
+        pros: [
+            "Exceptional logical reasoning and coding skills",
+            "Huge library of community-built Custom GPTs",
+            "Seamless multimodal image/voice inputs"
+        ],
+        cons: [
+            "Strict rate limits on the advanced model for free users",
+            "Answers can sometimes sound overly formulaic",
+            "Can occasionally hallucinate complex facts"
+        ],
+        features: [
+            "Real-time web browsing and citations",
+            "Advanced Python sandbox for data analytics",
+            "Direct integration with DALL-E 3 image engine"
+        ],
+        bestFor: "Writers, students, developers, and general users seeking an all-in-one assistant.",
+        isTrending: true,
+        isLatest: false
+    },
+    {
+        id: "ai-claude",
+        name: "Claude",
+        url: "https://claude.ai",
+        desc: "Anthropic's advanced model renowned for highly coherent writing, complex logic reasoning, and code creation.",
+        category: "chat",
+        subcat: "ai-assistant",
+        price: "Freemium",
+        icon: "fas fa-brain",
+        tags: ["Anthropic", "Writing", "Logic"],
+        tagline: "Experience the industry standard in coding intelligence and nuanced writing.",
+        longDesc: "Claude by Anthropic is built on a custom safety constitution. It is widely regarded as the most skilled writing and coding model in the industry, featuring Claude Artifacts which let users interact with generated SVGs, HTML pages, and games directly in the chat.",
+        pros: [
+            "Extremely high-quality code generation and formatting",
+            "More natural, empathetic, and nuanced tone than rivals",
+            "Sleek 'Artifacts' UI for real-time app rendering"
+        ],
+        cons: [
+            "Free tier limits can trigger very quickly during peak hours",
+            "No direct visual image generation capability",
+            "No native live internet searching"
+        ],
+        features: [
+            "Interactive Artifacts window for rendered code",
+            "Project folders with custom system prompt overrides",
+            "Huge 200k token context window for uploading long PDFs"
+        ],
+        bestFor: "Software developers, technical writers, and researchers uploading massive text volumes.",
+        isTrending: true,
+        isLatest: false
+    },
+    {
+        id: "ai-gemini",
+        name: "Google Gemini",
+        url: "https://gemini.google.com",
+        desc: "Google's flagship multimodal assistant integrated directly with search and Workspace applications.",
+        category: "chat",
+        subcat: "ai-assistant",
+        price: "Freemium",
+        icon: "fab fa-google",
+        tags: ["Google", "Multimodal", "Search"],
+        tagline: "Search, analyze, and automate across the entire Google workspace.",
+        longDesc: "Gemini is Google's natively multimodal assistant. Operating on massive databases, it excels at integrating directly with YouTube, Google Maps, Flights, Docs, and Gmail, making it the most practical model for real-life travel planning and document editing.",
+        pros: [
+            "Incredible speed and massive 2-million token capacity",
+            "Direct extensions link with Gmail, Workspace, and YouTube",
+            "One-click 'Double Check' feature searches web to verify answers"
+        ],
+        cons: [
+            "Reasoning can occasionally fall short on highly complex math",
+            "Image generation can be restrictive with human subjects",
+            "Workspace integrations require setting up personal permissions"
+        ],
+        features: [
+            "Natively multimodal video and audio context analysis",
+            "Extensions suite for Maps, Flights, and Hotels",
+            "Google Workspace side-panel integration"
+        ],
+        bestFor: "Frequent users of Google Docs, Gmail, and users analyzing massive amounts of data.",
+        isTrending: true,
+        isLatest: false
+    },
+    {
+        id: "ai-jasper",
+        name: "Jasper AI",
+        url: "https://www.jasper.ai",
+        desc: "Professional enterprise copywriting assistant optimized for marketing, campaigns, and corporate branding.",
+        category: "chat",
+        subcat: "seo-copy",
+        price: "Paid",
+        icon: "fas fa-pen-nib",
+        tags: ["Copywriting", "Marketing"],
+        tagline: "Scale your corporate marketing copy while maintaining perfect brand voice consistency.",
+        longDesc: "Jasper is a premium enterprise copywriting tool. Rather than writing one-off prompts, Jasper supports brand voices, style guides, SEO content workflows, and multi-channel marketing campaigns, ensuring consistent outputs across teams.",
+        pros: [
+            "Maintains a strict brand style guide across multiple authors",
+            "Dozens of high-converting marketing frameworks",
+            "Direct integration with SEO optimization engines like SurferSEO"
+        ],
+        cons: [
+            "Highly expensive pricing with no true free tier",
+            "Steep learning curve for configuring custom style guidelines",
+            "Can feel overly structured for casual individual writers"
+        ],
+        features: [
+            "Campaign builder compiles blogs, social, and emails at once",
+            "Dynamic brand voice scanning via product URLs",
+            "Built-in plagarism detector and AI image generation support"
+        ],
+        bestFor: "Corporate marketing agencies, copywriters, and enterprise content creators.",
+        isTrending: false,
+        isLatest: false
+    },
+    {
+        id: "ai-writesonic",
+        name: "Writesonic",
+        url: "https://writesonic.com",
+        desc: "AI writing platform built for generating SEO-friendly articles, blogs, and landing pages.",
+        category: "chat",
+        subcat: "seo-copy",
+        price: "Freemium",
+        icon: "fas fa-heading",
+        tags: ["SEO", "Blogs", "Writing"],
+        tagline: "Generate fully researched, SEO-optimized blog posts in minutes.",
+        longDesc: "Writesonic is a powerful content marketing platform built around Google Search data. It specializes in auto-generating high-ranking articles, marketing ad copy, and product descriptions with direct keywords integrated.",
+        pros: [
+            "Article Writer 6.0 generates highly accurate, cited text",
+            "Natively fetches real-time trends to output topical content",
+            "Generous monthly word count allowance on free tier"
+        ],
+        cons: [
+            "Outputted drafts still require editing to sound human",
+            "Credits consumption can get complicated with advanced tools",
+            "Niche scientific topics can sometimes return thin descriptions"
+        ],
+        features: [
+            "Built-in Chatsonic chatbot with real-time Google search",
+            "SEO Keyword optimization scoring and suggestion grid",
+            "One-click landing page HTML export tool"
+        ],
+        bestFor: "Affiliate marketers, SEO specialists, and solo bloggers scaling search traffic.",
+        isTrending: false,
+        isLatest: false
+    },
+    {
+        id: "ai-quillbot",
+        name: "Quillbot",
+        url: "https://quillbot.com",
+        desc: "An intelligent paraphrasing, grammar checking, and text summarizing utility for academic research.",
+        category: "chat",
+        subcat: "paraphraser",
+        price: "Freemium",
+        icon: "fas fa-sync-alt",
+        tags: ["Paraphrase", "Grammar", "Academic"],
+        tagline: "Refine your essays, clean up syntax mistakes, and summarize articles instantly.",
+        longDesc: "Quillbot is a specialized writing assistant beloved by students and researchers. Focusing on rewriting, academic formatting, plagiarism checking, and grammar validation, it refines draft compositions rather than generating them from scratch.",
+        pros: [
+            "Paraphraser supports 7 modes (Creative, Simple, Formal, etc.)",
+            "Exceptional summarizer tool condenses massive articles",
+            "Clean, easy-to-use interface that integrates with Word and Chrome"
+        ],
+        cons: [
+            "Strict character limits on free paraphraser mode",
+            "Advanced plagiarism checking requires purchasing premium credits",
+            "Academic mode can sometimes sound dry or repetitive"
+        ],
+        features: [
+            "Co-Writer workspace combining research, outlines, and drafts",
+            "Built-in Citation Generator supporting APA, MLA, and Chicago",
+            "Interactive translator supporting 45+ languages"
+        ],
+        bestFor: "Academic students, researchers, non-native English speakers, and editors.",
+        isTrending: false,
+        isLatest: false
+    },
+    {
+        id: "ai-copyai",
+        name: "Copy.ai",
+        url: "https://www.copy.ai",
+        desc: "Automated GTM workflow designer and high-converting marketing copy generator.",
+        category: "chat",
+        subcat: "seo-copy",
+        price: "Freemium",
+        icon: "fas fa-bullhorn",
+        tags: ["Marketing", "GTM", "Automation"],
+        tagline: "Build structured sales and marketing automation workflows with AI.",
+        longDesc: "Copy.ai has evolved from a simple copywriting app into a robust sales and Go-To-Market (GTM) workflow automation platform. It allows marketing teams to automate content generation, search engine audits, and outreach emails in batch pipelines.",
+        pros: [
+            "Powerful visual workflow builder that automates repetitive tasks",
+            "Perfect for scraping product lists and writing customized pitches",
+            "Excellent brand voice and asset storage dashboard"
+        ],
+        cons: [
+            "Workflow setup requires analytical planning and patience",
+            "Enterprise features are highly priced for small startups",
+            "Free tier is heavily capped on background executions"
+        ],
+        features: [
+            "Sales pipeline batch execution via CSV uploads",
+            "Multi-language content localization engine",
+            "Integrates directly with CRM hubs like HubSpot"
+        ],
+        bestFor: "Sales development teams, growth hackers, and content operation managers.",
+        isTrending: false,
+        isLatest: false
+    },
+
+    // --- Image Generation ---
+    {
+        id: "ai-midjourney",
+        name: "Midjourney",
+        url: "https://www.midjourney.com",
+        desc: "Unrivaled photorealistic, hyper-artistic text-to-image generator operating natively on Discord.",
+        category: "image",
+        subcat: "text-to-image",
+        price: "Paid",
+        icon: "fas fa-palette",
+        tags: ["Midjourney", "Art", "Design"],
+        tagline: "Create award-winning digital artwork and photorealistic graphics.",
+        longDesc: "Midjourney is widely recognized as the absolute highest quality AI image generator in the world. It renders breathtaking portraits, cinematic concept art, commercial product renders, and beautiful vectors from textual descriptions.",
+        pros: [
+            "Unmatched visual quality, textures, lighting, and detail",
+            "Vibrant creative community on Discord sharing prompt structures",
+            "Excellent 'Inpainting' and 'Vary Region' visual brush edits"
+        ],
+        cons: [
+            "Operating natively on Discord can feel cluttered for beginners",
+            "No free trial tier whatsoever; subscription is required",
+            "Struggles with placing precise spelling inside images"
+        ],
+        features: [
+            "Sleek web-based generation UI now rolling out",
+            "Natively supports panning, zooming, and image blend modes",
+            "Style Reference (--sref) copies textures from source images"
+        ],
+        bestFor: "Professional concept artists, UI designers, game developers, and agency creators.",
+        isTrending: true,
+        isLatest: false
+    },
+    {
+        id: "ai-stable-diffusion",
+        name: "Stable Diffusion",
+        url: "https://stability.ai",
+        desc: "Open-source, highly customizable local and cloud image creator by Stability AI.",
+        category: "image",
+        subcat: "text-to-image",
+        price: "Free",
+        icon: "fas fa-project-diagram",
+        tags: ["StabilityAI", "OpenSource", "Custom"],
+        tagline: "Take absolute local control of your image generation workflow.",
+        longDesc: "Stable Diffusion by Stability AI is the open-source alternative. Users can download model weights to run locally on their own computer, customize image generation styles, train custom Loras, and control compositions using tools like ControlNet.",
+        pros: [
+            "100% free to run locally without cloud usage fees",
+            "Absolute, precise control over poses, shapes, and depth",
+            "Massive community developing open-source models and check weights"
+        ],
+        cons: [
+            "Requires a highly expensive graphics card (GPU) with high VRAM",
+            "Very complex installation process using Python and terminals",
+            "Base model outputs require detailed tweaking to look photorealistic"
+        ],
+        features: [
+            "Advanced control over poses and structures using ControlNet",
+            "Highly customizable UI suites like Automatic1111 and ComfyUI",
+            "Custom-trained checkpoints and Lora visual style weights"
+        ],
+        bestFor: "Tech-savvy designers, 3D artists, and developers requiring private local execution.",
+        isTrending: true,
+        isLatest: false
+    },
+    {
+        id: "ai-leonardo",
+        name: "Leonardo AI",
+        url: "https://leonardo.ai",
+        desc: "Feature-rich creative asset platform offering custom-trained models, inpainting, and motion generation.",
+        category: "image",
+        subcat: "text-to-image",
+        price: "Freemium",
+        icon: "fas fa-paint-brush",
+        tags: ["Assets", "Models", "Gaming"],
+        tagline: "Your ultimate digital canvas for assets, textures, and vector designs.",
+        longDesc: "Leonardo AI provides a fully loaded creative suite in-browser. Utilizing pre-configured models tailored for gaming assets, commercial posters, and visual vectors, it also offers canvas editors, upscalers, and instant motion features.",
+        pros: [
+            "Superb in-browser design canvas combining sketch and generation",
+            "Excellent daily credit refresh allowing free generation",
+            "Leonardo Motion instantly turns generated art into moving loops"
+        ],
+        cons: [
+            "Interface can feel overwhelming due to the sheer count of options",
+            "Premium upscaling tools burn through monthly credits fast",
+            "Public models mean your prompt results are visible on the feed"
+        ],
+        features: [
+            "Real-time Canvas editor for sketching and generating live",
+            "Motion Video converter for making visual loops",
+            "Custom asset library model training capabilities"
+        ],
+        bestFor: "Game asset developers, product designers, and visual illustrators.",
+        isTrending: false,
+        isLatest: true
+    },
+    {
+        id: "ai-adobe-firefly",
+        name: "Adobe Firefly",
+        url: "https://firefly.adobe.com",
+        desc: "Commercially safe generative engine integrated natively with Photoshop, Illustrator, and Express.",
+        category: "image",
+        subcat: "photo-editor",
+        price: "Freemium",
+        icon: "fas fa-vector-square",
+        tags: ["Adobe", "Commercial", "Vectors"],
+        tagline: "Generate creative image assets built from the ground up to be commercially safe.",
+        longDesc: "Adobe Firefly is built specifically for professional designers. Trained exclusively on licensed content, public domain, and Adobe Stock assets, it guarantees commercial safety and operates natively inside Photoshop and Illustrator.",
+        pros: [
+            "100% commercially safe image licensing guarantees",
+            "Flawless Generative Fill in Photoshop replaces objects instantly",
+            "Excellent Vector coloring and scaling inside Adobe Illustrator"
+        ],
+        cons: [
+            "Outputted style can sometimes look slightly like a standard stock image",
+            "Lacks the absolute raw artistic edge of Midjourney",
+            "Requires Adobe CC subscription to unlock high-res unwatermarked exports"
+        ],
+        features: [
+            "Commercially safe AI architecture",
+            "Generative Expand expands photo borders intelligently",
+            "Text-to-Vector graphic generation"
+        ],
+        bestFor: "Corporate visual designers, marketing teams, and Adobe Creative Cloud users.",
+        isTrending: false,
+        isLatest: false
+    },
+    {
+        id: "ai-canva",
+        name: "Canva Magic Studio",
+        url: "https://www.canva.com/magic-studio",
+        desc: "Canva's suite of generative features for quick layout templates, background removal, and resizing.",
+        category: "image",
+        subcat: "graphic-design",
+        price: "Freemium",
+        icon: "fas fa-magic",
+        tags: ["Canva", "Layout", "Templates"],
+        tagline: "Design social graphics, banners, and presentations instantly with smart tools.",
+        longDesc: "Canva Magic Studio integrates automated AI into a popular web design platform. It allows users to write simple text prompts to generate fully designed slide decks, background removes, object edits, and social media layout scales in seconds.",
+        pros: [
+            "Incredibly easy drag-and-drop workflow for non-designers",
+            "Instantly resizes a single banner for multiple social channels",
+            "Massive templates library with stock fonts and assets"
+        ],
+        cons: [
+            "Generated vector elements can look basic or generic",
+            "Detailed creative controls are restricted compared to Photoshop",
+            "Best features require a Canva Pro monthly subscription"
+        ],
+        features: [
+            "Magic Design builds layout templates from text",
+            "Intelligent background remover and object replacement brushes",
+            "Text-to-Speech video slide generator"
+        ],
+        bestFor: "Social media managers, small business entrepreneurs, and bloggers.",
+        isTrending: true,
+        isLatest: false
+    },
+    {
+        id: "ai-clipdrop",
+        name: "Clipdrop",
+        url: "https://clipdrop.co",
+        desc: "Fast in-browser photo correction including background removal, light adjusting, and object replacement.",
+        category: "image",
+        subcat: "photo-editor",
+        price: "Freemium",
+        icon: "fas fa-image",
+        tags: ["Cleanup", "Lighting", "BGRemove"],
+        tagline: "Perfect your product catalog photos instantly using smart lighting.",
+        longDesc: "Clipdrop is an ecosystem of single-purpose image editing applications now powered by Jasper. It focuses on isolating, correcting, and refining existing assets, making it incredibly popular for e-commerce products.",
+        pros: [
+            "Unbelievable Reimagine XL creates multiple variations of an image",
+            "Uncrop expands canvas sizes naturally in seconds",
+            "Relight tool adds studio-quality light sources in post-production"
+        ],
+        cons: [
+            "Resolution limits are restricted for free tiers",
+            "High traffic can cause generation queues to lag",
+            "Batch editing is a premium paid-only capability"
+        ],
+        features: [
+            "Virtual Relight adds dynamic colored spotlights",
+            "Smart Object Remover cleans background clutter",
+            "Instant background swapper with catalog templates"
+        ],
+        bestFor: "E-commerce sellers, catalog designers, and product managers.",
+        isTrending: false,
+        isLatest: false
+    },
+    {
+        id: "ai-removebg",
+        name: "Remove.bg",
+        url: "https://www.remove.bg",
+        desc: "Single-purpose AI tool that instantly strips backgrounds from any image with pixel precision.",
+        category: "image",
+        subcat: "photo-editor",
+        price: "Freemium",
+        icon: "fas fa-crop-alt",
+        tags: ["Utility", "BGRemove", "PNG"],
+        tagline: "The fastest, most precise background remover on the web.",
+        longDesc: "Remove.bg does one thing and does it with flawless accuracy: removing image backgrounds. It identifies human subjects, hair, and complex structures, converting them into transparent PNGs.",
+        pros: [
+            "Blazing fast performance (under 3 seconds)",
+            "Amazing precision around fine details like hair and transparency",
+            "Extensive integrations with Photoshop, Figma, and Shopify"
+        ],
+        cons: [
+            "Free exports are limited to low-resolution previews",
+            "Highly expensive credit packs for high-resolution batch jobs",
+            "Lacks any other general image editing utility"
+        ],
+        features: [
+            "Automated batch image background remover",
+            "Built-in design replacements (add solid colors or simple scenes)",
+            "Robust developers API for Shopify backend automation"
+        ],
+        bestFor: "Shopify sellers, graphic designers, and developers automating pipelines.",
+        isTrending: false,
+        isLatest: false
+    },
+
+    // --- Video & Motion ---
+    {
+        id: "ai-sora",
+        name: "OpenAI Sora",
+        url: "https://openai.com/sora",
+        desc: "State-of-the-art text-to-video simulation engine rendering 1080p complex cinematic sequences.",
+        category: "video",
+        subcat: "text-to-video",
+        price: "Paid",
+        icon: "fas fa-film",
+        tags: ["OpenAI", "Cinematic", "TextToVideo"],
+        tagline: "Simulate physics and render 60-second cinematic video clips from text.",
+        longDesc: "Sora is OpenAI's groundbreaking video generation model. Rather than rendering frames blindly, it simulates a physics engine, maintaining consistency across camera motions, lighting bounces, and actors.",
+        pros: [
+            "Generates long 60-second video files in a single pass",
+            "Incredible simulation of realistic physics and camera trajectories",
+            "Flawless character tracking and lighting consistency"
+        ],
+        cons: [
+            "Highly expensive cost per render",
+            "Can occasionally get confused by cause-and-effect physics",
+            "Slow rendering times due to massive processing requirements"
+        ],
+        features: [
+            "Cinematic 1080p landscape or portrait output modes",
+            "Text-to-Video and Image-to-Video inputs",
+            "Camera motion parameters control suite"
+        ],
+        bestFor: "Film directors, cinematic creators, advertising agencies, and game designers.",
+        isTrending: true,
+        isLatest: true
+    },
+    {
+        id: "ai-runway",
+        name: "Runway Gen-2",
+        url: "https://runwayml.com",
+        desc: "Highly versatile cinematic visual toolset for custom video-to-video synthesis and multi-motion control.",
+        category: "video",
+        subcat: "text-to-video",
+        price: "Freemium",
+        icon: "fas fa-video",
+        tags: ["Runway", "VideoSynth", "Motion"],
+        tagline: "Bring your visual ideas to life with precise motion brushes.",
+        longDesc: "Runway Gen-2 is a mature browser-based AI video workspace. Highly popular for its multi-motion control, it allows directors to draw motion brushes to command exactly what parts of an image move and how.",
+        pros: [
+            "Motion Brush lets you animate specific details in static frames",
+            "Excellent active upscaling tools reduce film artifacts",
+            "Comprehensive timeline editor for adding audio and combining clips"
+        ],
+        cons: [
+            "Default render lengths are short (4 seconds, extendable with credits)",
+            "Fast action animations can sometimes morph or warp",
+            "High-resolution exports consume monthly points very quickly"
+        ],
+        features: [
+            "Advanced Multi-Brush motion controller",
+            "Video-to-Video visual style conversion",
+            "Camera motion direction simulation keys"
+        ],
+        bestFor: "Creative video editors, content creators, and marketing visual artists.",
+        isTrending: true,
+        isLatest: false
+    },
+    {
+        id: "ai-heygen",
+        name: "HeyGen",
+        url: "https://www.heygen.com",
+        desc: "Next-gen avatar builder producing studio-quality marketing videos with localized speech dubbing.",
+        category: "video",
+        subcat: "avatar-builder",
+        price: "Freemium",
+        icon: "fas fa-user-circle",
+        tags: ["Avatars", "Marketing", "Localization"],
+        tagline: "Create high-converting video presentations using hyper-realistic human avatars.",
+        longDesc: "HeyGen is the market leader in human-avatar cloning. It allows companies to generate training, onboarding, and advertisement videos with perfect voice lipsyncs in over 40 languages, without hiring actors.",
+        pros: [
+            "Frighteningly realistic avatar facial expressions and mouth movements",
+            "Flawless instant speech translation with matching voice tone",
+            "Massive database of pre-built professional actor templates"
+        ],
+        cons: [
+            "Pricing credits are highly restrictive for indie developers",
+            "Can occasionally lack physical human dynamic movement",
+            "Safety filters block creating avatars of public figures"
+        ],
+        features: [
+            "Custom-built interactive video avatars",
+            "AI Voice translation engine matching original vocal tone",
+            "Direct automation API for scaling video ads"
+        ],
+        bestFor: "B2B sales managers, corporate trainers, and advertising agencies.",
+        isTrending: true,
+        isLatest: false
+    },
+    {
+        id: "ai-synthesia",
+        name: "Synthesia",
+        url: "https://www.synthesia.io",
+        desc: "Enterprise video development tool using AI-modeled corporate presenters to create quick training guides.",
+        category: "video",
+        subcat: "avatar-builder",
+        price: "Paid",
+        icon: "fas fa-presentation",
+        tags: ["Enterprise", "Avatars", "Training"],
+        tagline: "Replace actors and studios with simple corporate video scripts.",
+        longDesc: "Synthesia focuses entirely on professional corporate communications. It helps brands transform dry knowledge bases and PDF documents into visually engaging video manuals, with AI presenters guiding the training.",
+        pros: [
+            "Excellent library of corporate, clean-cut presenter templates",
+            "Supports 120+ languages with professional text-to-speech",
+            "Natively integrates with popular LMS (Learning Management Systems)"
+        ],
+        cons: [
+            "Subscription cost is high with no free entry level",
+            "Avatar poses can feel somewhat stiff on longer presentation screens",
+            "Lacks the expressive viral style of HeyGen"
+        ],
+        features: [
+            "Screen recorder and slides integrations",
+            "Custom avatar cloning pipeline",
+            "LMS course integration and quiz embeds"
+        ],
+        bestFor: "Corporate HR training teams, customer support directors, and educators.",
+        isTrending: false,
+        isLatest: false
+    },
+    {
+        id: "ai-pika",
+        name: "Pika",
+        url: "https://pika.art",
+        desc: "Creative motion generator designed to add anime-style animations and local edits to video frames.",
+        category: "video",
+        subcat: "ai-animator",
+        price: "Freemium",
+        icon: "fas fa-play-circle",
+        tags: ["Animation", "VisualEffects"],
+        tagline: "Animate your illustrations and apply creative cartoon transformations.",
+        longDesc: "Pika focuses on casual visual effects and creative character animations. It is highly popular on social media for cartooning images, adding localized visual transformations, and creating animated meme assets.",
+        pros: [
+            "Superb control over local canvas modifications (Inpainting)",
+            "Excellent anime, cartoon, and 3D animation filters",
+            "Sound Effects (SFX) can be auto-generated to match video motion"
+        ],
+        cons: [
+            "Struggles with maintaining strict corporate realism",
+            "Clips can display small motion artifacts around borders",
+            "Free renders carry a heavy watermark in the corner"
+        ],
+        features: [
+            "Canvas Expansion to wider format ratios",
+            "Automated Video SFX audio generator",
+            "Dynamic Character clothing swapper"
+        ],
+        bestFor: "Meme creators, social media influencers, and digital animators.",
+        isTrending: false,
+        isLatest: false
+    },
+    {
+        id: "ai-luma",
+        name: "Luma Dream Machine",
+        url: "https://lumalabs.ai/dream-machine",
+        desc: "High-speed text/image-to-video physical simulator rendering highly accurate action physics.",
+        category: "video",
+        subcat: "text-to-video",
+        price: "Freemium",
+        icon: "fas fa-cubes",
+        tags: ["Luma", "Physics", "TextToVideo"],
+        tagline: "Generate fast cinematic sequences containing highly realistic action physics.",
+        longDesc: "Luma Dream Machine is designed for fast, highly realistic cinematic renders. Trained on physical models, it excels at dramatic camera moves, high-speed vehicle motions, and real-time environment lighting changes.",
+        pros: [
+            "Blazing fast generation speeds compared to other engines",
+            "Superb understanding of rapid motion and direct camera instructions",
+            "Offers some completely free daily generations on web"
+        ],
+        cons: [
+            "Complex humanoid hand/face renders can sometimes morph",
+            "Video quality requires manual upscaling in post-production",
+            "Lacks detailed sub-region motion brushes"
+        ],
+        features: [
+            "Natively fast rendering pipelines",
+            "Physical physics and acceleration simulator",
+            "High-fidelity image-to-video rendering"
+        ],
+        bestFor: "Storyboard creators, game visual designers, and video editors on a budget.",
+        isTrending: true,
+        isLatest: true
+    },
+    {
+        id: "ai-invideo",
+        name: "InVideo AI",
+        url: "https://invideo.io",
+        desc: "Generates scripted social media shorts, background music, and voiceovers from simple prompts.",
+        category: "video",
+        subcat: "text-to-video",
+        price: "Freemium",
+        icon: "fas fa-hashtag",
+        tags: ["Shorts", "SocialMedia", "AutoScript"],
+        tagline: "Turn your concepts and articles into finished YouTube Shorts.",
+        longDesc: "InVideo AI is built for quick social media scaling. Rather than focusing on professional art, it reads text prompts to write script sequences, pull stock footage assets, lay voiceovers, edit clips, and sync subtitles automatically.",
+        pros: [
+            "Automates the entire editing, scripting, and voice pipeline in one click",
+            "Excellent library of royalty-free stock videos and music",
+            "Clean text-based interface for fast script editing"
+        ],
+        cons: [
+            "Default stock footage selected can sometimes look generic",
+            "Voiceovers can carry a slightly automated commercial tone",
+            "Free exports carry branding watermarks"
+        ],
+        features: [
+            "Complete text prompt-to-video editor",
+            "Automated multi-accent voice narration synthesis",
+            "Direct TikTok and YouTube API posting adapters"
+        ],
+        bestFor: "Content creators, faceless YouTube channels, and social media marketers.",
+        isTrending: false,
+        isLatest: false
+    },
+
+    // --- Voice & Audio ---
+    {
+        id: "ai-elevenlabs",
+        name: "ElevenLabs",
+        url: "https://elevenlabs.io",
+        desc: "Industry-standard audio generator delivering hyper-realistic text-to-speech and instant voice cloning.",
+        category: "voice",
+        subcat: "voice-cloning",
+        price: "Freemium",
+        icon: "fas fa-microphone-alt",
+        tags: ["TTS", "VoiceCloning", "Audio"],
+        tagline: "Synthesize lifelike voice acting and clone vocal signatures instantly.",
+        longDesc: "ElevenLabs is the undisputed industry standard for text-to-speech. By studying human emotion, breathing patterns, and vocal inflections, it delivers speech that is completely indistinguishable from professional voice actors.",
+        pros: [
+            "Unrivaled emotional depth, pauses, and speech naturalism",
+            "Amazing vocal cloning requires only a 30-second audio sample",
+            "Professional licensing support for authors and voice actors"
+        ],
+        cons: [
+            "Character generation quotas consume credits quickly",
+            "Vocal emotion can sometimes drift on very long scripts",
+            "Risk of deepfake abuse requires robust authentication"
+        ],
+        features: [
+            "Emotion and pacing slider controls",
+            "Instant and high-fidelity vocal cloning",
+            "Sound Effects (SFX) synthesis engine"
+        ],
+        bestFor: "Audiobook authors, video creators, game voice-designers, and accessibility teams.",
+        isTrending: true,
+        isLatest: false
+    },
+    {
+        id: "ai-suno",
+        name: "Suno AI",
+        url: "https://suno.com",
+        desc: "State-of-the-art music composer creating complete acoustic, vocal, and lyrical songs from prompts.",
+        category: "voice",
+        subcat: "music-gen",
+        price: "Freemium",
+        icon: "fas fa-music",
+        tags: ["Music", "Vocals", "Composition"],
+        tagline: "Generate complete vocal, acoustic, and instrumental songs in any genre.",
+        longDesc: "Suno AI has revolutionized digital audio. In seconds, it converts text outlines into 2-minute vocal and lyrical compositions across any genre (pop, rock, jazz, classical, lo-fi), complete with instrumentation.",
+        pros: [
+            "Remarkable full orchestration and lyrical vocal synthesis",
+            "Supports combining and extending generation clips indefinitely",
+            "Generates separate custom backing tracks in one click"
+        ],
+        cons: [
+            "Vocal output can occasionally sound slightly pixelated or low-res",
+            "Commercial monetization requires keeping a paid subscription active",
+            "Strict copyright filters prevent styling after specific vocal artists"
+        ],
+        features: [
+            "Lyrical generator or completely instrumental modes",
+            "Song extension and clip combining timeline",
+            "High-fidelity MP3 or WAV audio exports"
+        ],
+        bestFor: "Content creators, songwriters seeking outlines, and casual music experimenters.",
+        isTrending: true,
+        isLatest: false
+    },
+    {
+        id: "ai-udio",
+        name: "Udio",
+        url: "https://www.udio.com",
+        desc: "High-fidelity artistic music generation tool built to generate complex multi-genre orchestration.",
+        category: "voice",
+        subcat: "music-gen",
+        price: "Freemium",
+        icon: "fas fa-guitar",
+        tags: ["Music", "Orchestra", "Production"],
+        tagline: "Compose high-fidelity, studio-mastered musical tracks.",
+        longDesc: "Udio is built for audiophiles and producers. Emphasizing high-fidelity audio mastery and complex multi-part structures, it delivers incredibly rich musical arrangements and cleaner vocal styling.",
+        pros: [
+            "Exceptional audio quality, vocal clarity, and mastering",
+            "Detailed multi-part structure controls (Intro, Verse, Chorus, Outro)",
+            "Dynamic inpainting allows modifying specific instrument notes"
+        ],
+        cons: [
+            "Requires slightly more descriptive prompts than Suno to sound perfect",
+            "Processing and rendering queues can be slower during high traffic",
+            "Interface has a slightly higher complexity curve"
+        ],
+        features: [
+            "Interactive Audio Inpainting brushes",
+            "Fine-tuned global genre tags selectors",
+            "Advanced multi-track stem exports"
+        ],
+        bestFor: "Independent music producers, audio engineers, and visual directors.",
+        isTrending: true,
+        isLatest: true
+    },
+    {
+        id: "ai-descript",
+        name: "Descript",
+        url: "https://www.descript.com",
+        desc: "Audio/video editor that works like a text document — transcribe, edit transcripts, and update files.",
+        category: "voice",
+        subcat: "audio-editor",
+        price: "Freemium",
+        icon: "fas fa-file-audio",
+        tags: ["Editing", "Transcription", "Podcast"],
+        tagline: "Edit your audio files by simply editing your text transcript.",
+        longDesc: "Descript completely changes the audio editing workflow. Rather than splicing raw waveforms, Descript transcribes your files and allows you to edit speech by deleting or moving text in a document, with AI cleaning the audio.",
+        pros: [
+            "Editing audio by cutting text is incredibly fast and intuitive",
+            "Incredible 'Overdub' creates a custom clone to insert missing words",
+            "Automated 'Remove Filler Words' strips 'ums' and 'uhs' instantly"
+        ],
+        cons: [
+            "Transcription accuracy can degrade with heavy accents",
+            "Heavy desktop application can lag on older computers",
+            "Detailed waveform fine-tuning can be clunky in their editor"
+        ],
+        features: [
+            "Automated multi-speaker transcriptions",
+            "Studio Sound background noise removal",
+            "Overdub AI speech replacement keyboard"
+        ],
+        bestFor: "Podcasters, video content creators, and corporate interview editors.",
+        isTrending: false,
+        isLatest: false
+    },
+    {
+        id: "ai-speechify",
+        name: "Speechify",
+        url: "https://speechify.com",
+        desc: "Accessibility text reader converting books, PDFs, and web articles into fluid, natural audio narrations.",
+        category: "voice",
+        subcat: "text-to-speech",
+        price: "Freemium",
+        icon: "fas fa-book-reader",
+        tags: ["Reader", "Accessibility", "TTS"],
+        tagline: "Speed-read your books and documents using natural voice synthesis.",
+        longDesc: "Speechify is an accessibility utility designed to speed up reading. It converts uploaded textbooks, PDFs, emails, and web pages into realistic, natural audio narrations, allowing users to listen while running or commuting.",
+        pros: [
+            "Outstanding library of celebrity narrators (Snoop Dogg, Gwyneth Paltrow)",
+            "Supports listening up to 9x speeds with perfect comprehension",
+            "Excellent Chrome extension and mobile app ecosystems"
+        ],
+        cons: [
+            "The best, most natural voices are locked behind a high yearly plan",
+            "Free tier uses standard computer synthesized voices",
+            "Struggles occasionally with complex table formats in documents"
+        ],
+        features: [
+            "Advanced OCR document scanner",
+            "Speed-listening acceleration settings",
+            "Cross-device progress syncing support"
+        ],
+        bestFor: "Students, ADHD professionals, and users needing accessibility reading solutions.",
+        isTrending: false,
+        isLatest: false
+    },
+    {
+        id: "ai-murf",
+        name: "Murf.ai",
+        url: "https://murf.ai",
+        desc: "Curated library of realistic, professional voice actors designed for commercials and slide presentations.",
+        category: "voice",
+        subcat: "text-to-speech",
+        price: "Freemium",
+        icon: "fas fa-headphones-alt",
+        tags: ["Voiceover", "Presentation"],
+        tagline: "Generate professional corporate voiceovers in minutes.",
+        longDesc: "Murf.ai is a professional voice studio in-browser. Focused on commercials, presentations, and product explainers, it provides a curated library of clean, pre-trained corporate voiceovers complete with timing adjustments.",
+        pros: [
+            "Extremely clean, corporate, high-end voice library",
+            "Flawless timeline synchronization with PowerPoint slides",
+            "Includes extensive background royalty-free backing music"
+        ],
+        cons: [
+            "Lacks the organic, dramatic emotional pauses of ElevenLabs",
+            "Highly restricted download capabilities on free trial",
+            "Custom audio cloning is highly priced for individual users"
+        ],
+        features: [
+            "Direct PowerPoint slide timing syncer",
+            "Vocal tone parameters customization",
+            "Team collaboration workspace"
+        ],
+        bestFor: "E-learning developers, slide designers, and product marketing managers.",
+        isTrending: false,
+        isLatest: false
+    },
+
+    // --- Coding & Tech ---
+    {
+        id: "ai-copilot",
+        name: "GitHub Copilot",
+        url: "https://github.com/features/copilot",
+        desc: "The pioneer IDE coding assistant offering in-line code completion and terminal assistance.",
+        category: "code",
+        subcat: "ide-companion",
+        price: "Paid",
+        icon: "fab fa-github",
+        tags: ["GitHub", "IDE", "CodeCompletion"],
+        tagline: "The pioneer AI coding companion integrated natively in your IDE.",
+        longDesc: "GitHub Copilot is the original developer companion. Operating directly within VS Code and JetBrains, it scans context, autocomplete statements, writes unit tests, and documents legacy files, saving up to 55% of developer time.",
+        pros: [
+            "Blazing fast, highly accurate inline code autocomplete",
+            "Deeply integrated with all major IDE structures",
+            "Massive training set ensures highly accurate boilerplate patterns"
+        ],
+        cons: [
+            "No free tier option for general individual users",
+            "Can occasionally suggest outdated library API code",
+            "Requires active internet connection to function smoothly"
+        ],
+        features: [
+            "Contextual inline autocomplete keyboard controls",
+            "GitHub Copilot Chat inside IDE panels",
+            "Secure enterprise private data filter masks"
+        ],
+        bestFor: "Professional software engineers, developers scaling complex codebases.",
+        isTrending: true,
+        isLatest: false
+    },
+    {
+        id: "ai-cursor",
+        name: "Cursor",
+        url: "https://cursor.sh",
+        desc: "AI-first code editor built on VS Code, enabling code editing and project-wide modifications.",
+        category: "code",
+        subcat: "ide-companion",
+        price: "Freemium",
+        icon: "fas fa-code-branch",
+        tags: ["Editor", "VSCode", "ProjectEdit"],
+        tagline: "The advanced AI-first editor built to rewrite entire files in one click.",
+        longDesc: "Cursor is a VS Code fork rebuilt around AI capability. It features Composer, allowing developers to direct an agent to edit files across a project, fix lint errors, and write complex pipelines in a sleek visual UI.",
+        pros: [
+            "Composer writes code across multiple files autonomously",
+            "Imports your entire local folder structure context automatically",
+            "Supports keyboard shortcuts to rewrite highlighted lines instantly"
+        ],
+        cons: [
+            "Requires switching away from standard VS Code to their fork",
+            "Premium model limits are restricted on free tiers",
+            "Requires minor setup to configure local API keys"
+        ],
+        features: [
+            "Advanced multi-file AI Composer",
+            "Intelligent auto-importing context indexing",
+            "One-click terminal error debug triggers"
+        ],
+        bestFor: "Modern developers, designers, and engineers building full-stack applications.",
+        isTrending: true,
+        isLatest: true
+    },
+    {
+        id: "ai-v0",
+        name: "v0.dev",
+        url: "https://v0.dev",
+        desc: "Vercel's component generator producing polished React, Tailwind CSS, and Shadcn UI frontends.",
+        category: "code",
+        subcat: "ui-builder",
+        price: "Freemium",
+        icon: "fas fa-laptop-code",
+        tags: ["Vercel", "React", "Tailwind"],
+        tagline: "Convert plain English prompts into polished React, Tailwind, and Shadcn layouts.",
+        longDesc: "v0.dev by Vercel is a specialized frontend component builder. It allows designers and developers to describe interfaces, generating modular React code styled with Tailwind CSS and pre-configured with Shadcn icons.",
+        pros: [
+            "Stunning, modern design systems out of the box",
+            "Generates completely modular, clean React components",
+            "Excellent support for updating mockups via screenshot uploads"
+        ],
+        cons: [
+            "Strictly focused on React and Tailwind framework architectures",
+            "Lacks direct database and backend function integrations",
+            "Advanced usage can consume monthly credits quickly"
+        ],
+        features: [
+            "Interactive component browser window",
+            "One-click copy code or deploy to Vercel",
+            "Direct Figma-to-code design system matching"
+        ],
+        bestFor: "Frontend developers, product designers, and creators building SaaS MVPs.",
+        isTrending: true,
+        isLatest: false
+    },
+    {
+        id: "ai-replit-agent",
+        name: "Replit Agent",
+        url: "https://replit.com",
+        desc: "Autonomous software generator creating full-stack web architectures from simple English prompts.",
+        category: "code",
+        subcat: "code-gen",
+        price: "Freemium",
+        icon: "fas fa-network-wired",
+        tags: ["Autonomous", "FullStack", "Replit"],
+        tagline: "Build and deploy complete full-stack web applications from text instructions.",
+        longDesc: "Replit Agent is a fully autonomous developer in-browser. Users describe application goals, and the Agent builds database configurations, backends, frontends, and handles deployment pipelines automatically.",
+        pros: [
+            "Completely handles backend database, UI, and deployment pipelines",
+            "Allows non-developers to create real full-stack web software",
+            "Dynamic debug cycles auto-correct runtime bugs in real-time"
+        ],
+        cons: [
+            "Requires purchasing Replit workspace memberships to run",
+            "Complex database schemes can sometimes crash execution",
+            "Limits customization capability on deployed server structures"
+        ],
+        features: [
+            "Autonomous environment setup and database builder",
+            "Built-in hosting and domain pipeline manager",
+            "Interactive feedback dashboard"
+        ],
+        bestFor: "Entrepreneurs, rapid prototype designers, and learners building web projects.",
+        isTrending: true,
+        isLatest: true
+    },
+    {
+        id: "ai-tabnine",
+        name: "Tabnine",
+        url: "https://www.tabnine.com",
+        desc: "Private, local-first code companion emphasizing secure enterprise-grade data protection.",
+        category: "code",
+        subcat: "ide-companion",
+        price: "Freemium",
+        icon: "fas fa-shield-alt",
+        tags: ["Security", "LocalCode", "Enterprise"],
+        tagline: "Write code with a secure, local companion that protects your intellectual property.",
+        longDesc: "Tabnine emphasizes enterprise privacy. It trains custom models on your codebases while guaranteeing zero data leaks, supporting complete local execution with zero internet connectivity required.",
+        pros: [
+            "100% private models can run fully offline locally",
+            "Zero legal risks; trained strictly on open-source permissible code",
+            "Very lightweight processing footprint in IDEs"
+        ],
+        cons: [
+            "Autocomplete can sometimes be slightly less creative than Copilot",
+            "Free version is limited to standard line-completions",
+            "Requires larger hardware setup to run deep models locally"
+        ],
+        features: [
+            "Complete local-only code models",
+            "Permissively licensed code validation check",
+            "Custom enterprise codebase model training"
+        ],
+        bestFor: "Enterprise companies, bank software teams, and developers with strict NDA rules.",
+        isTrending: false,
+        isLatest: false
+    },
+    {
+        id: "ai-phind",
+        name: "Phind",
+        url: "https://www.phind.com",
+        desc: "Highly specialized technical developer search engine delivering direct solutions to programming queries.",
+        category: "code",
+        subcat: "dev-search",
+        price: "Freemium",
+        icon: "fas fa-terminal",
+        tags: ["Search", "Developer", "Solutions"],
+        tagline: "The technical developer search engine that replaces StackOverflow.",
+        longDesc: "Phind is a technical answer engine optimized for programmers. It searches technical documentations, GitHub repos, and StackOverflow posts, returning ready-to-run solutions complete with citations.",
+        pros: [
+            "Stunningly accurate answers to highly specific developer errors",
+            "Cites official package documentation directly",
+            "Very fast performance compared to general LLMs"
+        ],
+        cons: [
+            "Strictly optimized for programming (struggles with general creative writing)",
+            "Free searches have lower rate limits during peak usage",
+            "Code output can sometimes require minor version adjustments"
+        ],
+        features: [
+            "Direct code sandbox runner integrations",
+            "Contextual IDE search companion adapters",
+            "Real-time documentation scanning pipeline"
+        ],
+        bestFor: "Software developers, technical writers, and DevOps engineers debugging logs.",
+        isTrending: false,
+        isLatest: false
+    },
+    {
+        id: "ai-codeium",
+        name: "Codeium",
+        url: "https://codeium.com",
+        desc: "Blazing fast, free-tier coding assistant featuring high-quality code autocompletion and chat.",
+        category: "code",
+        subcat: "ide-companion",
+        price: "Freemium",
+        icon: "fas fa-bolt",
+        tags: ["FreeTier", "Fast", "IDE"],
+        tagline: "Supercharge your IDE with a completely free technical copilot.",
+        longDesc: "Codeium offers high-quality IDE autocompletion and chat companion features with a generous, permanent free tier for individual developers. It focuses on blazing fast latency and wide language compatibility.",
+        pros: [
+            "Completely free with unlimited standard completions",
+            "Blazing fast performance speeds even on slow internet",
+            "Supports 70+ programming languages and all major editors"
+        ],
+        cons: [
+            "Requires active account creation to unlock free model tiers",
+            "Advanced multi-file edits are less robust than Cursor",
+            "Corporate support is restricted to enterprise plans"
+        ],
+        features: [
+            "Unlimited free code autocomplete and chat panels",
+            "In-IDE technical code search capabilities",
+            "Local indexing configuration systems"
+        ],
+        bestFor: "Student programmers, freelance developers, and engineers wanting a free coding assistant.",
+        isTrending: false,
+        isLatest: false
+    },
+
+    // --- Productivity & Search ---
+    {
+        id: "ai-perplexity",
+        name: "Perplexity",
+        url: "https://www.perplexity.ai",
+        desc: "Conversational knowledge engine that searches the web in real-time, delivering clean, cited answers.",
+        category: "productivity",
+        subcat: "ai-search",
+        price: "Freemium",
+        icon: "fas fa-search-location",
+        tags: ["Search", "Citations", "Knowledge"],
+        tagline: "The conversational research engine that replaces standard search pages.",
+        longDesc: "Perplexity is a conversational knowledge search engine. It crawls live web databases, gathers source materials, and synthesizes clean, cohesive reports complete with clickable footnote citations, making Google Search feel obsolete.",
+        pros: [
+            "Flawless footnotes citation system prevents AI hallucinations",
+            "Pro searches can select specific engines (Claude 3.5, GPT-4o)",
+            "Excellent 'Collections' organizes research threads easily"
+        ],
+        cons: [
+            "Rate limits on Pro queries on the free tier",
+            "Can sometimes summarize biased or low-quality source URLs",
+            "Visual image search integration is basic"
+        ],
+        features: [
+            "Footnote links verification pipeline",
+            "Multi-LLM choice options dashboard",
+            "Document attachment scanning for deep analysis"
+        ],
+        bestFor: "Journalists, academic researchers, students, and curious learners.",
+        isTrending: true,
+        isLatest: false
+    },
+    {
+        id: "ai-notion",
+        name: "Notion AI",
+        url: "https://www.notion.so/product/ai",
+        desc: "Embedded writing companion integrated with Notion workspace to summarize documents and auto-fill tables.",
+        category: "productivity",
+        subcat: "doc-assistant",
+        price: "Freemium",
+        icon: "fas fa-sticky-note",
+        tags: ["Notion", "Workspace", "NoteTaking"],
+        tagline: "Bring AI directly into your wikis, notes, and project databases.",
+        longDesc: "Notion AI embeds generative power directly inside your workspace documents. It auto-fills tables, summarizes meeting notes, translates pages, drafts content, and queries your entire workspace repository instantly.",
+        pros: [
+            "Natively integrates with all your existing folders and tables",
+            "Outstanding database auto-fill gathers research dynamically",
+            "Very fast keyboard commands inline (simply press space)"
+        ],
+        cons: [
+            "Requires purchasing a separate add-on on top of standard Notion plans",
+            "Database querying can sometimes return incomplete notes",
+            "Limited creative design layout customization"
+        ],
+        features: [
+            "Inline document summarizers",
+            "Automated table column filling bots",
+            "Workspace-wide Q&A semantic search"
+        ],
+        bestFor: "Startup founders, project managers, student note-takers, and wiki builders.",
+        isTrending: true,
+        isLatest: false
+    },
+    {
+        id: "ai-gamma",
+        name: "Gamma",
+        url: "https://gamma.app",
+        desc: "Generative presentation developer compiling slides, documents, and web layouts from outlines.",
+        category: "productivity",
+        subcat: "presentation",
+        price: "Freemium",
+        icon: "fas fa-file-powerpoint",
+        tags: ["Slides", "Documents", "Decks"],
+        tagline: "Create gorgeous slideshow presentations and landing pages from simple text.",
+        longDesc: "Gamma makes slide deck creation modern and fun. Rather than editing rigid PowerPoint layouts, users write structured text, and Gamma compiles gorgeous, interactive, responsive slide decks, webpages, or PDF summaries in seconds.",
+        pros: [
+            "Creates incredibly beautiful, modern design themes automatically",
+            "Cards are responsive (adjust to fit mobile screens perfectly)",
+            "Allows embedding interactive components like videos and forms"
+        ],
+        cons: [
+            "Advanced customized formatting is restricted compared to PowerPoint",
+            "Export options for raw PPTX formats can occasionally shift fonts",
+            "High-end custom styling requires monthly premium memberships"
+        ],
+        features: [
+            "Prompt-to-presentation structured generator",
+            "Responsive layout deck architecture",
+            "Interactive video, chart, and mockups integrations"
+        ],
+        bestFor: "Sales professionals, startup founders raising capital, and corporate lecturers.",
+        isTrending: true,
+        isLatest: false
+    },
+    {
+        id: "ai-consensus",
+        name: "Consensus",
+        url: "https://consensus.app",
+        desc: "Academic search engine finding scientific consensus across 200M+ scientific journal papers.",
+        category: "productivity",
+        subcat: "ai-search",
+        price: "Freemium",
+        icon: "fas fa-microscope",
+        tags: ["Academic", "Science", "Journal"],
+        tagline: "See what peer-reviewed scientific studies actually say on any topic.",
+        longDesc: "Consensus is an AI search engine trained exclusively on 200 million peer-reviewed scientific papers. It extracts evidence-backed answers, aggregates scientific consensus, and drafts study snapshots, replacing hours of manual Google Scholar research.",
+        pros: [
+            "Consensus Meter visually summarizes scientific split (Yes/No/mixed)",
+            "Answers are strictly grounded in published papers, not hallucinated",
+            "Fuzzy question-based search simplifies finding scientific files"
+        ],
+        cons: [
+            "Free tier is capped on advanced search limits",
+            "Doesn't automatically filter out retracted studies",
+            "Personal research organization folders are basic"
+        ],
+        features: [
+            "Evidence-backed Consensus Meter charts",
+            "Deep Search synthesizes up to 50 papers",
+            "Built-in APA and MLA citation compilers"
+        ],
+        bestFor: "Medical professionals, academic researchers, biology students, and science writers.",
+        isTrending: false,
+        isLatest: false
+    },
+    {
+        id: "ai-julius",
+        name: "Julius AI",
+        url: "https://julius.ai",
+        desc: "Advanced data analyst capable of analyzing spreadsheets, building graphs, and writing Python algorithms.",
+        category: "productivity",
+        subcat: "data-analyst",
+        price: "Freemium",
+        icon: "fas fa-chart-bar",
+        tags: ["DataAnalyst", "Spreadsheets", "Graphs"],
+        tagline: "Analyze data files and render beautiful charts in seconds.",
+        longDesc: "Julius AI acts as a dedicated personal data scientist. By uploading CSV files, Excel spreadsheets, or SQL databases, Julius writes customized Python scripts to run cleanups, build regression models, and render gorgeous visual charts.",
+        pros: [
+            "Outstanding handling of large, messy spreadsheets and databases",
+            "Generates beautiful, fully labeled interactive graphs and charts",
+            "Excellent support for mathematical and statistical models"
+        ],
+        cons: [
+            "Requires basic understanding of statistics to verify outputs",
+            "Heavy data operations can consume credit limits quickly",
+            "No direct live connections to external API pipelines yet"
+        ],
+        features: [
+            "Advanced Python sandbox engine",
+            "Messy dataset automatic cleanups",
+            "Interactive graph output editors"
+        ],
+        bestFor: "Financial analysts, operations managers, and marketing data researchers.",
+        isTrending: true,
+        isLatest: true
+    },
+    {
+        id: "ai-otter",
+        name: "Otter.ai",
+        url: "https://otter.ai",
+        desc: "Autonomous meeting companion that records audio, writes transcripts, and generates tasks in real-time.",
+        category: "productivity",
+        subcat: "meeting-comp",
+        price: "Freemium",
+        icon: "fas fa-comments-dollar",
+        tags: ["Meetings", "Transcription", "Tasks"],
+        tagline: "Automate your meeting summaries, action items, and task boards.",
+        longDesc: "Otter.ai joins your corporate Zoom, Teams, and Google Meet calls as a silent assistant. It records audio streams, transcribes conversations in real-time, isolates separate speakers, and automatically formats structured summaries and tasks.",
+        pros: [
+            "Brilliant real-time transcription speeds and speaker labeling",
+            "Excellent automated action-item lists sync with Slack",
+            "Saves hours of manual administrative note-taking"
+        ],
+        cons: [
+            "Free version is limited to short meeting durations",
+            "Transcription quality degrades in noisy conference rooms",
+            "Integration with calendar invites requires set up steps"
+        ],
+        features: [
+            "Silent video call companion integration",
+            "Real-time speaker recognition transcription",
+            "Automated action item and timeline builder"
+        ],
+        bestFor: "Corporate project leads, journalists, and teams managing back-to-back meetings.",
+        isTrending: false,
+        isLatest: false
+    }
+];
+
+// Controller State
+let currentCategory = "all";
+let currentSubcategory = "";
+let currentFilter = "all"; // 'all', 'latest', 'trending', 'bookmarks'
+let searchQuery = "";
+let favorites = [];
+
+// DOM Elements
+const aiGrid = document.getElementById("aiGrid");
+const aiSearch = document.getElementById("aiSearch");
+const aiSidebar = document.getElementById("aiSidebar");
+const listingTitle = document.getElementById("listingTitle");
+const toolCount = document.getElementById("toolCount");
+const ultimateFilters = document.getElementById("ultimateFilters");
+const mobileSidebarToggle = document.getElementById("mobileSidebarToggle");
+const sidebarCloseBtn = document.getElementById("sidebarCloseBtn");
+
+// Details Drawer Elements
+const detailsDrawer = document.getElementById("detailsDrawer");
+const drawerBackdrop = document.getElementById("drawerBackdrop");
+const closeDrawerBtn = document.getElementById("closeDrawerBtn");
+const drawerContent = document.getElementById("drawerContent");
+
+// Modal Elements
+const submitModal = document.getElementById("submitModal");
+const openSubmitModalBtn = document.getElementById("openSubmitModal");
+const closeModalBtn = document.getElementById("closeModal");
+const cancelModalBtn = document.getElementById("cancelModal");
+const submitAiForm = document.getElementById("submitAiForm");
+const payloadResult = document.getElementById("payloadResult");
+const payloadCode = document.getElementById("payloadCode");
+const copyPayloadBtn = document.getElementById("copyPayload");
+const donePayloadBtn = document.getElementById("donePayload");
+
+// Initialize Controller
+function init() {
+    loadFavorites();
+    calculateCounts();
+    renderGrid();
+    setupListeners();
+
+    // Command Palette hotkey listener focus
+    document.addEventListener("keydown", (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
+            e.preventDefault();
+            aiSearch.focus();
+        } else if (e.key === "Escape") {
+            closeDetailsDrawer();
+            submitModal.classList.remove("active");
+        }
+    });
+}
+
+// Load favorites from LocalStorage
+function loadFavorites() {
+    try {
+        const stored = localStorage.getItem("ai_hub_favorites");
+        favorites = stored ? JSON.parse(stored) : [];
+    } catch {
+        favorites = [];
+    }
+}
+
+// Save favorites to LocalStorage
+function saveFavorites() {
+    try {
+        localStorage.setItem("ai_hub_favorites", JSON.stringify(favorites));
+    } catch (e) {
+        console.warn("Storage write blocked", e);
+    }
+}
+
+// Calculate parent & child category counts dynamically
+function calculateCounts() {
+    // 1. Total All Count
+    const countAllEl = document.getElementById("count-all");
+    if (countAllEl) countAllEl.textContent = AI_TOOLS_DB.length;
+
+    // 2. Parent Categories Counts
+    const parentCats = ["chat", "image", "video", "voice", "code", "productivity"];
+    parentCats.forEach(cat => {
+        const el = document.getElementById(`count-${cat}`);
+        if (el) {
+            el.textContent = AI_TOOLS_DB.filter(t => t.category === cat).length;
+        }
+    });
+
+    // 3. Child Subcategories Counts
+    const subcats = [
+        "ai-assistant", "seo-copy", "paraphraser",
+        "text-to-image", "photo-editor", "graphic-design",
+        "text-to-video", "avatar-builder", "ai-animator",
+        "voice-cloning", "text-to-speech", "music-gen", "audio-editor",
+        "ide-companion", "code-gen", "ui-builder", "dev-search",
+        "ai-search", "presentation", "data-analyst", "doc-assistant", "meeting-comp"
+    ];
+    subcats.forEach(sub => {
+        const el = document.getElementById(`count-sub-${sub}`);
+        if (el) {
+            el.textContent = AI_TOOLS_DB.filter(t => t.subcat === sub).length;
+        }
+    });
+}
+
+// Render dynamic listings grid
+function renderGrid() {
+    aiGrid.innerHTML = "";
+    
+    // Filter database
+    const filtered = AI_TOOLS_DB.filter(tool => {
+        // 1. Sidebar Category/Subcategory Filter
+        if (currentCategory !== "all") {
+            if (tool.category !== currentCategory) return false;
+            if (currentSubcategory && tool.subcat !== currentSubcategory) return false;
+        }
+
+        // 2. Aixploria Ultimate List Filter
+        if (currentFilter === "latest" && !tool.isLatest) return false;
+        if (currentFilter === "trending" && !tool.isTrending) return false;
+        if (currentFilter === "bookmarks" && !favorites.includes(tool.id)) return false;
+
+        // 3. Search Filter (fuzzy)
+        if (searchQuery) {
+            const query = searchQuery.toLowerCase().trim();
+            const nameMatch = tool.name.toLowerCase().includes(query);
+            const descMatch = tool.desc.toLowerCase().includes(query);
+            const taglineMatch = tool.tagline ? tool.tagline.toLowerCase().includes(query) : false;
+            const bestForMatch = tool.bestFor ? tool.bestFor.toLowerCase().includes(query) : false;
+            const tagMatch = tool.tags.some(t => t.toLowerCase().includes(query));
+            const catMatch = tool.category.toLowerCase().includes(query);
+            return nameMatch || descMatch || taglineMatch || bestForMatch || tagMatch || catMatch;
+        }
+
+        return true;
+    });
+
+    // Update Header Listing Title dynamically for supreme polish
+    let headerText = "All AI Tools";
+    
+    // Category mapping text
+    const catNames = {
+        chat: "Writing & Chat",
+        image: "Image Gen",
+        video: "Video & Motion",
+        voice: "Voice & Audio",
+        code: "Coding & Tech",
+        productivity: "Productivity"
+    };
+
+    const subNames = {
+        "ai-assistant": "AI Assistants",
+        "seo-copy": "SEO Copywriting",
+        "paraphraser": "Paraphraser & Grammar",
+        "text-to-image": "Text to Image",
+        "photo-editor": "AI Photo Editors",
+        "graphic-design": "Graphic Design",
+        "text-to-video": "Text to Video",
+        "avatar-builder": "Avatar Builders",
+        "ai-animator": "AI Animators",
+        "voice-cloning": "Voice Cloning",
+        "text-to-speech": "Text to Speech",
+        "music-gen": "Music Gen",
+        "audio-editor": "Audio Editors",
+        "ide-companion": "IDE Companions",
+        "code-gen": "Code Generators",
+        "ui-builder": "React & UI Builders",
+        "dev-search": "Developer Search",
+        "ai-search": "Conversational Search",
+        "presentation": "Presentations",
+        "data-analyst": "Data Analysts",
+        "doc-assistant": "Doc Assistants",
+        "meeting-comp": "Meeting Companions"
+    };
+
+    if (currentFilter === "bookmarks") {
+        headerText = "Bookmarked Tools";
+    } else if (currentFilter === "latest") {
+        headerText = "Latest AI Releases";
+    } else if (currentFilter === "trending") {
+        headerText = "Trending Top AI";
+    }
+
+    if (currentCategory !== "all") {
+        const catLabel = catNames[currentCategory] || currentCategory;
+        if (currentSubcategory) {
+            const subLabel = subNames[currentSubcategory] || currentSubcategory;
+            headerText += ` › ${subLabel}`;
+        } else {
+            headerText += ` › ${catLabel}`;
+        }
+    }
+    
+    listingTitle.textContent = headerText;
+    toolCount.textContent = `${filtered.length} Tool${filtered.length === 1 ? "" : "s"}`;
+
+    if (filtered.length === 0) {
+        aiGrid.innerHTML = `
+            <div class="empty-state animate-fade-in">
+                <i class="fas fa-folder-open"></i>
+                <h3>No AI Tools Found</h3>
+                <p>Try adjusting your filters, clearing search, or saving bookmarks.</p>
+            </div>
+        `;
+        return;
+    }
+
+    // Render Cards
+    filtered.forEach((tool, index) => {
+        const isFav = favorites.includes(tool.id);
+        const card = document.createElement("div");
+        card.className = `ai-card cat-${tool.category} animate-fade-in`;
+        card.style.animationDelay = `${Math.min(index * 30, 240)}ms`;
+        
+        card.innerHTML = `
+            <div class="ai-card-header">
+                <div class="ai-thumb">
+                    <i class="${tool.icon}"></i>
+                </div>
+                <button class="ai-fav-btn ${isFav ? "active" : ""}" data-id="${tool.id}" aria-label="Favorite Tool">
+                    <i class="${isFav ? "fas" : "far"} fa-heart"></i>
+                </button>
+            </div>
+            <div class="ai-card-body">
+                <h3>${tool.name}</h3>
+                <p>${tool.desc}</p>
+            </div>
+            <div class="ai-card-footer">
+                <div class="ai-tags">
+                    <span class="ai-price-tag price-${tool.price.toLowerCase()}">${tool.price}</span>
+                    ${tool.tags.slice(0, 2).map(tag => `<span class="ai-tag">${tag}</span>`).join("")}
+                </div>
+                <div class="ai-launch-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            </div>
+        `;
+
+        // Wire bookmark toggle button inside the card
+        const favBtn = card.querySelector(".ai-fav-btn");
+        favBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleFavorite(tool.id, favBtn);
+        });
+
+        // Click card to trigger details drawer
+        card.addEventListener("click", (e) => {
+            if (e.target.closest(".ai-fav-btn")) return;
+            openDetailsDrawer(tool);
+        });
+
+        aiGrid.appendChild(card);
+    });
+
+    // Wire Card Spotlight Effect
+    let spotlightRaf = null;
+    aiGrid.onmousemove = (e) => {
+        if (spotlightRaf) return;
+        spotlightRaf = requestAnimationFrame(() => {
+            const cards = aiGrid.getElementsByClassName("ai-card");
+            for (const card of cards) {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty("--mouse-x", `${x}px`);
+                card.style.setProperty("--mouse-y", `${y}px`);
+            }
+            spotlightRaf = null;
+        });
+    };
+}
+
+// Toggle Favorites Manager
+function toggleFavorite(id, btn) {
+    const index = favorites.indexOf(id);
+    if (index === -1) {
+        favorites.push(id);
+        if (btn) {
+            btn.classList.add("active");
+            btn.innerHTML = '<i class="fas fa-heart"></i>';
+        }
+        if (window.Utils && window.Utils.showToast) {
+            window.Utils.showToast("Added to bookmarks ❤️", "success");
+        }
+    } else {
+        favorites.splice(index, 1);
+        if (btn) {
+            btn.classList.remove("active");
+            btn.innerHTML = '<i class="far fa-heart"></i>';
+        }
+        if (window.Utils && window.Utils.showToast) {
+            window.Utils.showToast("Removed from bookmarks", "info");
+        }
+    }
+    saveFavorites();
+    
+    // Update drawer fav button if open
+    const drawerFavBtn = document.getElementById("drawerFavBtn");
+    if (drawerFavBtn && drawerFavBtn.dataset.id === id) {
+        if (index === -1) {
+            drawerFavBtn.classList.add("active");
+            drawerFavBtn.innerHTML = '<i class="fas fa-heart"></i> Bookmarked';
+        } else {
+            drawerFavBtn.classList.remove("active");
+            drawerFavBtn.innerHTML = '<i class="far fa-heart"></i> Bookmark';
+        }
+    }
+
+    // Refresh UI elements
+    if (currentFilter === "bookmarks") {
+        setTimeout(renderGrid, 180);
+    } else {
+        // Sync visual hearts in background grid without full redraw
+        const backgroundHeart = aiGrid.querySelector(`.ai-fav-btn[data-id="${id}"]`);
+        if (backgroundHeart) {
+            if (index === -1) {
+                backgroundHeart.classList.add("active");
+                backgroundHeart.innerHTML = '<i class="fas fa-heart"></i>';
+            } else {
+                backgroundHeart.classList.remove("active");
+                backgroundHeart.innerHTML = '<i class="far fa-heart"></i>';
+            }
+        }
+    }
+}
+
+// Open Details Drawer
+function openDetailsDrawer(tool) {
+    detailsDrawer.classList.add("active");
+    drawerBackdrop.classList.add("active");
+    document.body.style.overflow = "hidden"; // Prevent background scroll
+
+    // Set styling context on the drawer for neon color accents based on tool category
+    detailsDrawer.className = `details-drawer active cat-${tool.category} drawer-active-glow`;
+
+    const isFav = favorites.includes(tool.id);
+
+    // Hydrate the drawer contents
+    drawerContent.innerHTML = `
+        <div class="drawer-header-area">
+            <div class="drawer-logo-container">
+                <div class="drawer-icon-box">
+                    <i class="${tool.icon}"></i>
+                </div>
+            </div>
+            <div class="drawer-title-box">
+                <h2 class="drawer-title">${tool.name}</h2>
+                <span class="drawer-badge">${tool.price} • ${tool.category.toUpperCase()}</span>
+            </div>
+        </div>
+        
+        <p class="drawer-tagline">"${tool.tagline || tool.desc}"</p>
+        
+        <div class="drawer-action-row">
+            <a href="${tool.url}" target="_blank" rel="noopener noreferrer" class="drawer-visit-btn">
+                Visit Website <i class="fas fa-external-link-alt"></i>
+            </a>
+            <button class="drawer-fav-btn ${isFav ? "active" : ""}" id="drawerFavBtn" data-id="${tool.id}">
+                <i class="${isFav ? "fas" : "far"} fa-heart"></i> ${isFav ? "Bookmarked" : "Bookmark"}
+            </button>
+        </div>
+        
+        <div class="drawer-section">
+            <h3>In-Depth Review</h3>
+            <p class="drawer-long-desc">${tool.longDesc || tool.desc}</p>
+        </div>
+        
+        <div class="drawer-section">
+            <h3>Ideal For</h3>
+            <div class="best-for-card">
+                <i class="fas fa-bullseye"></i>
+                <p>${tool.bestFor || "Ideal choice for developers, designers, and scaling creators."}</p>
+            </div>
+        </div>
+        
+        <div class="drawer-section">
+            <h3>Key Features</h3>
+            <ul class="drawer-features-list">
+                ${(tool.features || ["Natively high performance", "Intuitive layout systems", "Commercially safe integrations"]).map(feat => `<li>${feat}</li>`).join("")}
+            </ul>
+        </div>
+        
+        <div class="drawer-section">
+            <h3>Pros &amp; Cons</h3>
+            <div class="pros-cons-grid">
+                <div class="pro-card">
+                    <div class="card-title"><i class="fas fa-check-circle"></i> Pros</div>
+                    <ul>
+                        ${(tool.pros || ["High quality results", "Generous free tiers", "Highly customizable"]).map(pro => `<li>${pro}</li>`).join("")}
+                    </ul>
+                </div>
+                <div class="con-card">
+                    <div class="card-title"><i class="fas fa-times-circle"></i> Cons</div>
+                    <ul>
+                        ${(tool.cons || ["Minor learning curves", "Occasional rate limits", "Premium plans required for HD"]).map(con => `<li>${con}</li>`).join("")}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    `;
+
+    // Wire up drawer favorite button
+    const drawerFavBtn = document.getElementById("drawerFavBtn");
+    drawerFavBtn.addEventListener("click", () => {
+        toggleFavorite(tool.id, drawerFavBtn);
+    });
+}
+
+// Close Details Drawer
+function closeDetailsDrawer() {
+    detailsDrawer.classList.remove("active");
+    drawerBackdrop.classList.remove("active");
+    document.body.style.overflow = ""; // Restore background scroll
+}
+
+// Listeners Setup
+function setupListeners() {
+    // Search listener
+    aiSearch.addEventListener("input", (e) => {
+        searchQuery = e.target.value;
+        renderGrid();
+    });
+
+    // Hierarchical sidebar menu item listener
+    const menuItems = aiSidebar.querySelectorAll(".menu-item");
+    menuItems.forEach(item => {
+        item.addEventListener("click", (e) => {
+            e.stopPropagation();
+            
+            // Remove active classes
+            menuItems.forEach(m => m.classList.remove("active"));
+            
+            // Add active class
+            item.classList.add("active");
+            
+            // Assign states
+            currentCategory = item.dataset.cat;
+            currentSubcategory = item.dataset.subcat || "";
+            
+            // Render grid listings
+            renderGrid();
+            
+            // Close mobile sidebar drawer if on mobile screen size
+            if (window.innerWidth <= 992) {
+                aiSidebar.classList.remove("active");
+            }
+        });
+    });
+
+    // Ultimate horizontal list filters tabs listener
+    const filterTabs = ultimateFilters.querySelectorAll(".ultimate-tab");
+    filterTabs.forEach(tab => {
+        tab.addEventListener("click", () => {
+            filterTabs.forEach(t => t.classList.remove("active"));
+            tab.classList.add("active");
+            
+            currentFilter = tab.dataset.filter;
+            renderGrid();
+        });
+    });
+
+    // Mobile categories togglers
+    mobileSidebarToggle.addEventListener("click", () => {
+        aiSidebar.classList.add("active");
+    });
+
+    sidebarCloseBtn.addEventListener("click", () => {
+        aiSidebar.classList.remove("active");
+    });
+
+    // Backdrop clicks to close elements
+    drawerBackdrop.addEventListener("click", closeDetailsDrawer);
+    closeDrawerBtn.addEventListener("click", closeDetailsDrawer);
+
+    // Modal Events
+    openSubmitModalBtn.addEventListener("click", () => {
+        submitModal.classList.add("active");
+        submitAiForm.classList.remove("hidden");
+        payloadResult.classList.add("hidden");
+        submitAiForm.reset();
+    });
+
+    const closeModal = () => {
+        submitModal.classList.remove("active");
+    };
+
+    closeModalBtn.addEventListener("click", closeModal);
+    cancelModalBtn.addEventListener("click", closeModal);
+    
+    // Form Submission
+    submitAiForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        
+        // Compile static data payload
+        const name = document.getElementById("submitName").value.trim();
+        const url = document.getElementById("submitUrl").value.trim();
+        const category = document.getElementById("submitCat").value;
+        const price = document.getElementById("submitPrice").value;
+        const desc = document.getElementById("submitDesc").value.trim();
+        
+        const timestamp = new Date().toISOString().split("T")[0];
+        
+        const payload = {
+            id: `ai-${name.toLowerCase().replace(/[^a-z0-9]/g, "-")}`,
+            name,
+            url,
+            desc,
+            category,
+            price,
+            icon: "fas fa-brain",
+            tags: ["New", "Community"],
+            submittedOn: timestamp
+        };
+
+        payloadCode.textContent = JSON.stringify(payload, null, 2);
+        
+        submitAiForm.classList.add("hidden");
+        payloadResult.classList.remove("hidden");
+    });
+
+    // Copy Payload
+    copyPayloadBtn.addEventListener("click", () => {
+        navigator.clipboard.writeText(payloadCode.textContent)
+            .then(() => {
+                if (window.Utils && window.Utils.showToast) {
+                    window.Utils.showToast("Payload copied to clipboard! 📋", "success");
+                }
+            })
+            .catch(() => {
+                alert("Failed to copy automatically. Please copy the text manually.");
+            });
+    });
+
+    donePayloadBtn.addEventListener("click", closeModal);
+}
+
+// Run init on DOM Ready
+window.addEventListener("DOMContentLoaded", init);
+
