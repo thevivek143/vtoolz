@@ -601,6 +601,7 @@ body {
     align-items: flex-start;
     position: relative; z-index: 1;
 }
+.aih-card-actions { display:flex; align-items:center; gap:6px; }
 
 .aih-card-icon {
     width: 44px; height: 44px;
@@ -1190,3 +1191,23 @@ body {
     .aih-logo { font-size: 1.25rem; }
     .aih-nav-link { font-size: .8rem; padding: 6px 10px; }
 }
+.aih-compare-btn { position:relative; z-index:6; width:34px; height:34px; display:grid; place-items:center; color:var(--aih-muted,#94a3b8); background:rgba(15,23,42,.88); border:1px solid rgba(148,163,184,.3); border-radius:50%; cursor:pointer; pointer-events:auto; }
+.aih-compare-btn.active { color:#c4b5fd; background:rgba(124,58,237,.2); border-color:#8b5cf6; }
+.aih-compare-bar { position:fixed; z-index:900; left:50%; bottom:18px; transform:translateX(-50%); display:flex; align-items:center; justify-content:space-between; gap:20px; width:min(760px,calc(100vw - 30px)); padding:12px 14px; color:#f8fafc; background:rgba(15,23,42,.96); border:1px solid rgba(139,92,246,.5); border-radius:14px; box-shadow:0 20px 60px rgba(0,0,0,.55); font-size:.82rem; }
+.aih-compare-bar span { display:flex; align-items:center; gap:8px; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.aih-compare-bar button { padding:8px 12px; color:#fff; background:#7c3aed; border:0; border-radius:9px; cursor:pointer; }
+.aih-compare-bar button:disabled { opacity:.45; cursor:not-allowed; }
+.aih-compare-overlay { position:fixed; inset:0; z-index:1200; display:grid; place-items:center; padding:20px; background:rgba(2,6,23,.78); backdrop-filter:blur(8px); }
+.aih-compare-overlay > section { width:min(1050px,100%); max-height:90vh; overflow:auto; padding:22px; color:#f8fafc; background:#0f172a; border:1px solid rgba(139,92,246,.38); border-radius:22px; box-shadow:0 30px 100px rgba(0,0,0,.65); }
+.aih-compare-overlay header { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
+.aih-compare-overlay header small { color:#a78bfa; font-weight:800; letter-spacing:.1em; }
+.aih-compare-overlay header button { width:40px; height:40px; color:#fff; background:rgba(148,163,184,.08); border:1px solid rgba(148,163,184,.2); border-radius:11px; cursor:pointer; }
+.aih-compare-table { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+.aih-compare-table article { padding:18px; background:rgba(30,41,59,.68); border:1px solid rgba(148,163,184,.16); border-radius:16px; }
+.aih-compare-table h3 { margin:12px 0 8px; }
+.aih-compare-table h4 { margin:18px 0 5px; color:#c4b5fd; font-size:.75rem; text-transform:uppercase; letter-spacing:.08em; }
+.aih-compare-table p,.aih-compare-table li { color:#cbd5e1; font-size:.8rem; line-height:1.5; }
+.aih-compare-table ul { padding-left:18px; }
+.aih-compare-table a { display:inline-block; margin-top:18px; color:#c4b5fd; font-weight:700; text-decoration:none; }
+.aih-d-report { color:#fca5a5; background:rgba(248,113,113,.08); border:1px solid rgba(248,113,113,.2); border-radius:10px; padding:10px 12px; cursor:pointer; }
+@media(max-width:760px){.aih-compare-table{grid-template-columns:1fr}.aih-compare-bar>span:first-child{display:none}.aih-compare-bar{justify-content:flex-end}.aih-compare-overlay{padding:8px}.aih-compare-overlay>section{padding:15px}}

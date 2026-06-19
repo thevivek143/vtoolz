@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'vtoolz-v57';
+const CACHE_VERSION = 'vtoolz-v70';
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const DYNAMIC_CACHE = `${CACHE_VERSION}-dynamic`;
 const CDN_CACHE = `${CACHE_VERSION}-cdn`;
@@ -19,7 +19,6 @@ const CRITICAL_ASSETS = [
     './js/utils/tools.js',
     './manifest.json',
     './favicon.ico',
-    './favicon.png',
     './favicon-48.png',
     './apple-touch-icon.png',
     './assets/icon.png'
@@ -31,6 +30,7 @@ const SECONDARY_ASSETS = [
     './js/category.js',
     './js/utils/seo.js',
     './js/utils/command-palette.js',
+    './js/utils/workspace.js',
     './js/utils/cube.js',
     './js/utils/tilt.js',
     './tools/index.html',
@@ -43,6 +43,9 @@ const SECONDARY_ASSETS = [
 
     // Tool landing pages
     './tools/pdf/index.html',
+    './tools/pdf/document-scanner.html',
+    './tools/pdf/document-scanner.css',
+    './tools/pdf/document-scanner.js',
     './tools/image/index.html',
     './tools/text/index.html',
     './tools/dev/index.html',
@@ -60,6 +63,33 @@ const SECONDARY_ASSETS = [
     './tools/math/index.html',
     './tools/time/index.html',
     './tools/utility/index.html',
+    './games/viral/index.html',
+    './games/viral/style.css',
+    './games/viral/games-data.js',
+    './games/viral/hub.js',
+    './games/viral/engine.js',
+    './games/viral/troll-puzzle-quest.html',
+    './games/viral/aura-points.html',
+    './games/viral/mog-off-battle.html',
+    './games/viral/guess-the-brainrot.html',
+    './games/viral/brainrot-merge.html',
+    './games/viral/locked-in-reaction-test.html',
+    './games/viral/meme-higher-lower.html',
+    './games/viral/troll-obby.html',
+    './games/viral/one-button-challenge.html',
+    './games/viral/meme-sound-quiz.html',
+    './games/viral/daily-internet-quiz.html',
+    './games/viral/emoji-decode-battle.html',
+    './games/viral/chaos-would-you-rather.html',
+    './games/viral/npc-simulator.html',
+    './games/viral/daily-meme-bracket.html',
+    './games/viral/67-troll-challenge.html',
+    './games/viral/67-game.js',
+    './games/viral/67-game.css',
+    './games/viral/face-mogged.html',
+    './games/viral/face-mogged.css',
+    './games/viral/face-mogged.js',
+    './assets/games/face-mogged/rival-01.png',
 
     // Core tool scripts
     './js/pdf/pdf-main.js',

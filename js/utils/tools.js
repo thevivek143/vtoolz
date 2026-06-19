@@ -5,6 +5,7 @@ export const tools = [
     { id: 'pdf-compress', name: 'Compress PDF', category: 'pdf', url: 'tools/pdf/compress.html', description: 'Reduce PDF file size.', icon: 'fas fa-compress-arrows-alt', color: '#e74c3c', keywords: 'shrink size optimize' },
     { id: 'pdf-conv-img', name: 'PDF to Image', category: 'pdf', url: 'tools/pdf/pdf-to-img.html', description: 'Convert pages to JPG/PNG.', icon: 'fas fa-image', color: '#e74c3c', keywords: 'convert jpg png' },
     { id: 'pdf-conv-pdf', name: 'Image to PDF', category: 'pdf', url: 'tools/pdf/img-to-pdf.html', description: 'Convert images to PDF.', icon: 'fas fa-file-image', color: '#e74c3c', keywords: 'create make photos' },
+    { id: 'document-scanner', name: 'Document Scanner', category: 'pdf', url: 'tools/pdf/document-scanner.html', description: 'Scan photos into a clean multi-page PDF.', icon: 'fas fa-camera-retro', color: '#7c3aed', keywords: 'camera scan document photos pages pdf maker' },
     { id: 'pdf-watermark', name: 'Watermark PDF', category: 'pdf', url: 'tools/pdf/watermark.html', description: 'Add text/image stamp.', icon: 'fas fa-stamp', color: '#e74c3c', keywords: 'stamp logo protect' },
     { id: 'pdf-duplicate', name: 'Duplicate Pages', category: 'pdf', url: 'tools/pdf/duplicate.html', description: 'Clone specific pages.', icon: 'fas fa-copy', color: '#e74c3c', keywords: 'clone repeat' },
     { id: 'pdf-rotate', name: 'Rotate PDF', category: 'pdf', url: 'tools/pdf/rotate.html', description: 'Rotate pages 90/180 deg.', icon: 'fas fa-sync-alt', color: '#e74c3c', keywords: 'turn orientation' },
@@ -79,6 +80,7 @@ export const tools = [
 
     // Fun & Games
     { id: 'game-hub', name: 'Game Arcade', category: 'fun', url: 'games/index.html', description: 'Play offline games.', icon: 'fas fa-gamepad', color: '#ffeb3b', keywords: 'play fun 2048' },
+    { id: 'viral-arcade', name: 'Viral Arcade', category: 'fun', url: 'games/viral/index.html', description: 'Play 17 meme games and daily challenges.', icon: 'fas fa-fire', color: '#f472b6', keywords: 'viral meme brainrot aura 67 mog troll daily games' },
     { id: 'ai-hub', name: 'AI Tools Hub', category: 'fun', url: 'ai-hub/index.html', description: 'Explore curated top AI tools.', icon: 'fas fa-brain', color: '#9b59b6', keywords: 'ai artificial intelligence chatgpt claude sora deepseek tools library directory' },
     { id: 'fun-decision', name: 'Decision Wheel', category: 'fun', url: 'tools/fun/wheel.html', description: 'Spin the wheel.', icon: 'fas fa-dharmachakra', color: '#ffeb3b', keywords: 'random choice' },
     { id: 'fun-paint', name: 'Paint', category: 'fun', url: 'tools/fun/paint.html', description: 'Draw and sketch.', icon: 'fas fa-paint-brush', color: '#ffeb3b', keywords: 'draw art canvas' },

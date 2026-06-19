@@ -30,6 +30,7 @@
     let activeFilter = "all";
     let searchQuery = "";
     let favorites = [];
+    let compareIds = [];
     let visibleLimit = PAGE_SIZE;
 
     // ---- DOM refs (safe — script loaded at bottom of body) ----
@@ -108,9 +109,14 @@
     // ---- LocalStorage helpers ----
     function loadFavs() {
         try { favorites = JSON.parse(localStorage.getItem("ai_hub_favorites") || "[]"); } catch { favorites = []; }
+        try { compareIds = JSON.parse(localStorage.getItem("ai_hub_compare") || "[]"); } catch { compareIds = []; }
     }
     function saveFavs() {
         try { localStorage.setItem("ai_hub_favorites", JSON.stringify(favorites)); } catch (e) { /* noop */ }
+    }
+
+    function saveCompare() {
+        try { localStorage.setItem("ai_hub_compare", JSON.stringify(compareIds)); } catch (e) { /* noop */ }
     }
 
     // ---- Brand logos ----
@@ -295,6 +301,7 @@
 
         visibleTools.forEach((tool, i) => {
             const isFav = favorites.includes(tool.id);
+            const isCompared = compareIds.includes(tool.id);
             const card = document.createElement("div");
             card.className = "aih-card aih-cat-" + tool.category + " aih-animate";
             card.style.animationDelay = Math.min(i * 25, 300) + "ms";
@@ -304,9 +311,14 @@
             card.innerHTML =
                 '<div class="aih-card-top">' +
                     renderToolLogo(tool) +
+                    '<div class="aih-card-actions">' +
                     '<button class="aih-fav-btn' + (isFav ? " active" : "") + '" data-id="' + tool.id + '" aria-label="Bookmark">' +
                         '<i class="' + (isFav ? "fas" : "far") + ' fa-heart"></i>' +
                     '</button>' +
+                    '<button class="aih-compare-btn' + (isCompared ? " active" : "") + '" data-id="' + tool.id + '" aria-label="' + (isCompared ? 'Remove from comparison' : 'Add to comparison') + '">' +
+                        '<i class="fas fa-scale-balanced"></i>' +
+                    '</button>' +
+                    '</div>' +
                 '</div>' +
                 '<div class="aih-card-body">' +
                     '<h3>' + tool.name + '</h3>' +
@@ -327,10 +339,14 @@
                 e.stopPropagation();
                 toggleFav(tool.id, this);
             });
+            card.querySelector(".aih-compare-btn").addEventListener("click", function (e) {
+                e.stopPropagation();
+                toggleCompare(tool.id);
+            });
 
             // Card click -> open drawer
             card.addEventListener("click", function (e) {
-                if (e.target.closest(".aih-fav-btn")) return;
+                if (e.target.closest(".aih-fav-btn, .aih-compare-btn")) return;
                 openDrawer(tool);
             });
 
@@ -351,6 +367,53 @@
                 cards[j].style.setProperty("--my", (e.clientY - rect.top) + "px");
             }
         };
+    }
+
+    function toggleCompare(id) {
+        const index = compareIds.indexOf(id);
+        if (index >= 0) compareIds.splice(index, 1);
+        else if (compareIds.length < 3) compareIds.push(id);
+        else {
+            window.Utils?.showToast?.("Compare up to three tools at once.", "info");
+            return;
+        }
+        saveCompare();
+        renderGrid();
+        renderCompareBar();
+    }
+
+    function renderCompareBar() {
+        let bar = document.getElementById("aihCompareBar");
+        if (!compareIds.length) {
+            if (bar) bar.remove();
+            return;
+        }
+        if (!bar) {
+            bar = document.createElement("div");
+            bar.id = "aihCompareBar";
+            bar.className = "aih-compare-bar";
+            document.body.appendChild(bar);
+        }
+        const selected = compareIds.map(id => DB.find(tool => tool.id === id)).filter(Boolean);
+        bar.innerHTML = '<span><i class="fas fa-scale-balanced"></i><strong>Compare</strong> ' + selected.map(tool => tool.name).join(" · ") + '</span>' +
+            '<span><button type="button" id="aihCompareOpen"' + (selected.length < 2 ? ' disabled' : '') + '>Compare ' + selected.length + '</button><button type="button" id="aihCompareClear" aria-label="Clear comparison"><i class="fas fa-times"></i></button></span>';
+        bar.querySelector("#aihCompareClear").addEventListener("click", () => { compareIds = []; saveCompare(); renderGrid(); renderCompareBar(); });
+        bar.querySelector("#aihCompareOpen").addEventListener("click", openComparison);
+    }
+
+    function openComparison() {
+        const selected = compareIds.map(id => DB.find(tool => tool.id === id)).filter(Boolean);
+        if (selected.length < 2) return;
+        const overlay = document.createElement("div");
+        overlay.className = "aih-compare-overlay";
+        overlay.innerHTML = '<section role="dialog" aria-modal="true" aria-label="AI tool comparison"><header><div><small>SIDE-BY-SIDE</small><h2>Compare AI tools</h2></div><button type="button" aria-label="Close comparison"><i class="fas fa-times"></i></button></header>' +
+            '<div class="aih-compare-table">' + selected.map(tool => '<article>' + renderToolLogo(tool) + '<h3>' + tool.name + '</h3><span class="aih-price aih-price-' + getPriceSlug(tool.price) + '">' + tool.price + '</span><p>' + tool.desc + '</p><h4>Best for</h4><p>' + (tool.bestFor || "Creators and teams") + '</p><h4>Highlights</h4><ul>' + (tool.features || []).slice(0, 4).map(item => '<li>' + item + '</li>').join("") + '</ul><a href="' + tool.url + '" target="_blank" rel="noopener noreferrer">Visit <i class="fas fa-external-link-alt"></i></a></article>').join("") + '</div></section>';
+        document.body.appendChild(overlay);
+        wireLogoFallback(overlay);
+        const close = () => overlay.remove();
+        overlay.querySelector('header button').addEventListener('click', close);
+        overlay.addEventListener('click', event => { if (event.target === overlay) close(); });
+        document.addEventListener('keydown', function onEscape(event) { if (event.key === 'Escape') { close(); document.removeEventListener('keydown', onEscape); } });
     }
 
     // ---- Favorites ----
@@ -412,6 +475,7 @@
                 '<button class="aih-d-fav' + (isFav ? " active" : "") + '" id="aihDFav" data-id="' + tool.id + '">' +
                     '<i class="' + (isFav ? "fas" : "far") + ' fa-heart"></i> ' + (isFav ? "Bookmarked" : "Bookmark") +
                 '</button>' +
+                '<button class="aih-d-report" id="aihDReport"><i class="fas fa-flag"></i> Report link</button>' +
             '</div>' +
 
             '<div class="aih-d-section">' +
@@ -465,6 +529,16 @@
                 }
             });
         }
+        const reportButton = document.getElementById("aihDReport");
+        if (reportButton) reportButton.addEventListener("click", function () {
+            let reports = [];
+            try { reports = JSON.parse(localStorage.getItem("ai_hub_link_reports") || "[]"); } catch { reports = []; }
+            if (!reports.some(report => report.id === tool.id)) reports.push({ id: tool.id, name: tool.name, url: tool.url, reportedAt: new Date().toISOString() });
+            localStorage.setItem("ai_hub_link_reports", JSON.stringify(reports.slice(-100)));
+            this.disabled = true;
+            this.innerHTML = '<i class="fas fa-check"></i> Report saved';
+            window.Utils?.showToast?.("Saved locally for the next directory review.", "success");
+        });
     }
 
     function closeDrawer() {
@@ -546,6 +620,7 @@
         updateCounts();
         renderDirectory();
         renderGrid();
+        renderCompareBar();
 
         // Search
         elSearch.addEventListener("input", function () {

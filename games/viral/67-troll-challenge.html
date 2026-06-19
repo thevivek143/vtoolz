@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>6–7 Camera Challenge – Free Motion Game | Vibox Viral Arcade</title>
+  <meta name="description" content="Raise your arms, race the 15-second clock, and try to score 67 in this free camera motion challenge. Private, browser-based, and playable on mobile or desktop.">
+  <link rel="canonical" href="https://vibox.app/games/viral/67-troll-challenge.html">
+  <meta property="og:type" content="website"><meta property="og:title" content="6–7 Camera Challenge | Vibox Viral Arcade"><meta property="og:description" content="Can you reach 67 arm raises in 15 seconds?"><meta property="og:url" content="https://vibox.app/games/viral/67-troll-challenge.html"><meta property="og:image" content="https://vibox.app/assets/og-image.png">
+  <meta name="twitter:card" content="summary_large_image"><meta name="theme-color" content="#080b18">
+  <link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"><link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="67-game.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"6–7 Camera Challenge","description":"A 15-second browser motion game where alternating arm raises score points.","genre":"Motion game","playMode":"SinglePlayer","gamePlatform":"Web Browser","url":"https://vibox.app/games/viral/67-troll-challenge.html","isAccessibleForFree":true}</script>
+</head>
+<body class="viral-game-body game67-body">
+<header class="ga-header"><div class="ga-header-inner"><a class="ga-logo" href="index.html"><span class="ga-logo-v">V</span>ibox<span class="ga-logo-dot">.</span>Viral</a><nav class="ga-nav"><a class="ga-nav-link" href="index.html"><i class="fas fa-fire"></i> Viral Arcade</a><a class="ga-nav-link" href="../index.html"><i class="fas fa-gamepad"></i> All Games</a></nav></div></header>
+<main class="game67-shell">
+  <section class="game67-hero">
+    <div><span class="game67-kicker"><i class="fas fa-video"></i> Motion challenge</span><h1>The 6–7 Challenge</h1><p>Raise your left and right arms as fast as you can. You have 15 seconds to hit the magic number: <strong>67</strong>.</p></div>
+    <div class="game67-best"><span>Personal best</span><strong id="best67">0</strong></div>
+  </section>
+  <section class="game67-card" aria-label="6–7 camera game">
+    <div class="game67-toolbar">
+      <div class="game67-score"><span>Score</span><strong id="score67">0</strong></div>
+      <div class="game67-timer" aria-label="Time remaining"><i class="fas fa-stopwatch"></i><strong id="timer67">15.0</strong><span>s</span></div>
+      <button class="game67-icon-btn" id="mute67" aria-label="Toggle sound"><i class="fas fa-volume-high"></i></button>
+    </div>
+    <div class="game67-view" id="view67">
+      <video id="camera67" playsinline muted></video><canvas id="motion67"></canvas>
+      <div class="game67-zones" aria-hidden="true"><span class="left">LEFT</span><span class="right">RIGHT</span></div>
+      <div class="game67-overlay" id="intro67">
+        <div class="game67-mark"><span>6</span><i class="fas fa-bolt"></i><span>7</span></div>
+        <h2>Ready to move?</h2>
+        <p>Your video stays on this device. Vibox only measures movement in two upper-screen zones and never uploads or saves camera frames.</p>
+        <button class="game-btn primary game67-start" id="start67"><i class="fas fa-camera"></i> Enable camera &amp; play</button>
+        <button class="game67-practice" id="practice67"><i class="fas fa-keyboard"></i> Play without camera</button>
+      </div>
+      <div class="game67-overlay" id="countdown67" hidden><span class="game67-count" id="count67">3</span><p>Get your upper body in frame</p></div>
+      <div class="game67-overlay game67-result" id="result67" hidden><span class="game67-result-icon" id="resultIcon67">🔥</span><h2 id="resultTitle67">Round complete!</h2><div class="game67-final" id="final67">0</div><p id="resultCopy67"></p><div class="share-row"><button class="game-btn primary" id="again67">Play again</button><button class="game-btn" id="share67"><i class="fas fa-share-nodes"></i> Share</button></div></div>
+      <div class="game67-flash" id="flash67">+1</div>
+    </div>
+    <div class="game67-guide"><span><i class="fas fa-person-rays"></i> Face the camera</span><span><i class="fas fa-arrows-up-down"></i> Alternate arms</span><span><i class="fas fa-bullseye"></i> Aim for 67</span></div>
+    <div class="game67-practice-controls" id="practiceControls67" hidden><button id="left67" aria-label="Raise left arm"><i class="fas fa-arrow-up"></i> Left arm</button><button id="right67" aria-label="Raise right arm">Right arm <i class="fas fa-arrow-up"></i></button><p>Keyboard: press <kbd>A</kbd> and <kbd>L</kbd> alternately</p></div>
+  </section>
+  <section class="game67-lower">
+    <article class="game67-how"><span class="game67-kicker">How to play</span><h2>Fast arms. Fifteen seconds. One iconic target.</h2><ol><li><b>Allow the camera</b><span>Stand far enough back that your shoulders and hands are visible.</span></li><li><b>Start moving</b><span>Raise one arm into its upper corner, lower it, then raise the other.</span></li><li><b>Reach 67</b><span>Every clean alternating raise earns one point. Your best score is saved locally.</span></li></ol></article>
+    <aside class="game67-board"><div><span class="game67-kicker">On this device</span><h2>Top scores</h2></div><ol id="leaderboard67"></ol></aside>
+  </section>
+  <section class="game-how"><h2>More viral games</h2><div class="related-games"><a href="aura-points.html">Aura Points</a><a href="guess-the-brainrot.html">Guess the Brainrot</a><a href="locked-in-reaction-test.html">Reaction Test</a><a href="face-mogged.html">Face Mogged</a><a href="index.html">All viral games</a></div></section>
+</main>
+<footer class="ga-footer">&copy; 2026 Vibox &middot; Camera processing stays on your device &middot; <a href="index.html">Viral Arcade</a></footer>
+<script src="67-game.js"></script>
+</body></html>

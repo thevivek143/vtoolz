@@ -496,6 +496,16 @@
         "image": "assets/covers/g46.png"
     },
     {
+        "id": 48,
+        "name": "Vibox Viral Arcade",
+        "description": "Play 17 fast meme games: Aura Points, Troll Puzzle Quest, brainrot quizzes, brackets and more.",
+        "engine": "iframe",
+        "url": "viral/index.html",
+        "category": "casual",
+        "mode": "single",
+        "mobileOptimized": true
+    },
+    {
         "id": 47,
         "name": "Stack Tower",
         "description": "Stack isometric blocks as high as you can! Trim overhang slices with physics and build a gorgeous rainbow tower.",

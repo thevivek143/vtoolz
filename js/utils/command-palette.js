@@ -118,6 +118,9 @@ export class CommandPalette {
             { id: 'cmd-home', name: 'Go Home', icon: 'fas fa-home', action: () => this.navigate('index.html'), desc: 'Navigate to Home' },
             { id: 'cmd-theme', name: 'Toggle Theme', icon: 'fas fa-adjust', action: () => this.toggleTheme(), desc: 'Switch Light/Dark mode' },
             { id: 'cmd-zen', name: 'Toggle Zen Mode', icon: 'fas fa-compress-alt', action: () => this.toggleZen(), desc: 'Focus Mode (Hide UI)' },
+            { id: 'cmd-workspace', name: 'Open Workspace', icon: 'fas fa-layer-group', action: () => window.ViboxWorkspace?.open('home'), desc: 'Favorites, recents, and collections' },
+            { id: 'cmd-pipelines', name: 'Open Pipelines', icon: 'fas fa-route', action: () => window.ViboxWorkspace?.open('pipelines'), desc: 'Run a reusable multi-tool workflow' },
+            { id: 'cmd-offline', name: 'Manage Offline Tools', icon: 'fas fa-cloud-download-alt', action: () => window.ViboxWorkspace?.open('offline'), desc: 'View and manage local caches' },
             { id: 'cmd-ai-hub', name: 'Go to AI Hub', icon: 'fas fa-brain', action: () => this.navigate('ai-hub/index.html'), desc: 'Explore Curated AI Tools Directory' }
         ];
 

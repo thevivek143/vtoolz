@@ -1,11 +1,11 @@
-# VtoolZ - Secure, Client-Side Utilities
+# Vibox - Secure, Client-Side Utilities
 
-VtoolZ is a collection of 50+ powerful web utilities that run entirely in your browser. No data is ever sent to a server. 
+Vibox is a collection of 150+ web utilities that run entirely in your browser, plus a searchable AI-tool directory and browser games. Files processed by Vibox utilities stay on your device.
 
 ## 🔒 Privacy Promise
 - **100% Client-Side**: All processing (PDF merging, Image compression, etc.) happens on your device.
 - **No Uploads**: Your files never leave your computer.
-- **No Tracking**: No analytics, cookies, or third-party scripts.
+- **Local Workspace**: Favorites, recents, collections, pipelines, presets, and preferences stay in browser storage.
 - **Offline Capable**: Works without an internet connection once loaded.
 
 ## 🛠️ Features

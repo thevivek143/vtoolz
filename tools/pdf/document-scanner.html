@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self' https://cdnjs.cloudflare.com; img-src 'self' data: blob:; media-src 'self' blob: mediastream:; connect-src 'self'; worker-src 'self' blob:;">
+  <title>Document Scanner &amp; PDF Maker | Vibox</title>
+  <meta name="description" content="Scan documents with your camera or photos, enhance and arrange pages, then create a private PDF in your browser.">
+  <link rel="canonical" href="https://vibox.app/tools/pdf/document-scanner.html">
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../../js/vendor/cropper.min.css">
+  <link rel="stylesheet" href="../../css/style.css">
+  <link rel="stylesheet" href="document-scanner.css">
+</head>
+<body>
+  <header><div class="container"><a href="../../index.html" class="logo">Vibox</a><nav><ul><li><a href="index.html"><i class="fas fa-file-pdf"></i> PDF Tools</a></li></ul></nav></div></header>
+  <main class="scanner-shell">
+    <section class="scanner-heading">
+      <div><span class="eyebrow"><i class="fas fa-shield-halved"></i> Private, on-device processing</span><h1>Document Scanner</h1><p>Capture paper documents or add photos, clean each page, and save everything as one PDF.</p></div>
+      <div class="stepper" aria-label="Progress"><span class="step active" data-step="capture"><b>1</b> Capture</span><span class="step" data-step="edit"><b>2</b> Edit pages</span><span class="step" data-step="export"><b>3</b> Export PDF</span></div>
+    </section>
+    <section class="capture-panel" id="capture-panel">
+      <div class="capture-actions">
+        <button class="capture-choice primary" id="open-camera" type="button"><i class="fas fa-camera"></i><span><strong>Use camera</strong><small>Photograph one page at a time</small></span></button>
+        <button class="capture-choice" id="choose-photos" type="button"><i class="fas fa-images"></i><span><strong>Choose photos</strong><small>Add JPG, PNG, or WebP pages</small></span></button>
+        <input id="photo-input" type="file" accept="image/*" multiple hidden>
+      </div>
+      <div class="drop-zone scanner-drop" id="scanner-drop" role="button" tabindex="0" aria-label="Add document photos"><i class="fas fa-cloud-arrow-up"></i><strong>Drop document photos here</strong><span>You can add more pages at any time</span></div>
+    </section>
+    <section class="editor-panel" id="editor-panel" hidden>
+      <div class="panel-head"><div><h2>Your pages</h2><p><span id="page-count">0</span> pages · drag to reorder</p></div><div class="compact-actions"><button class="btn btn-secondary" id="add-more" type="button"><i class="fas fa-plus"></i> Add pages</button><button class="btn btn-secondary" id="camera-more" type="button"><i class="fas fa-camera"></i> Camera</button></div></div>
+      <div class="page-grid" id="page-grid"></div>
+      <div class="export-card">
+        <div class="export-settings">
+          <label>Document name<input id="doc-name" value="Scanned document" maxlength="80"></label>
+          <label>Page size<select id="page-size"><option value="auto">Fit each image</option><option value="a4" selected>A4</option><option value="letter">US Letter</option></select></label>
+          <label>Margins<select id="page-margin"><option value="0">None</option><option value="24" selected>Small</option><option value="48">Comfortable</option></select></label>
+          <label>Image quality<select id="image-quality"><option value="0.72">Smaller file</option><option value="0.86" selected>Balanced</option><option value="0.95">High quality</option></select></label>
+        </div>
+        <div class="export-summary"><span><i class="fas fa-lock"></i> Files never leave this device</span><button class="btn btn-primary scanner-download" id="create-pdf" type="button"><i class="fas fa-file-arrow-down"></i> Create PDF</button></div>
+      </div>
+    </section>
+  </main>
+  <dialog class="scanner-dialog" id="camera-dialog">
+    <div class="dialog-head"><div><h2>Camera</h2><p>Place one page inside the frame</p></div><button class="icon-button" data-close="camera-dialog" aria-label="Close camera"><i class="fas fa-xmark"></i></button></div>
+    <div class="camera-stage"><video id="camera-video" autoplay playsinline muted></video><div class="scan-frame"></div></div><canvas id="camera-canvas" hidden></canvas>
+    <div class="dialog-actions"><button class="btn btn-secondary" id="switch-camera" type="button"><i class="fas fa-rotate"></i> Switch</button><button class="shutter" id="take-photo" type="button" aria-label="Take photo"><span></span></button><span class="page-tally" id="camera-tally">0 captured</span></div>
+  </dialog>
+  <dialog class="scanner-dialog crop-dialog" id="crop-dialog">
+    <div class="dialog-head"><div><h2>Crop page</h2><p>Keep only the document area</p></div><button class="icon-button" data-close="crop-dialog" aria-label="Close crop editor"><i class="fas fa-xmark"></i></button></div>
+    <div class="crop-stage"><img id="crop-image" alt="Page to crop"></div><div class="crop-actions"><button class="btn btn-secondary" data-close="crop-dialog" type="button">Cancel</button><button class="btn btn-primary" id="apply-crop" type="button">Apply crop</button></div>
+  </dialog>
+  <div class="busy-overlay" id="busy-overlay" hidden><div><i class="fas fa-circle-notch fa-spin"></i><strong>Creating your PDF…</strong><span>Optimizing page <b id="busy-page">1</b></span></div></div>
+  <script src="../../js/vendor/pdf-lib.min.js"></script><script src="../../js/vendor/cropper.min.js"></script><script src="document-scanner.js" type="module"></script>
+</body>
+</html>

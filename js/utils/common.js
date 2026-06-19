@@ -8,6 +8,7 @@ import './seo.js';
 import { Tilt } from './tilt.js';
 import { CubeRotator } from './cube.js';
 import { CommandPalette } from './command-palette.js';
+import { ViboxWorkspace } from './workspace.js';
 
 // ... existing code ...
 export const Utils = {
@@ -530,6 +531,7 @@ window.addEventListener('DOMContentLoaded', () => {
     Utils.ensureFontAwesome();
     Utils.ensureSkipLink();
     new CommandPalette();
+    window.ViboxWorkspace = new ViboxWorkspace();
 
     // Track recently used tool (if on a tool page)
     const path = window.location.pathname;
